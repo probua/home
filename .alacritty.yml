@@ -1,0 +1,18 @@
+selection:
+  save_to_clipboard: true
+
+shell:
+  program: "C:\\Program Files\\Git\\bin\\bash.exe"
+
+window:
+  opacity: 0.9
+  decorations: full
+  padding:
+    x: 15
+    y: 15
+  startup_mode: Fullscreen
+
+key_bindings:
+  - { key: T, mods: Control|Alt, action: SpawnNewInstance }
+
+working_directory: 'C:/Users/aleja/'  
