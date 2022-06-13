@@ -7,9 +7,13 @@ set showcmd
 set ruler
 set encoding=utf-8
 set showmatch
-set sw=4
+set sw=4 
 set laststatus=2
 set cursorline
+set splitbelow
+set splitright
+
+set termwinsize=10*10
 "set noshowmode
 syntax enable
 
@@ -27,16 +31,32 @@ call plug#end()
 
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = "hard"
-let NERDTreeQuitOnOpen=1
+"let NERDTreeQuitOnOpen=1
 
 let mapleader=" "
 
 " Hotkeys
 nmap <Leader>s <Plug>(easymotion-s2)
 nmap <Leader>nt :NERDTreeFind<CR>
-nmap <c-b> :NERDTreeFind<CR>
+nmap <c-b> :NERDTreeToggle<CR>
+nmap <c-t> :below terminal<CR>
 
-command! NT :NERDTreeFind
+" Tabs
+nmap <tab> >>
+nmap <s-tab> <<
+vmap <tab> >gv
+vmap <s-tab> <gv
+
+" Split resize
+nmap <s-left> 10<c-w><
+nmap <s-right> 10<c-w>>
+
+" Faster scrolling
+nmap <c-up> 10k
+nmap <c-down> 10j
+
+cnoreabbrev nt NERDTreeToggle
+command! NT :NERDTreeToggle
 command! W :w
 command! Wq :wq
 command! WQ :wq
@@ -50,4 +70,5 @@ nmap <a-down> <c-j>
 
 nmap <Leader>vs :vsplit<CR>
 nmap <Leader>sp :split<CR>
+
 
