@@ -29,8 +29,8 @@ Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
-colorscheme gruvbox
-let g:gruvbox_contrast_dark = "hard"
+"colorscheme gruvbox
+"let g:gruvbox_contrast_dark = "hard"
 "let NERDTreeQuitOnOpen=1
 
 let mapleader=" "
@@ -48,8 +48,10 @@ vmap <tab> >gv
 vmap <s-tab> <gv
 
 " Split resize
-nmap <s-left> 10<c-w><
-nmap <s-right> 10<c-w>>
+nmap <s-left> 1<c-w><
+nmap <s-right> 1<c-w>>
+nmap <s-up> 1<c-w>+
+nmap <s-down> 1<c-w>-
 
 " Faster scrolling
 nmap <c-up> 10k
