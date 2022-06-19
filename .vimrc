@@ -9,18 +9,21 @@ set encoding=utf-8
 set showmatch
 set sw=4 
 set laststatus=2
-set cursorline
 set splitbelow
 set splitright
+set cursorline
 
-set termwinsize=10*10
+set termwinsize=10*0
 "set noshowmode
 syntax enable
 
 call plug#begin('~/.vim/plugged')
 
 " Temas
-Plug 'morhetz/gruvbox'
+"Plug 'morhetz/gruvbox'
+
+" Languages
+Plug 'sheerun/vim-polyglot'
 
 " IDE
 Plug 'easymotion/vim-easymotion'
@@ -31,8 +34,7 @@ call plug#end()
 
 "colorscheme gruvbox
 "let g:gruvbox_contrast_dark = "hard"
-"let NERDTreeQuitOnOpen=1
-
+let NERDTreeQuitOnOpen=1
 let mapleader=" "
 
 " Hotkeys
