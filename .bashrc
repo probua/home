@@ -19,11 +19,14 @@ PS1='\[\e[0;38;5;222m\]\u@\h \[\e[0;38;5;39m\]\w \[\e[0m\]$(markup_git_branch $(
 \[\e[0;38;5;222m\]> \[\e[0m\]'
 
 # alias
-alias gs="git status -s"
+alias l="ls -lh --color=auto --group-directories-first"
 alias ll="ls -lah --color=auto --group-directories-first"
+alias gs="git status -s"
 alias gl="git log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold red)%d%C(reset)' --all"
 
-#git alias
-git config --global alias.lg "log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold red)%d%C(reset)' --all"
+# locals
+#alias paint="kolourpaint &"
+#alias calc="kcalc &"
+#alias exp="dolphin . &"
 
 cd
