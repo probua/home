@@ -17,6 +17,7 @@ set termwinsize=10*0
 "set noshowmode
 syntax enable
 
+" Install vim-plug: https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
 " Temas
