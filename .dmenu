@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+dmenu_run -i -p "Run" -fn "Hack-12" -nb "#1e2229" -nf "#f5d87a" -sb "#f5d87a" -sf "#1e2229"
