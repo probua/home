@@ -24,6 +24,9 @@ alias ll="ls -lah --color=auto --group-directories-first"
 alias gs="git status -s"
 alias gl="git log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold red)%d%C(reset)' --all"
 
+# windows
+#alias python="winpty python"
+
 # locals
 #alias paint="kolourpaint &"
 #alias calc="kcalc &"
