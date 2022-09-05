@@ -11,7 +11,7 @@ set sw=4
 set laststatus=2
 set splitbelow
 set splitright
-set cursorline
+"set cursorline
 
 set termwinsize=10*0
 "set noshowmode
