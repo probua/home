@@ -2,11 +2,11 @@ selection:
   save_to_clipboard: true
     
 window:
-  opacity: 0.9
+  opacity: 1
   decorations: full
   padding:
-    x: 5
-    y: 5
+    x: 10
+    y: 10
   startup_mode: Windowed
 
 font:
@@ -17,5 +17,9 @@ font:
 
 colors:
   primary:
-    background: '#1e2229'
-    foreground: '#c5c8c6'
+    background: '#181818'
+    foreground: '#ecf0f1'
+  cursor:
+    text: '#ecf0f1'
+    cursor: '#d35400'
+
