@@ -30,6 +30,5 @@ alias gl="git log --graph --abbrev-commit --decorate --format=format:'%C(yellow)
 # locals
 #alias paint="kolourpaint &"
 #alias calc="kcalc &"
-#alias exp="dolphin . &"
 
 cd

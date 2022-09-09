@@ -7,13 +7,17 @@ set showcmd
 set ruler
 set encoding=utf-8
 set showmatch
-set sw=4 
 set laststatus=2
 set splitbelow
 set splitright
 "set cursorline
 
+" Terminal size
 set termwinsize=10*0
+"Tabs
+set tabstop=4
+set softtabstop=0 noexpandtab
+set shiftwidth=4
 "set noshowmode
 syntax enable
 
