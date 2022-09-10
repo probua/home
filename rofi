@@ -1,5 +1,5 @@
 configuration {
-	 display-drun: "Run";
+	 display-drun: "Run:";
 	 display-window: "Windows";
 	 drun-display-format: "{icon} {name}";
 	 font: "Hack 10";
@@ -10,11 +10,14 @@ configuration {
 @theme "/dev/null"
 
 * {
-	bg: #11121D;
-	bg-alt: #444b6a;
+	bg: #181818;
+	bg-alt: #3e3e3e;
 
-	fg: #FFFFFF;
-	fg-alt: #787c99;
+	fg: #ecf0f1;
+	fg-alt: #6c6c6c;
+
+	pc: #ffd787;
+	pc-alt: #00afff;
 
 	background-color: @bg;
 
@@ -56,7 +59,7 @@ element-icon {
 entry {
 	background-color: @bg-alt;
 	padding: 8;
-	text-color: @fg;
+	text-color: @pc;
 }
 
 inputbar {
@@ -74,5 +77,5 @@ prompt {
 	background-color: @bg-alt;
 	enabled: true;
 	padding: 8 0 0 8;
-	text-color: @fg;
+	text-color: @pc-alt;
 }
