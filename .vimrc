@@ -80,4 +80,3 @@ nmap <a-down> <c-j>
 nmap <Leader>vs :vsplit<CR>
 nmap <Leader>sp :split<CR>
 
-

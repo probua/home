@@ -1,5 +1,78 @@
 configuration {
-	 display-drun: "Applications";
+	 display-drun: "Run";
+	 display-window: "Windows";
+	 drun-display-format: "{icon} {name}";
+	 font: "Hack 10";
+	 modi: "window,run,drun";
 	 show-icons: true;
 }
 
+@theme "/dev/null"
+
+* {
+	bg: #11121D;
+	bg-alt: #444b6a;
+
+	fg: #FFFFFF;
+	fg-alt: #787c99;
+
+	background-color: @bg;
+
+	border: 0;
+	margin: 0;
+	padding: 0;
+	spacing: 0;
+}
+
+window {
+	width: 45%;
+	padding: 8;
+}
+
+mainbox {
+	background-color: @bg;
+	children: [inputbar, listview];	
+}
+
+element {
+	padding: 2;
+	text-color: @fg-alt;
+}
+
+element selected {
+	text-color: @fg;
+}
+
+element-text {
+	background-color: inherit;
+	text-color: inherit;
+	vertical-align: 0.5;
+}
+
+element-icon {
+	size: 24;
+}
+
+entry {
+	background-color: @bg-alt;
+	padding: 8;
+	text-color: @fg;
+}
+
+inputbar {
+	children: [prompt, entry];
+	padding: 0 0 8 0;
+}
+
+listview {
+	background-color: @bg;
+	columns: 1;
+	lines: 8;
+}
+
+prompt {
+	background-color: @bg-alt;
+	enabled: true;
+	padding: 8 0 0 8;
+	text-color: @fg;
+}
