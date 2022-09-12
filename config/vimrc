@@ -24,9 +24,6 @@ syntax enable
 " Install vim-plug: https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
-" Temas
-"Plug 'morhetz/gruvbox'
-
 " Languages
 Plug 'sheerun/vim-polyglot'
 
