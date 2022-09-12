@@ -1,0 +1,4 @@
+# windows
+#alias python="winpty python"
+
+cd
