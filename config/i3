@@ -46,19 +46,18 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
+bindsym $mod+t exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
 bindsym $alt+F4 kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run -i -p "Run" -fn "Hack-12" -nb "#1e2229" -nf "#f5d87a" -sb "#f5d87a" -sf "#1e2229"
-# A more modern dmenu replacement is rofi:
-# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-# There also is i3-dmenu-desktop which only displays applications shipping a
-# .desktop file. It is a wrapper around dmenu, so you need that installed.
-# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+# start dmenu
+#bindsym $mod+d exec --no-startup-id dmenu_run -i -p "Run" -fn "Hack-12" -nb "#1e2229" -nf "#f5d87a" -sb "#f5d87a" -sf "#1e2229"
+
+# start rofi
+bindsym $mod+d exec rofi -show drun
 
 # change focus
 bindsym $mod+Left focus left
