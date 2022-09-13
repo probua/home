@@ -7,7 +7,7 @@ window:
   padding:
     x: 10
     y: 10
-  startup_mode: Windowed
+  startup_mode: Maximized
 
 font:
   size: 10
@@ -23,3 +23,10 @@ colors:
     text: '#ecf0f1'
     cursor: '#d35400'
 
+mouse_bindings:
+  - { mouse: Right, action: PasteSelection }
+
+key_bindings:
+  - { key: Up, mods: Control, chars: "10k" }
+  - { key: Down, mods: Control, chars: "10j" }
+  - { key: Back, mods: Control, chars: "\x15" }
