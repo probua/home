@@ -50,7 +50,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+t exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 bindsym $alt+F4 kill
 
 # start dmenu
@@ -58,6 +58,9 @@ bindsym $alt+F4 kill
 
 # start rofi
 bindsym $mod+d exec rofi -show drun
+
+# lock
+bindsym $mod+l exec dm-tool lock
 
 # change focus
 bindsym $mod+Left focus left
@@ -100,7 +103,7 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: terminales"
+set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
@@ -167,7 +170,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        position top
+	position top
 	status_command i3blocks
 	colors {
 		background #222222
@@ -177,4 +180,7 @@ gaps outer 0
 gaps inner 5
 smart_gaps on
 
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 2
+
+#background
+exec feh --bg-fill ~/projects/probua/wallpapers/02.jpg
