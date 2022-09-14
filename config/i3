@@ -177,5 +177,8 @@ gaps inner 40
 
 for_window [class="^.*"] border pixel 3
 
-#background
+# screen layout
+exec . ~/projects/probua/home/config/screenlayout/vertical.sh
+
+# background
 exec feh --bg-fill ~/projects/probua/wallpapers/02.jpg
