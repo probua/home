@@ -105,7 +105,7 @@ inactive-opacity = 1;
 
 # Opacity of window titlebars and borders. (0.1 - 1.0, disabled by default)
 # frame-opacity = 1.0
-frame-opacity = 0.9;
+#frame-opacity = 0.8;
 
 # Let inactive opacity set by -i override the '_NET_WM_WINDOW_OPACITY' values of windows.
 # inactive-opacity-override = true
@@ -204,8 +204,8 @@ blur-background-exclude = [
 # Specify the backend to use: `xrender`, `glx`, or `xr_glx_hybrid`.
 # `xrender` is the default one.
 #
-# backend = "glx"
-backend = "xrender";
+backend = "glx"
+#backend = "xrender";
 
 # Enable/disable VSync.
 # vsync = false
@@ -400,9 +400,9 @@ log-level = "warn";
 #
 wintypes:
 {
-  tooltip = { fade = true; shadow = true; opacity = 0.75; focus = true; full-shadow = false; };
+  tooltip = { fade = true; shadow = true; opacity = 1; focus = true; full-shadow = false; };
   dock = { shadow = false; clip-shadow-above = true; }
   dnd = { shadow = false; }
-  popup_menu = { opacity = 0.8; }
-  dropdown_menu = { opacity = 0.8; }
+  popup_menu = { opacity = 1; }
+  dropdown_menu = { opacity = 1; }
 };

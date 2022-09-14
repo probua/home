@@ -182,3 +182,4 @@ exec . ~/projects/probua/home/config/screenlayout/vertical.sh
 
 # background
 exec feh --bg-fill ~/projects/probua/wallpapers/02.jpg
+exec picom -b
