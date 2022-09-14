@@ -2,7 +2,7 @@ configuration {
 	 display-drun: "Run:";
 	 display-window: "Windows";
 	 drun-display-format: "{icon} {name}";
-	 font: "Hack 10";
+	 font: "Hack 12";
 	 modi: "window,run,drun";
 	 show-icons: true;
 }
@@ -11,7 +11,7 @@ configuration {
 
 * {
 	bg: #181818;
-	bg-alt: #3e3e3e;
+	bg-alt: #181818;
 
 	fg: #ecf0f1;
 	fg-alt: #6c6c6c;
