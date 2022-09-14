@@ -14,7 +14,7 @@ set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Hack 11
+font pango:Awesome 11
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -97,16 +97,16 @@ bindsym $mod+space focus mode_toggle
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws1 "1  "
+set $ws2 "2 "
+set $ws3 "3 "
+set $ws4 "4  "
+set $ws5 "5  "
+set $ws6 "6 "
+set $ws7 "7 "
+set $ws8 "8  "
+set $ws9 "9 "
+set $ws10 "0 "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -163,14 +163,14 @@ bindsym $mod+r mode "resize"
 # start i3bar
 bar {    
 	position top
-    output primary
+    #output primary
 	status_command i3blocks
 	colors {
 		background #181818
         statusline #ecf0f1
         separator  #181818
         focused_workspace  #181818 #FFD787 #181818
-        active_workspace   #181818 #181818 #181818
+        active_workspace   #181818 #181818 #FFD787
         inactive_workspace #181818 #181818 #FFD787
 	}
 }
@@ -183,7 +183,7 @@ gaps outer 0
 gaps inner 40
 #smart_gaps on
 
-#for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 3
 
 # screen layout
 exec . ~/projects/probua/home/config/screenlayout/vertical.sh
