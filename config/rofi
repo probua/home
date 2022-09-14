@@ -34,7 +34,8 @@ window {
 
 mainbox {
 	background-color: @bg;
-	children: [inputbar, listview];	
+	children: [inputbar, listview];
+	padding: 10;
 }
 
 element {
@@ -71,6 +72,7 @@ listview {
 	background-color: @bg;
 	columns: 1;
 	lines: 8;
+	padding: 0 0 8 8;
 }
 
 prompt {
