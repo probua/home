@@ -54,10 +54,11 @@ bindsym $mod+q kill
 bindsym $alt+F4 kill
 
 # start dmenu
-#bindsym $mod+d exec --no-startup-id dmenu_run -i -p "Run" -fn "Hack-12" -nb "#1e2229" -nf "#f5d87a" -sb "#f5d87a" -sf "#1e2229"
+#bindsym $mod+d exec --no-startup-id dmenu_run -i -p "Run:" -fn "Hack-14" -nb "#181818" -nf "#ffd787" -sb "#181818" -sf "#00afff"
 
 # start rofi
 bindsym $mod+d exec rofi -show drun
+bindsym $mod+a exec rofi -show drun
 
 bindsym $alt+Tab exec rofi -show window
 
@@ -92,10 +93,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+space floating toggle
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -145,36 +143,40 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec source ~/projects/probua/home/config/dmenu/dmenu_double_confirmation.sh "¿Quiéres cerrar la sesión de i3" "¿Estás seguro?" "i3-msg exit"
+bindsym $mod+Shift+x exec source ~/projects/probua/home/config/dmenu/dmenu_double_confirmation.sh "¿Quiéres apagar el equipo" "¿Estás seguro?" "shutdown now"
+
+# shutdown
+#indsym $mod+Shift+x exec
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        bindsym Left resize shrink width 3 px or 3 ppt
-        bindsym Down resize grow height 3 px or 3 ppt
-        bindsym Up resize shrink height 3 px or 3 ppt
-        bindsym Right resize grow width 3 px or 3 ppt
+    bindsym Left resize shrink width 3 px or 3 ppt
+    bindsym Down resize grow height 3 px or 3 ppt
+    bindsym Up resize shrink height 3 px or 3 ppt
+    bindsym Right resize grow width 3 px or 3 ppt
 
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+    # back to normal: Enter or Escape or $mod+r
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
 
 # start i3bar
 bar {    
-	position top
+    position top
     #output primary
-	status_command i3blocks
-	colors {
-		background #181818
+    status_command i3blocks
+    colors {
+        background #181818
         statusline #ecf0f1
         separator  #181818
         focused_workspace  #181818 #FFD787 #181818
         active_workspace   #181818 #181818 #FFD787
         inactive_workspace #181818 #181818 #FFD787
-	}
+    }
 }
 # class                 border  backgr. text    indicator child_border
 client.focused          #FFD787 #FFD787 #181818 #FFD787   #FFD787
@@ -182,7 +184,7 @@ client.focused_inactive #181818 #181818 #FFD787 #181818   #181818
 client.unfocused        #181818 #181818 #FFD787 #181818   #181818
 
 gaps outer 0
-gaps inner 40
+gaps inner 20
 #smart_gaps on
 
 for_window [class="^.*"] border pixel 3
