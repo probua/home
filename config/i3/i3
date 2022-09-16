@@ -144,13 +144,13 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec source ~/projects/probua/home/config/dmenu/dmenu_double_confirmation.sh "   " "    " "i3-msg exit"
+bindsym $mod+Shift+e exec source ~/projects/probua/home/config/scripts/dmenu_double_confirmation.sh "   " "    " "i3-msg exit"
 
 # lock
-bindsym $mod+l exec source ~/projects/probua/home/config/dmenu/dmenu_double_confirmation.sh "   " "    " "dm-tool lock"
+bindsym $mod+l exec source ~/projects/probua/home/config/scripts/dmenu_double_confirmation.sh "   " "    " "dm-tool lock"
 
 # shutdown
-bindsym $mod+Shift+x exec source ~/projects/probua/home/config/dmenu/dmenu_double_confirmation.sh "   " "    " "shutdown now"
+bindsym $mod+Shift+x exec source ~/projects/probua/home/config/scripts/dmenu_double_confirmation.sh "   " "    " "shutdown now"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
