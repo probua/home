@@ -98,10 +98,10 @@
       "KC_INS",
       "KC_NO",
       "LWIN(KC_0)",
-      "KC_HOME",
-      "KC_DOWN",
-      "KC_UP",
-      "KC_END"
+      "LWIN(KC_LEFT)",
+      "LWIN(KC_DOWN)",
+      "LWIN(KC_UP)",
+      "LWIN(KC_NO)"
     ],
     [
       "KC_PAUS",
