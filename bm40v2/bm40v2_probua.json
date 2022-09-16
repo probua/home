@@ -101,7 +101,7 @@
       "LWIN(KC_LEFT)",
       "LWIN(KC_DOWN)",
       "LWIN(KC_UP)",
-      "LWIN(KC_NO)"
+      "LWIN(KC_RGHT)"
     ],
     [
       "KC_PAUS",
