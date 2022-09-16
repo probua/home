@@ -93,6 +93,9 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+space floating toggle
 
+# print screen
+bindsym print exec xfce4-screenshooter
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1  " 1  "
@@ -163,12 +166,25 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-
-# start i3bar
+# primary i3bar
 bar {    
     position top
-    #output primary
+    output primary
     status_command i3blocks
+    colors {
+        background #181818
+        statusline #ecf0f1
+        separator  #181818
+        focused_workspace  #181818 #FFD787 #181818
+        active_workspace   #181818 #181818 #FFD787
+        inactive_workspace #181818 #181818 #FFD787
+    }
+}
+
+# secondary i3bar
+bar {    
+    position top
+    output DP-1
     colors {
         background #181818
         statusline #ecf0f1
