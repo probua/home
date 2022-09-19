@@ -1,0 +1,26 @@
+# Global properties
+separator=false
+separator_block_width=10
+markup=none
+
+[TIME_DATE]
+command=date +"%A %d %B %Y"
+interval=1
+color=#ffd787
+
+[TIME]
+command=date +"%H:%M"
+interval=1
+color=#ffd787
+
+[CAPS]
+command=source ~/projects/probua/home/config/scripts/i3_caps.sh
+interval=once
+signal=11
+color=#ffd787
+
+[SOUND]
+command=source ~/projects/probua/home/config/scripts/i3_sound_info.sh
+interval=once
+signal=5
+color=#ffd787
