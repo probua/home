@@ -1,3 +1,3 @@
 format=$(date +"%A %d %B %Y ")
-dt=" $format"
+dt="  $format"
 echo "$dt"
