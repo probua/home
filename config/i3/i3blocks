@@ -3,6 +3,12 @@ separator=false
 separator_block_width=15
 markup=none
 
+[SOUND]
+command=source ~/projects/probua/home/config/scripts/i3_sound_info.sh
+interval=once
+signal=5
+color=#ffd787
+
 [DATE]
 command=source ~/projects/probua/home/config/scripts/i3_date.sh
 interval=1
@@ -13,14 +19,8 @@ command=source ~/projects/probua/home/config/scripts/i3_time.sh
 interval=1
 color=#ecf0f1
 
-[SOUND]
-command=source ~/projects/probua/home/config/scripts/i3_sound_info.sh
-interval=once
-signal=5
-color=#ffd787
-
 [CAPS]
 command=source ~/projects/probua/home/config/scripts/i3_caps.sh
 interval=once
 signal=11
-color=#00afff
+color=#ffd787
