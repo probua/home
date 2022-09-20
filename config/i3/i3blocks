@@ -23,4 +23,4 @@ color=#ecf0f1
 command=source ~/projects/probua/home/config/scripts/i3_caps.sh
 interval=once
 signal=11
-color=#ffd787
+color=#00afff
