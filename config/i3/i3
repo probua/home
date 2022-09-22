@@ -234,3 +234,7 @@ exec picom -b
 
 # Caps. Lock
 bindsym Caps_Lock --release exec pkill -SIGRTMIN+11 i3blocks
+
+# Num. Lock
+bindsym Num_Lock --release exec pkill -SIGRTMIN+10 i3blocks
+
