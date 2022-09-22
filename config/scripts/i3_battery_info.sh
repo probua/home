@@ -17,4 +17,6 @@ if [[ "$battery_status" == "Discharging" ]]; then
 	fi
 fi
 
-echo "$battery_icon  $battery_perc"
+if [[ "$battery_perc" != "" ]]; then
+	echo "$battery_icon  $battery_perc"
+fi
