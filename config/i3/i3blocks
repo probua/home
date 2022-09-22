@@ -1,6 +1,6 @@
 # Global properties
 separator=false
-separator_block_width=15
+separator_block_width=12
 markup=none
 
 [SOUND]
@@ -28,4 +28,9 @@ color=#ecf0f1
 command=source ~/projects/probua/home/config/scripts/i3_caps.sh
 interval=once
 signal=11
+color=#00afff
+
+[EXIT]
+full_text=" "
+command=source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
 color=#00afff

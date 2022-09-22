@@ -23,4 +23,4 @@ else
 	fi
 fi
 
-echo "$ICON" "$SOUND_LEVEL" | awk '{ printf("%s  %3s%% \n", $1, $2) }'
+echo "$ICON" "$SOUND_LEVEL" | awk '{ printf("%s  %3s%%\n", $1, $2) }'

@@ -1,3 +1,3 @@
-format=$(date +"%H:%M ")
+format=$(date +"%H:%M")
 time="  $format"
 echo "$time"

@@ -164,14 +164,8 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec source ~/projects/probua/home/config/scripts/rofi_double_confirmation.sh "  Close session" "  Confirm close session" "i3-msg exit"
-
-# lock
-#bindsym $mod+l exec source ~/projects/probua/home/config/scripts/rofi_double_confirmation.sh " Lock screen" " Confirm lock screen" "dm-tool lock"
-
-# shutdown
-#bindsym $mod+Shift+x exec source ~/projects/probua/home/config/scripts/rofi_double_confirmation.sh " Shutdown" "  Confirm shutdown " "shutdown now"
+# exit menu i3
+bindsym $mod+Shift+e exec source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
 
 # wallpaper
 bindsym $mod+w exec source ~/projects/probua/home/config/scripts/rofi_wallpaper_picker.sh
