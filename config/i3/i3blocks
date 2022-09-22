@@ -9,6 +9,11 @@ interval=once
 signal=5
 color=#ffd787
 
+[BATTERY]
+command=source ~/projects/probua/home/config/scripts/i3_battery_info.sh
+interval=1
+color=#ffd787
+
 [DATE]
 command=source ~/projects/probua/home/config/scripts/i3_date.sh
 interval=1
