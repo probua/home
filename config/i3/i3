@@ -224,7 +224,7 @@ gaps inner 20
 for_window [class="^.*"] border pixel 3
 
 # screen layout (monitor)
-exec . ~/.screenlayout/layout.sh
+exec . ~/.screenlayout/i3.sh
 
 #assign [class="firefox"] $ws2
 
