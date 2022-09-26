@@ -50,6 +50,7 @@ bindsym $mod+t exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+q kill
+bindsym $mod+Escape kill
 
 # start rofi
 bindsym $mod+d exec rofi -show drun
@@ -196,6 +197,7 @@ bar {
         focused_workspace  #181818 #FFD787 #181818
         active_workspace   #181818 #181818 #FFD787
         inactive_workspace #181818 #181818 #FFD787
+        urgent_workspace   #181818 #00AFFF #181818
     }
 }
 
@@ -210,12 +212,15 @@ bar {
         focused_workspace  #181818 #FFD787 #181818
         active_workspace   #181818 #181818 #FFD787
         inactive_workspace #181818 #181818 #FFD787
+        urgent_workspace   #181818 #00AFFF #181818
     }
 }
 # class                 border  backgr. text    indicator child_border
 client.focused          #FFD787 #FFD787 #181818 #FFD787   #FFD787
 client.focused_inactive #181818 #181818 #FFD787 #181818   #181818
 client.unfocused        #181818 #181818 #FFD787 #181818   #181818
+
+client.background       #181818
 
 gaps outer 0
 gaps inner 12
