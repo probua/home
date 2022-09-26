@@ -97,9 +97,9 @@ set $ws3  " 3  "
 set $ws4  " 4  "
 set $ws5  " 5  "
 set $ws6  " 6  "
-set $ws7  " 7  "
-set $ws8  " 8  "
-set $ws9  " 9  "
+set $ws7  " 7  "
+set $ws8  " 8  "
+set $ws9  " 9  "
 set $ws00 " A  "
 set $ws01 " B  "
 set $ws02 " C  "
@@ -237,6 +237,7 @@ for_window [class="^.*"] border pixel 2
 # screen layout (monitor)
 exec . ~/.screenlayout/i3.sh
 
+# Applications
 #assign [class="firefox"] $ws2
 
 # Wallpaper
