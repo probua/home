@@ -112,9 +112,9 @@ bindsym $mod+l workspace $ws6
 bindsym $mod+u workspace $ws7
 bindsym $mod+i workspace $ws8
 bindsym $mod+o workspace $ws9
-bindsym $mod+p workspace $ws00
+bindsym $mod+minus workspace $ws00
 bindsym $mod+ntilde workspace $ws01
-bindsym $mod+minus workspace $ws02
+bindsym $mod+p workspace $ws02
 
 # ... with numbers
 bindsym $mod+1 workspace $ws1
@@ -138,9 +138,9 @@ bindsym $mod+Shift+l move container to workspace $ws6
 bindsym $mod+Shift+u move container to workspace $ws7
 bindsym $mod+Shift+i move container to workspace $ws8
 bindsym $mod+Shift+o move container to workspace $ws9
-bindsym $mod+Shift+p move container to workspace $ws00
+bindsym $mod+Shift+minus move container to workspace $ws00
 bindsym $mod+Shift+ntilde move container to workspace $ws01
-bindsym $mod+Shift+minus move container to workspace $ws02
+bindsym $mod+Shift+p move container to workspace $ws02
 
 # ... with numbers
 bindsym $mod+Shift+1 move container to workspace $ws1
