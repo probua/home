@@ -17,7 +17,8 @@ configuration {
 	fg-alt: #6c6c6c;
 
 	pc: #ffd787;
-	pc-alt: #00afff;
+	pc-alt: #5FD7FF;
+	pc-alt-old: #00afff; 
 
 	background-color: @bg;
 

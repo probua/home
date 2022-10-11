@@ -200,7 +200,7 @@ bar {
         focused_workspace  #181818 #FFD787 #181818
         active_workspace   #181818 #181818 #FFD787
         inactive_workspace #181818 #181818 #FFD787
-        urgent_workspace   #181818 #00AFFF #181818
+        urgent_workspace   #181818 #5FD7FF #181818
     }
 }
 
@@ -215,7 +215,7 @@ bar {
         focused_workspace  #181818 #FFD787 #181818
         active_workspace   #181818 #181818 #FFD787
         inactive_workspace #181818 #181818 #FFD787
-        urgent_workspace   #181818 #00AFFF #181818
+        urgent_workspace   #181818 #5FD7FF #181818
     }
 }
 # class                 border  backgr. text    indicator child_border

@@ -8,13 +8,17 @@ function markup_git_branch {
 		echo -e "$1"
 	else
 		if [[ $(git status -s) == "" ]]; then
-			echo -e 'git:'"$1"
+			echo -e 'git: '"$1 "
 		else
-			echo -e 'git:''\033[0;38;5;210m'"$1"'\033[0m'
+			echo -e 'git: ''\033[0;38;5;210m'"$1 "'\033[0m'
 		fi
 	fi
 }
-
+#classic
 PS1='\[\e[0;38;5;222m\]\u@\h \[\e[0;38;5;39m\]\w \[\e[0m\]$(markup_git_branch $(git_branch))
 \[\e[0;38;5;222m\]> \[\e[0m\]'
+
+#new
+PS1='\[\e[0;38;5;250m\]\t \[\e[0;38;5;81m\]\w
+\[\e[0m\]$(markup_git_branch $(git_branch))\[\e[0;38;5;222m\]> \[\e[0m\]'
 
