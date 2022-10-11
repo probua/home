@@ -4,21 +4,37 @@ function git_branch {
 }
 
 function markup_git_branch {
-	if [[ "x$1" == "x" ]]; then
+	if [[ "$1" == "" ]]; then
 		echo -e "$1"
 	else
-		if [[ $(git status -s) == "" ]]; then
+		gs=$(git status -s)
+		if [[ "$gs" == "" ]]; then
 			echo -e 'git: '"$1 "
 		else
-			echo -e 'git: ''\033[0;38;5;210m'"$1 "'\033[0m'
+			gsc="$(gs | cut -c 2)"
+			gsf=0
+
+			for i in $gsc;
+			do 
+				gsf=1
+			done
+
+			if [[ $gsf == 1 ]]; then
+				echo -e 'git: ''\033[0;38;5;210m'"$1 "'\033[0m'
+			else
+				echo -e 'git: ''\033[0;38;5;107m'"$1 "'\033[0m'
+			fi
+
 		fi
 	fi
 }
-#classic
+# ver 1.0
 PS1='\[\e[0;38;5;222m\]\u@\h \[\e[0;38;5;39m\]\w \[\e[0m\]$(markup_git_branch $(git_branch))
 \[\e[0;38;5;222m\]> \[\e[0m\]'
 
-#new
+# ver 1.1
 PS1='\[\e[0;38;5;250m\]\t \[\e[0;38;5;81m\]\w
-\[\e[0m\]$(markup_git_branch $(git_branch))\[\e[0;38;5;222m\]> \[\e[0m\]'
+\[\e[0m\]$(markup_git_branch $(git_branch))\[\e[0;38;5;222m\]> \[\e[222m\]'
 
+# reset color after command
+trap 'echo -ne "\e[0m"' DEBUG
