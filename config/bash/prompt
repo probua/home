@@ -9,7 +9,7 @@ function markup_git_branch {
 	else
 		gs=$(git status -s)
 		if [[ "$gs" == "" ]]; then
-			echo -e '\033[0;38;5;246m''git: '"$1 "
+			echo -e '\033[0;38;5;246m''git: ''\e[0m'"$1 "
 		else
 			gsc="$(gs | cut -c 2)"
 			gsf=0
