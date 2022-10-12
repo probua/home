@@ -33,8 +33,6 @@ PS1='\[\e[0;38;5;246m\]\u@\h \[\e[0;38;5;39m\]\w \[\e[0m\]$(markup_git_branch $(
 \[\e[0;38;5;222m\]> \[\e[0m\]'
 
 # ver 1.1
-PS1='\[\e[0;38;5;246m\]\t \[\e[0;38;5;81m\]\w
-\[\e[0m\]$(markup_git_branch $(git_branch))\[\e[0;38;5;222m\]> \[\e[222m\]'
+PS1='\[\e[0;38;5;222m\]\t \[\e[0;38;5;81m\]\w
+\[\e[0m\]$(markup_git_branch $(git_branch))\[\e[0;38;5;222m\]> \[\e[0m\]'
 
-# reset color after command
-trap 'echo -ne "\e[0m"' DEBUG
