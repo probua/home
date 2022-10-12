@@ -7,41 +7,41 @@ markup=none
 command=source ~/projects/probua/home/config/scripts/i3_sound_info.sh
 interval=once
 signal=5
-color=#ffd787
+color=#E0E0E0
 
 [BATTERY]
 command=source ~/projects/probua/home/config/scripts/i3_battery_info.sh
 interval=1
-color=#ffd787
+color=#E0E0E0
 
 [MEMORY]
 command=source ~/projects/probua/home/config/scripts/i3_memory_info.sh
 interval=1
-color=#ffd787
+color=#E0E0E0
 
 [DATE]
 command=source ~/projects/probua/home/config/scripts/i3_date.sh
 interval=1
-color=#ecf0f1
+color=#E0E0E0
 
 [TIME]
 command=source ~/projects/probua/home/config/scripts/i3_time.sh
 interval=1
-color=#ecf0f1
+color=#E0E0E0
 
 [CAPS]
 command=source ~/projects/probua/home/config/scripts/i3_caps.sh
 interval=once
 signal=11
-color=#5FD7FF
+color=#FFD787
 
 [NUM]
 command=source ~/projects/probua/home/config/scripts/i3_num.sh
 interval=once
 signal=10
-color=#5FD7FF
+color=#FFD787
 
 [EXIT]
 full_text=" "
 command=source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
-color=#5FD7FF
+color=#FFD787
