@@ -9,7 +9,14 @@ function markup_git_branch {
 	else
 		gs=$(git status -s)
 		if [[ "$gs" == "" ]]; then
-			echo -e '\033[0;38;5;246m''git: ''\e[0m'"$1 "
+			
+			grl="$(git rev-list $1 --not origin/$1 --count)"
+			
+			if [[ $grl > 0 ]]; then
+				echo -e '\033[0m''git: ''\033[0;38;5;157m'"$1 "'\033[0m'
+			else
+				echo -e '\033[0;38;5;246m''git: ''\e[0m'"$1 "
+			fi
 		else
 			gsc="$(gs | cut -c 2)"
 			gsf=0
