@@ -217,8 +217,7 @@ bar {
     }
 }
 # class                 border  backgr. text    indicator child_border
-#client.focused          #A0A0A0 #A0A0A0 #F0F0F0 #181818   #FFD787
-client.focused          #181818 #181818 #5FD7FF #181818   #FFD787
+client.focused          #181818 #181818 #5FD7FF #5FD7FF   #FFD787
 client.focused_inactive #181818 #181818 #A0A0A0 #181818   #181818
 client.unfocused        #181818 #181818 #A0A0A0 #181818   #181818
 client.background       #181818
