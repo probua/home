@@ -42,10 +42,10 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -SIGRTMIN+7 i3blocks
 
 #Audio control + Arrows
-bindsym Control+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && pkill -SIGRTMIN+5 i3blocks 
-bindsym Control+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && pkill -SIGRTMIN+5 i3blocks
-bindsym Control+Left exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -SIGRTMIN+6 i3blocks
-bindsym Control+Right exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -SIGRTMIN+7 i3blocks
+#bindsym Control+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && pkill -SIGRTMIN+5 i3blocks 
+#bindsym Control+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && pkill -SIGRTMIN+5 i3blocks
+#bindsym Control+Left exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -SIGRTMIN+6 i3blocks
+#bindsym Control+Right exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -SIGRTMIN+7 i3blocks
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
