@@ -54,6 +54,6 @@ signal=10
 color=#5FD7FF
 
 [EXIT]
-full_text="   "
+full_text="  "
 command=source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
 color=#FFD787
