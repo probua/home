@@ -45,15 +45,15 @@ color=#5FD7FF
 command=source ~/projects/probua/home/config/scripts/i3_caps.sh
 interval=once
 signal=11
-color=#FFD787
+color=#5FD7FF
 
 [NUM]
 command=source ~/projects/probua/home/config/scripts/i3_num.sh
 interval=once
 signal=10
-color=#FFD787
+color=#5FD7FF
 
 [EXIT]
-full_text=" "
+full_text="   "
 command=source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
 color=#FFD787

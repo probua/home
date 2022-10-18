@@ -1,12 +1,5 @@
-ICON=""
-MIC_OFF=""
-OFF=" "
-ON=" "
+MIC_MUTED=""
 
 if [[ "$(pactl get-source-mute @DEFAULT_SOURCE@)" != "Mute: no" ]]; then
-#	echo "$ICON $OFF"
-	echo "$MIC_OFF"
-else
-#	echo "$ICON $ON"
-	echo "$ICON"
+	echo "$MIC_MUTED"
 fi
