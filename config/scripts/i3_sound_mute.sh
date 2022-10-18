@@ -1,0 +1,12 @@
+#!/bin/sh
+
+OFF=" "
+ON=" "
+ICON=""
+MUTED=$(amixer get Master | awk ' /%/{print ($NF=="[off]" ? 1 : 0); exit;}')
+
+if [ "$MUTED" = "1" ]; then
+	echo "$ICON $OFF" 
+else
+	echo "$ICON $ON"
+fi
