@@ -209,6 +209,7 @@ bar {
 bar {    
     position top
     output DP-1
+    status_command i3blocks
     colors {
         background #181818
         statusline #ecf0f1
