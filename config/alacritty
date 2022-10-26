@@ -29,4 +29,3 @@ mouse_bindings:
 key_bindings:
   - { key: Up, mods: Control, chars: "10k" }
   - { key: Down, mods: Control, chars: "10j" }
-  - { key: Back, mods: Control, chars: "\x15" }
