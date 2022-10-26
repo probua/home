@@ -27,5 +27,9 @@ mouse_bindings:
   - { mouse: Right, action: PasteSelection }
 
 key_bindings:
+  - { key: PageUp, action: ScrollHalfPageUp }
+  - { key: PageDown, action: ScrollHalfPageDown }
+  - { key: Left, mods: Control, chars: "gE" }
+  - { key: Right, mods: Control, chars: "W" }
   - { key: Up, mods: Control, chars: "10k" }
   - { key: Down, mods: Control, chars: "10j" }
