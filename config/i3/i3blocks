@@ -3,6 +3,30 @@ separator=false
 separator_block_width=12
 markup=none
 
+[SOUND_MUTE]
+command=source ~/projects/probua/home/config/scripts/i3_sound_mute.sh
+interval=once
+signal=6
+color=#FFD787
+
+[MIC_MUTE]
+command=source ~/projects/probua/home/config/scripts/i3_mic.sh
+interval=once
+signal=7
+color=#FFD787
+
+[CAPS]
+command=source ~/projects/probua/home/config/scripts/i3_caps.sh
+interval=once
+signal=11
+color=#FFD787
+
+[NUM]
+command=source ~/projects/probua/home/config/scripts/i3_num.sh
+interval=once
+signal=10
+color=#FFD787
+
 [BATTERY]
 command=source ~/projects/probua/home/config/scripts/i3_battery_info.sh
 interval=1
@@ -29,31 +53,7 @@ command=source ~/projects/probua/home/config/scripts/i3_time.sh
 interval=1
 color=#E0E0E0
 
-[SOUND_MUTE]
-command=source ~/projects/probua/home/config/scripts/i3_sound_mute.sh
-interval=once
-signal=6
-color=#5FD7FF
-
-[MIC_MUTE]
-command=source ~/projects/probua/home/config/scripts/i3_mic.sh
-interval=once
-signal=7
-color=#5FD7FF
-
-[CAPS]
-command=source ~/projects/probua/home/config/scripts/i3_caps.sh
-interval=once
-signal=11
-color=#5FD7FF
-
-[NUM]
-command=source ~/projects/probua/home/config/scripts/i3_num.sh
-interval=once
-signal=10
-color=#5FD7FF
-
 [EXIT]
-full_text="  "
+full_text=" "
 command=source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
-color=#FFD787
+color=#5FD7FF

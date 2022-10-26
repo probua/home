@@ -191,17 +191,17 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 # primary i3bar
 bar {    
-    position bottom
+    position top
     output primary
     status_command i3blocks
     colors {
         background #181818
         statusline #ecf0f1
         separator  #181818
-        focused_workspace  #181818 #181818 #FFD787
+        focused_workspace  #181818 #181818 #5FD7FF
         active_workspace   #181818 #181818 #A0A0A0
         inactive_workspace #181818 #181818 #A0A0A0
-        urgent_workspace   #181818 #181818 #5FD7FF
+        urgent_workspace   #181818 #181818 #FFD787
     }
 }
 
@@ -214,10 +214,10 @@ bar {
         background #181818
         statusline #ecf0f1
         separator  #181818
-        focused_workspace  #181818 #181818 #FFD787
+        focused_workspace  #181818 #181818 #5FD7FF
         active_workspace   #181818 #181818 #A0A0A0
         inactive_workspace #181818 #181818 #A0A0A0
-        urgent_workspace   #181818 #181818 #5FD7FF
+        urgent_workspace   #181818 #181818 #FFD787
     }
 }
 # class                 border  backgr. text    indicator child_border
