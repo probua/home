@@ -191,7 +191,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 # primary i3bar
 bar {    
-    position top
+    position bottom
     output primary
     status_command i3blocks
     colors {
@@ -228,7 +228,7 @@ client.background       #181818
 
 title_align center
 gaps outer 0
-gaps inner 12
+gaps inner 2
 smart_gaps on
 
 smart_borders on
