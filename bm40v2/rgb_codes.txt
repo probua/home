@@ -1,0 +1,8 @@
+0x5d5e ---- interruptor RGB encendido/apagado
+0x5d5f ---- cambiar modo RGB
+0x5d60 ---- interruptor RGB Hue +
+0x5d61 ---- interruptor RGB Hue-
+0x5d62 ---- saturación de Color +
+0x5d63 ---- saturación del Color-
+0x5d64 ---- brillo +
+0x5d65 ---- brillo-
