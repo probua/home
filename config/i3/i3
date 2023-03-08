@@ -247,7 +247,7 @@ exec . ~/.screenlayout/i3.sh
 #assign [class="firefox"] $ws2
 
 # Wallpaper
-exec feh --bg-fill ~/projects/probua/wallpapers/01.jpg
+exec feh --bg-fill ~/projects/probua/wallpapers/03.jpg
 exec picom -b
 
 # Caps. Lock
