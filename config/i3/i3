@@ -207,21 +207,6 @@ bar {
     }
 }
 
-# secondary i3bar
-bar {    
-    position top
-    output DP-1
-    status_command i3blocks
-    colors {
-        background #181818
-        statusline #ecf0f1
-        separator  #181818
-        focused_workspace  #181818 #181818 #5FD7FF
-        active_workspace   #181818 #181818 #A0A0A0
-        inactive_workspace #181818 #181818 #A0A0A0
-        urgent_workspace   #181818 #181818 #FFD787
-    }
-}
 # class                 border  backgr. text    indicator child_border
 client.focused          #181818 #181818 #5FD7FF #5FD7FF   #FFD787
 client.focused_inactive #181818 #181818 #A0A0A0 #181818   #181818
