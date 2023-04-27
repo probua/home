@@ -54,7 +54,7 @@ bindsym $mod+Control+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SI
 floating_modifier $mod
 
 # lock screen
-bindsym $mod+Escape exec dm-tool lock
+bindsym $mod+Escape exec source ~/projects/probua/home/config/scripts/rofi_lock_menu.sh
 
 # start a terminal
 bindsym $mod+Return exec . ~/projects/probua/home/config/i3/launch_terminal.sh
