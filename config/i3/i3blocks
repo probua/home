@@ -3,6 +3,12 @@ separator=false
 separator_block_width=12
 markup=none
 
+[MEDIA_STATUS]
+command=source ~/projects/probua/home/config/scripts/i3_media_status.sh
+interval=1
+signal=3
+color=#E0E0E0
+
 [PLAY_NOW]
 command=source ~/projects/probua/home/config/scripts/i3_play_now.sh
 interval=1
