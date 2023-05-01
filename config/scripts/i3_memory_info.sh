@@ -1,4 +1,5 @@
-icon=" "
+#icon=" "
+icon=" "
 total=($(free | awk -F "Mem:" '{print $2}' | awk -F " " '{print $1}'))
 used=($(free | awk -F "Mem:" '{print $2}' | awk -F " " '{print $2}'))
 
