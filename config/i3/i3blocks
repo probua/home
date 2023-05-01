@@ -8,13 +8,13 @@ command=source ~/projects/probua/home/config/scripts/i3_media_status.sh
 interval=1
 signal=3
 #color=#E0E0E0
-color=#FFD787
+color=#FFD787FF
 
 [PLAY_NOW]
 command=source ~/projects/probua/home/config/scripts/i3_play_now.sh
 interval=1
 signal=3
-color=#A0A0A0
+color=#ffffffa0
 
 [SOUND_MUTE]
 command=source ~/projects/probua/home/config/scripts/i3_sound_mute.sh
@@ -44,34 +44,34 @@ color=#FFD787
 [BATTERY]
 command=source ~/projects/probua/home/config/scripts/i3_battery_info.sh
 interval=1
-color=#E0E0E0
+color=#ffffffE0
 
 [SOUND_VOLUME]
 command=source ~/projects/probua/home/config/scripts/i3_sound_level.sh
 interval=once
 signal=5
-color=#E0E0E0
+color=#ffffffE0
 
 [MEMORY]
 command=source ~/projects/probua/home/config/scripts/i3_memory_info.sh
 interval=1
-color=#E0E0E0
+color=#ffffffE0
 
 [BRIGHTNESS]
 command=source ~/projects/probua/home/config/scripts/i3_brightness_info.sh
 interval=once
 signal=4
-color=#E0E0E0
+color=#ffffffE0
 
 [DATE]
 command=source ~/projects/probua/home/config/scripts/i3_date.sh
 interval=1
-color=#E0E0E0
+color=#ffffffE0
 
 [TIME]
 command=source ~/projects/probua/home/config/scripts/i3_time.sh
 interval=1
-color=#E0E0E0
+color=#ffffffE0
 
 [EXIT]
 full_text=" "

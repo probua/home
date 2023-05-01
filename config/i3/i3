@@ -231,10 +231,10 @@ bar {
         background #000000aa
         statusline #000000aa
         separator  #000000aa
-        focused_workspace  #000000aa #000000aa #ffd787
-        active_workspace   #000000aa #000000aa #777777
-        inactive_workspace #000000aa #000000aa #777777
-        urgent_workspace   #000000aa #000000aa #ffffff
+        focused_workspace  #000000aa #000000aa #ffd787ff
+        active_workspace   #000000aa #000000aa #ffffff77
+        inactive_workspace #000000aa #000000aa #ffffff77
+        urgent_workspace   #000000aa #000000aa #ffffffff
     }
 	padding 5px 5px 5px 10px
 }
@@ -248,17 +248,17 @@ bar {
         background #000000aa
         statusline #000000aa
         separator  #000000aa
-        focused_workspace  #000000aa #000000aa #ffd787
-        active_workspace   #000000aa #000000aa #777777
-        inactive_workspace #000000aa #000000aa #777777
-        urgent_workspace   #000000aa #000000aa #ffffff
+        focused_workspace  #000000aa #000000aa #ffd787ff
+        active_workspace   #000000aa #000000aa #ffffff77
+        inactive_workspace #000000aa #000000aa #ffffff77
+        urgent_workspace   #000000aa #000000aa #ffffffff
     }
 }
 
-# class                 border    backgr.   text    indicator   child_border
-client.focused          #000000aa #000000aa #ffffff #ffd787     #e0e0e0
-client.focused_inactive #000000aa #000000aa #777777 #000000aa   #000000aa
-client.unfocused        #000000aa #000000aa #777777 #000000aa   #000000aa
+# class                 border    backgr.   text       indicator   child_border
+client.focused          #000000aa #000000aa #ffd787ff  #ffd787ff   #ffffffe0
+client.focused_inactive #000000aa #000000aa #ffffff77  #000000aa   #000000aa
+client.unfocused        #000000aa #000000aa #ffffff77  #000000aa   #000000aa
 client.background       #000000aa
 
 title_align center
