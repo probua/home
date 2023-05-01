@@ -223,18 +223,20 @@ bar {
     position bottom
     output primary
 	tray_output primary
-	tray_padding 5
+	tray_padding 7
 	strip_workspace_numbers yes
     status_command i3blocks
+	i3bar_command i3bar --transparency
     colors {
-        background #181818
-        statusline #ecf0f1
-        separator  #181818
-        focused_workspace  #181818 #181818 #FFD787
-        active_workspace   #181818 #181818 #A0A0A0
-        inactive_workspace #181818 #181818 #A0A0A0
-        urgent_workspace   #181818 #181818 #FFD787
+        background #000000aa
+        statusline #000000aa
+        separator  #000000aa
+        focused_workspace  #000000aa #000000aa #ffd787
+        active_workspace   #000000aa #000000aa #777777
+        inactive_workspace #000000aa #000000aa #777777
+        urgent_workspace   #000000aa #000000aa #ffffff
     }
+	padding 5px 5px 5px 10px
 }
 # secondary i3bar
 bar {
@@ -243,21 +245,21 @@ bar {
 	tray_output none
 	strip_workspace_numbers yes
 	colors {
-        background #181818
-        statusline #ecf0f1
-        separator  #181818
-        focused_workspace  #181818 #181818 #FFD787
-        active_workspace   #181818 #181818 #A0A0A0
-        inactive_workspace #181818 #181818 #A0A0A0
-        urgent_workspace   #181818 #181818 #FFD787
+        background #000000aa
+        statusline #000000aa
+        separator  #000000aa
+        focused_workspace  #000000aa #000000aa #ffd787
+        active_workspace   #000000aa #000000aa #777777
+        inactive_workspace #000000aa #000000aa #777777
+        urgent_workspace   #000000aa #000000aa #ffffff
     }
 }
 
-# class                 border  backgr. text    indicator child_border
-client.focused          #181818 #181818 #FFD787 #FFD787   #E0E0E0
-client.focused_inactive #181818 #181818 #A0A0A0 #181818   #181818
-client.unfocused        #181818 #181818 #A0A0A0 #181818   #181818
-client.background       #181818
+# class                 border    backgr.   text    indicator   child_border
+client.focused          #000000aa #000000aa #ffffff #ffd787     #e0e0e0
+client.focused_inactive #000000aa #000000aa #777777 #000000aa   #000000aa
+client.unfocused        #000000aa #000000aa #777777 #000000aa   #000000aa
+client.background       #000000aa
 
 title_align center
 gaps outer 2
