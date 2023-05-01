@@ -49,15 +49,16 @@ bindsym $mod+Control+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURC
 #Audio control + Arrows
 bindsym $mod+Control+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -SIGRTMIN+5 i3blocks
 bindsym $mod+Control+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -SIGRTMIN+5 i3blocks
-bindsym $mod+Control+space exec playerctl play-pause
-bindsym $mod+Control+Left exec playerctl previous
-bindsym $mod+Control+Right exec playerctl next
+bindsym $mod+Control+space exec playerctl play-pause && pkill -SIGRTMIN+3 i3blocks
+bindsym $mod+Control+Left exec playerctl previous && pkill -SIGRTMIN+3 i3blocks
+bindsym $mod+Control+Right exec playerctl next && pkill -SIGRTMIN+3 i3blocks
+
 
 # Media player controls
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioPause exec playerctl pause-pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec playerctl play-pause && pkill -SIGRTMIN+3 i3blocks
+bindsym XF86AudioPause exec playerctl pause-pause && pkill -SIGRTMIN+3 i3blocks
+bindsym XF86AudioNext exec playerctl next && pkill -SIGRTMIN+3 i3blocks
+bindsym XF86AudioPrev exec playerctl previous && pkill -SIGRTMIN+3 i3blocks
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
