@@ -7,18 +7,20 @@ markup=none
 command=source ~/projects/probua/home/config/scripts/i3_media_status.sh
 interval=1
 signal=3
-color=#E0E0E0
+#color=#E0E0E0
+color=#FFD787
 
 [PLAY_NOW]
 command=source ~/projects/probua/home/config/scripts/i3_play_now.sh
 interval=1
 signal=3
-color=#E0E0E0
+color=#A0A0A0
 
 [SOUND_MUTE]
 command=source ~/projects/probua/home/config/scripts/i3_sound_mute.sh
 interval=once
 signal=6
+#color=#FFD787
 color=#FFD787
 
 [MIC_MUTE]
@@ -74,4 +76,5 @@ color=#E0E0E0
 [EXIT]
 full_text=" "
 command=source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
-color=#5FD7FF
+#color=#5FD7FF
+color=#FFD787
