@@ -13,12 +13,11 @@ configuration {
 	bg: #181818;
 	bg-alt: #181818;
 
-	fg: #ecf0f1;
+	fg: #e0e0e0;
 	fg-alt: #6c6c6c;
 
 	pc: #ffd787;
-	pc-alt: #5FD7FF;
-	pc-alt-old: #00afff; 
+	pc-alt: #e0e0e0;
 
 	background-color: @bg;
 
@@ -45,7 +44,7 @@ element {
 }
 
 element selected {
-	text-color: @fg;
+	text-color: @pc-alt;
 }
 
 element-text {
