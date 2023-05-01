@@ -110,20 +110,21 @@ bindsym Print --release exec xfce4-screenshooter
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1  " >_ "
-set $ws2  "  "
-set $ws3  "  "
-set $ws4  "  "
-set $ws5  "  "
-set $ws6  "  "
-#set $ws7  "  "
-set $ws7  "  "
-#set $ws8  "  "
-set $ws8  "  "
-set $ws9  "  "
-set $ws00 "  "
-set $ws01 "  "
-set $ws02 "  "
+#set $ws1  "1:>_ "
+set $ws1  "1:"
+set $ws2  "2:"
+set $ws3  "3:"
+set $ws4  "4:"
+set $ws5  "5:"
+set $ws6  "6:"
+#set $ws7  "7:"
+set $ws7  "7:"
+#set $ws8  "8:"
+set $ws8  "8:"
+set $ws9  "9:"
+set $ws00 "10:"
+set $ws01 "11:"
+set $ws02 "12:"
 
 # switch to workspace keys
 bindsym $mod+m workspace $ws1
@@ -207,8 +208,27 @@ bindsym $mod+r mode "resize"
 bar {    
     position bottom
     output primary
+	tray_output primary
+	tray_padding 5
+	strip_workspace_numbers yes
     status_command i3blocks
     colors {
+        background #181818
+        statusline #ecf0f1
+        separator  #181818
+        focused_workspace  #181818 #181818 #FFD787
+        active_workspace   #181818 #181818 #A0A0A0
+        inactive_workspace #181818 #181818 #A0A0A0
+        urgent_workspace   #181818 #181818 #FFD787
+    }
+}
+# secondary i3bar
+bar {
+	position bottom
+	output nonprimary
+	tray_output none
+	strip_workspace_numbers yes
+	colors {
         background #181818
         statusline #ecf0f1
         separator  #181818
