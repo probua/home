@@ -17,25 +17,25 @@ color=#ffffff80
 
 [SOUND_MUTE]
 command=source ~/projects/probua/home/config/scripts/i3_sound_mute.sh
-interval=once
+interval=1
 signal=6
 color=#FFD787
 
 [MIC_MUTE]
 command=source ~/projects/probua/home/config/scripts/i3_mic.sh
-interval=once
+interval=1
 signal=7
 color=#FFD787
 
 [CAPS]
 command=source ~/projects/probua/home/config/scripts/i3_caps.sh
-interval=once
+interval=1
 signal=11
 color=#FFD787
 
 [NUM]
 command=source ~/projects/probua/home/config/scripts/i3_num.sh
-interval=once
+interval=1
 signal=10
 color=#FFD787
 
@@ -46,7 +46,7 @@ color=#ffffffcc
 
 [SOUND_VOLUME]
 command=source ~/projects/probua/home/config/scripts/i3_sound_level.sh
-interval=once
+interval=1
 signal=5
 color=#ffffffcc
 
