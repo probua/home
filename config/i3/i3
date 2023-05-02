@@ -228,13 +228,13 @@ bar {
     status_command i3blocks
 	i3bar_command i3bar --transparency
     colors {
-        background #000000aa
-        statusline #000000aa
-        separator  #000000aa
-        focused_workspace  #000000aa #000000aa #ffd787ff
-        active_workspace   #000000aa #000000aa #ffffff77
-        inactive_workspace #000000aa #000000aa #ffffff77
-        urgent_workspace   #000000aa #000000aa #ffffffff
+        background #000000b2
+        statusline #000000b2
+        separator  #000000b2
+        focused_workspace  #000000b2 #000000b2 #ffd787ff
+        active_workspace   #000000b2 #000000b2 #ffffff77
+        inactive_workspace #000000b2 #000000b2 #ffffff77
+        urgent_workspace   #000000b2 #000000b2 #ffffffff
     }
 	padding 4px 5px 4px 10px
 }
@@ -245,22 +245,22 @@ bar {
 	tray_output none
 	strip_workspace_numbers yes
 	colors {
-        background #000000aa
-        statusline #000000aa
-        separator  #000000aa
-        focused_workspace  #000000aa #000000aa #ffd787ff
-        active_workspace   #000000aa #000000aa #ffffff77
-        inactive_workspace #000000aa #000000aa #ffffff77
-        urgent_workspace   #000000aa #000000aa #ffffffff
+        background #000000b2
+        statusline #000000b2
+        separator  #000000b2
+        focused_workspace  #000000b2 #000000b2 #ffd787ff
+        active_workspace   #000000b2 #000000b2 #ffffff77
+        inactive_workspace #000000b2 #000000b2 #ffffff77
+        urgent_workspace   #000000b2 #000000b2 #ffffffff
     }
 	padding 4px 5px 4px 10px
 }
 
 # class                 border    backgr.   text       indicator   child_border
-client.focused          #000000aa #000000aa #ffd787ff  #ffd787ff   #ffffffe0
-client.focused_inactive #000000aa #000000aa #ffffff77  #000000aa   #000000aa
-client.unfocused        #000000aa #000000aa #ffffff77  #000000aa   #000000aa
-client.background       #000000aa
+client.focused          #000000b2 #000000b2 #ffd787ff  #ffd787ff   #ffffffe0
+client.focused_inactive #000000b2 #000000b2 #ffffff77  #000000b2   #000000b2
+client.unfocused        #000000b2 #000000b2 #ffffff77  #000000b2   #000000b2
+client.background       #000000b2
 
 title_align center
 gaps outer 2
