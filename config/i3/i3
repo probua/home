@@ -243,7 +243,9 @@ bar {
 	position bottom
 	output nonprimary
 	tray_output none
-	strip_workspace_numbers yes
+    strip_workspace_numbers yes
+    status_command i3blocks
+	i3bar_command i3bar --transparency
 	colors {
         background #000000b2
         statusline #000000b2
