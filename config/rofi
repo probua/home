@@ -10,11 +10,8 @@ configuration {
 @theme "/dev/null"
 
 * {
-	bg: #000000aa;
-	bg-alt: #000000bb;
-
-	fg: #ffffff;
-	fg-alt: #ffffff44;
+	bg: #000000b2;
+	fg: #ffffff4d;
 
 	pc: #ffd787;
 	pc-alt: #ffffff;
@@ -34,14 +31,14 @@ window {
 }
 
 mainbox {
-	background-color: @bg-alt;
+	background-color: @bg;
 	children: [inputbar, listview];
 	padding: 10;
 }
 
 element {
 	padding: 2;
-	text-color: @fg-alt;
+	text-color: @fg;
 }
 
 element selected {

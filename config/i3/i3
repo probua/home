@@ -232,8 +232,8 @@ bar {
         statusline #000000b2
         separator  #000000b2
         focused_workspace  #000000b2 #000000b2 #ffd787ff
-        active_workspace   #000000b2 #000000b2 #ffffff77
-        inactive_workspace #000000b2 #000000b2 #ffffff77
+        active_workspace   #000000b2 #000000b2 #ffffff80
+        inactive_workspace #000000b2 #000000b2 #ffffff80
         urgent_workspace   #000000b2 #000000b2 #ffffffff
     }
 	padding 4px 5px 4px 10px
@@ -249,17 +249,17 @@ bar {
         statusline #000000b2
         separator  #000000b2
         focused_workspace  #000000b2 #000000b2 #ffd787ff
-        active_workspace   #000000b2 #000000b2 #ffffff77
-        inactive_workspace #000000b2 #000000b2 #ffffff77
+        active_workspace   #000000b2 #000000b2 #ffffff80
+        inactive_workspace #000000b2 #000000b2 #ffffff80
         urgent_workspace   #000000b2 #000000b2 #ffffffff
     }
 	padding 4px 5px 4px 10px
 }
 
 # class                 border    backgr.   text       indicator   child_border
-client.focused          #000000b2 #000000b2 #ffd787ff  #ffd787ff   #ffffffe0
-client.focused_inactive #000000b2 #000000b2 #ffffff77  #000000b2   #000000b2
-client.unfocused        #000000b2 #000000b2 #ffffff77  #000000b2   #000000b2
+client.focused          #000000b2 #000000b2 #ffd787ff  #ffd787ff   #ffffffcc
+client.focused_inactive #000000b2 #000000b2 #ffffff80  #000000b2   #000000b2
+client.unfocused        #000000b2 #000000b2 #ffffff80  #000000b2   #000000b2
 client.background       #000000b2
 
 title_align center
