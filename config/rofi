@@ -10,16 +10,16 @@ configuration {
 @theme "/dev/null"
 
 * {
-	bg: #181818;
-	bg-alt: #181818;
+	bg: #000000aa;
+	bg-alt: #000000bb;
 
-	fg: #e0e0e0;
-	fg-alt: #6c6c6c;
+	fg: #ffffff;
+	fg-alt: #ffffff44;
 
 	pc: #ffd787;
-	pc-alt: #e0e0e0;
+	pc-alt: #ffffff;
 
-	background-color: @bg;
+	background-color: #00000000;
 
 	border: 0;
 	margin: 0;
@@ -30,10 +30,11 @@ configuration {
 window {
 	width: 45%;
 	padding: 8;
+	background-color: @bg;
 }
 
 mainbox {
-	background-color: @bg;
+	background-color: @bg-alt;
 	children: [inputbar, listview];
 	padding: 10;
 }
@@ -58,7 +59,6 @@ element-icon {
 }
 
 entry {
-	background-color: @bg-alt;
 	padding: 8;
 	text-color: @pc;
 }
@@ -69,14 +69,12 @@ inputbar {
 }
 
 listview {
-	background-color: @bg;
 	columns: 1;
 	lines: 8;
 	padding: 0 0 8 8;
 }
 
 prompt {
-	background-color: @bg-alt;
 	enabled: true;
 	padding: 8 0 0 8;
 	text-color: @pc-alt;
