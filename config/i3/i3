@@ -236,7 +236,7 @@ bar {
         inactive_workspace #000000aa #000000aa #ffffff77
         urgent_workspace   #000000aa #000000aa #ffffffff
     }
-	padding 5px 5px 5px 10px
+	padding 4px 5px 4px 10px
 }
 # secondary i3bar
 bar {
@@ -253,6 +253,7 @@ bar {
         inactive_workspace #000000aa #000000aa #ffffff77
         urgent_workspace   #000000aa #000000aa #ffffffff
     }
+	padding 4px 5px 4px 10px
 }
 
 # class                 border    backgr.   text       indicator   child_border
