@@ -74,5 +74,4 @@ color=#ffffffcc
 [EXIT]
 full_text=" "
 command=source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
-#color=#5FD7FF
 color=#FFD787

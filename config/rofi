@@ -10,13 +10,12 @@ configuration {
 @theme "/dev/null"
 
 * {
-	bg: #000000b2;
-	fg: #ffffff4d;
+	bg: #000000;
+	fg0: #ffd787;
+	fg1: #ffffff;
+	fg2: #ffffff4d;
 
-	pc: #ffd787;
-	pc-alt: #ffffff;
-
-	background-color: #00000000;
+	background-color: @bg;
 
 	border: 0;
 	margin: 0;
@@ -38,11 +37,11 @@ mainbox {
 
 element {
 	padding: 2;
-	text-color: @fg;
+	text-color: @fg2;
 }
 
 element selected {
-	text-color: @pc-alt;
+	text-color: @fg1;
 }
 
 element-text {
@@ -57,7 +56,7 @@ element-icon {
 
 entry {
 	padding: 8;
-	text-color: @pc;
+	text-color: @fg0;
 }
 
 inputbar {
@@ -74,5 +73,5 @@ listview {
 prompt {
 	enabled: true;
 	padding: 8 0 0 8;
-	text-color: @pc-alt;
+	text-color: @fg1;
 }

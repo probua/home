@@ -218,6 +218,15 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# colors
+set $bg  #000000
+set $fg0 #ffd787
+set $fg1 #ffffff
+set $fg2 #cccccc
+set $fg3 #808080
+set $fg4 #4d4d4d
+
 # primary i3bar
 bar {    
     position bottom
@@ -226,15 +235,15 @@ bar {
 	tray_padding 7
 	strip_workspace_numbers yes
     status_command i3blocks
-	i3bar_command i3bar --transparency
+	# i3bar_command i3bar --transparency
     colors {
-        background #000000b2
-        statusline #000000b2
-        separator  #000000b2
-        focused_workspace  #000000b2 #000000b2 #ffd787ff
-        active_workspace   #000000b2 #000000b2 #ffffff80
-        inactive_workspace #000000b2 #000000b2 #ffffff80
-        urgent_workspace   #000000b2 #000000b2 #ffffffff
+        background $bg
+        statusline $bg
+        separator  $bg
+        focused_workspace  $bg $bg $fg0
+        active_workspace   $bg $bg $fg3
+        inactive_workspace $bg $bg $fg3
+        urgent_workspace   $bg $bg $fg1
     }
 	padding 4px 5px 4px 10px
 }
@@ -245,24 +254,25 @@ bar {
 	tray_output none
     strip_workspace_numbers yes
     status_command i3blocks
-	i3bar_command i3bar --transparency
+	# i3bar_command i3bar --transparency
 	colors {
-        background #000000b2
-        statusline #000000b2
-        separator  #000000b2
-        focused_workspace  #000000b2 #000000b2 #ffd787ff
-        active_workspace   #000000b2 #000000b2 #ffffff80
-        inactive_workspace #000000b2 #000000b2 #ffffff80
-        urgent_workspace   #000000b2 #000000b2 #ffffffff
+        background $bg
+        statusline $bg
+        separator  $bg
+        focused_workspace  $bg $bg $fg0
+        active_workspace   $bg $bg $fg3
+        inactive_workspace $bg $bg $fg3
+        urgent_workspace   $bg $bg $fg1
     }
 	padding 4px 5px 4px 10px
 }
 
 # class                 border    backgr.   text       indicator   child_border
-client.focused          #000000b2 #000000b2 #ffd787ff  #ffd787ff   #ffffffcc
-client.focused_inactive #000000b2 #000000b2 #ffffff80  #000000b2   #000000b2
-client.unfocused        #000000b2 #000000b2 #ffffff80  #000000b2   #000000b2
-client.background       #000000b2
+client.focused          $bg       $bg       $fg1       $fg0        $fg2
+client.focused_inactive $bg       $bg       $fg3       $bg         $bg
+client.unfocused        $bg       $bg       $fg3       $bg         $bg
+client.urgent           $bg       $bg       $fg0       $bg         $bg
+client.background       $bg
 
 title_align center
 gaps outer 2
