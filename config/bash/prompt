@@ -46,5 +46,5 @@ function markup_git_branch {
 
 # ver 1.2
 PS1='\[\e[0;38;5;222m\]\w
-\[\e[0;38;5;246m\]\t \[\e[0m\]$(markup_git_branch $(git_branch))
+\[\e[0m\]$(markup_git_branch $(git_branch))\[\e[0;38;5;246m\]\t
 \[\e[0;1m\]> \[\e[0m\]'
