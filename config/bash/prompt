@@ -7,15 +7,16 @@ function markup_git_branch {
 	if [[ "$1" == "" ]]; then
 		echo ""
 	else
+		separator=" "
 		gs=$(git status -s)
 		if [[ "$gs" == "" ]]; then
 			
 			grl="$(git rev-list $1 --not --ignore-missing origin/$1 --count)"
 
 			if [[ $grl > 0 ]]; then
-				echo -e '\033[0m''git:''\033[0;1;38;5;157m'"$1"'\033[0m'" "
+				echo -e '\033[0m''git:''\033[0;1;38;5;157m'"$1"'\033[0m'"$separator"
 			else
-				echo -e '\033[0;38;5;246m''git:''\e[0;1m'"$1"" "
+				echo -e '\033[0;38;5;246m''git:''\e[0;1m'"$1""$separator"
 			fi
 		else
 			gsc="$(gs | cut -c 2)"
@@ -27,9 +28,9 @@ function markup_git_branch {
 			done
 
 			if [[ $gsf == 1 ]]; then
-				echo -e '\033[0m''git:''\033[0;1;38;5;210m'"$1"'\033[0m'" "
+				echo -e '\033[0m''git:''\033[0;1;38;5;210m'"$1"'\033[0m'"$separator"
 			else
-				echo -e '\033[0m''git:''\033[0;1;38;5;222m'"$1"'\033[0m'" "
+				echo -e '\033[0m''git:''\033[0;1;38;5;222m'"$1"'\033[0m'"$separator"
 			fi
 
 		fi
@@ -45,5 +46,5 @@ function markup_git_branch {
 
 # ver 1.2
 PS1='\[\e[0;38;5;222m\]\w
-\[\e[0;38;5;246m\]\t
-\[\e[0m\]$(markup_git_branch $(git_branch))\[\e[0;1m\]> \[\e[0m\]'
+\[\e[0;38;5;246m\]\t \[\e[0m\]$(markup_git_branch $(git_branch))
+\[\e[0;1m\]> \[\e[0m\]'
