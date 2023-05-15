@@ -7,4 +7,4 @@ echo '# prompt
 . ~/projects/probua/home/config/bash/alias
 ' > ~/.bashrc
 
-cat ~/projects/probua/home/config/bash/optional >> ~/.bashrc
+cat ~/projects/probua/home/config/bash/run >> ~/.bashrc
