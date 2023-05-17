@@ -57,9 +57,11 @@ nmap <s-right> 1<c-w>>
 nmap <s-up> 1<c-w>+
 nmap <s-down> 1<c-w>-
 
-" Faster scrolling
+" Faster scrolling / side moving
 nmap <c-up> 10k
 nmap <c-down> 10j
+nmap <c-left> gE
+nmap <c-right> W
 
 cnoreabbrev nt NERDTreeToggle
 command! NT :NERDTreeToggle
