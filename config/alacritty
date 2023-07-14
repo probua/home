@@ -10,7 +10,7 @@ window:
   startup_mode: Maximized
 
 font:
-  size: 10
+  size: 8.5
   normal:
     family: Hack
     style: Regular
