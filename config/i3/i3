@@ -53,7 +53,6 @@ bindsym $mod+Control+space exec playerctl play-pause && pkill -SIGRTMIN+3 i3bloc
 bindsym $mod+Control+Left exec playerctl previous && pkill -SIGRTMIN+3 i3blocks
 bindsym $mod+Control+Right exec playerctl next && pkill -SIGRTMIN+3 i3blocks
 
-
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause && pkill -SIGRTMIN+3 i3blocks
 bindsym XF86AudioPause exec playerctl pause-pause && pkill -SIGRTMIN+3 i3blocks
@@ -63,18 +62,20 @@ bindsym XF86AudioPrev exec playerctl previous && pkill -SIGRTMIN+3 i3blocks
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# lock screen
+# Lock screen
 bindsym $mod+Escape exec source ~/.config/probua/scripts/rofi-lock-menu.sh
 
-# start a terminal
+# Start a terminal
 bindsym $mod+Return exec source ~/.config/probua/scripts/i3-launch-terminal.sh
 
-# kill focused window
+# Kill focused window
 bindsym $mod+q kill
 
-# start rofi
+# Start rofi
 bindsym $mod+d exec rofi -show drun
-bindsym $mod+a exec rofi -show drun
+
+# Start dmenu
+bindsym $mod+a exec source ~/.config/probua/scripts/dmenu-run.sh
 
 # change focus
 bindsym $mod+Left focus left
