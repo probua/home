@@ -1,4 +1,4 @@
 #!/bin/bash
 
 mkdir -p ~/.config/rofi
-ln -s ~/projects/probua/home/config/rofi ~/.config/rofi/config.rasi
+ln -s ~/workspace/probua/home/config/rofi ~/.config/rofi/config.rasi

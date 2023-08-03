@@ -64,10 +64,10 @@ bindsym XF86AudioPrev exec playerctl previous && pkill -SIGRTMIN+3 i3blocks
 floating_modifier $mod
 
 # lock screen
-bindsym $mod+Escape exec source ~/projects/probua/home/config/scripts/rofi_lock_menu.sh
+bindsym $mod+Escape exec source ~/workspace/probua/home/config/scripts/rofi_lock_menu.sh
 
 # start a terminal
-bindsym $mod+Return exec . ~/projects/probua/home/config/i3/launch_terminal.sh
+bindsym $mod+Return exec . ~/workspace/probua/home/config/i3/launch_terminal.sh
 
 # kill focused window
 bindsym $mod+q kill
@@ -203,10 +203,10 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit menu i3
-bindsym $mod+Shift+e exec source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
+bindsym $mod+Shift+e exec source ~/workspace/probua/home/config/scripts/rofi_exit_menu.sh
 
 # wallpaper
-bindsym $mod+Shift+w exec source ~/projects/probua/home/config/scripts/rofi_wallpaper_picker.sh
+bindsym $mod+Shift+w exec source ~/workspace/probua/home/config/scripts/rofi_wallpaper_picker.sh
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

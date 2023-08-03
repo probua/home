@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ln -s ~/projects/probua/home/config/alacritty ~/.alacritty.yml
+ln -s ~/workspace/probua/home/config/alacritty ~/.alacritty.yml
