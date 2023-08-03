@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo '# prompt
-. ~/projects/probua/home/config/bash/prompt
+. ~/workspace/probua/home/config/bash/prompt
 
 # alias
-. ~/projects/probua/home/config/bash/alias
+. ~/workspace/probua/home/config/bash/alias
 ' > ~/.bashrc
 
 cat ~/projects/probua/home/config/bash/run >> ~/.bashrc
