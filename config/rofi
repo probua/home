@@ -10,10 +10,15 @@ configuration {
 @theme "/dev/null"
 
 * {
-	bg: #000000;
+	bg: #00000000;
 	fg0: #ffd787;
 	fg1: #ffffff;
 	fg2: #ffffff4d;
+	red: #FF0000;
+	green: #00FF00;
+	blue: #0000FF;
+	b50: #00000080;
+	b100: #000000;
 
 	background-color: @bg;
 
@@ -26,7 +31,7 @@ configuration {
 window {
 	width: 45%;
 	padding: 8;
-	background-color: @bg;
+	background-color: @b50;
 }
 
 mainbox {
@@ -60,14 +65,16 @@ entry {
 }
 
 inputbar {
+	background-color: @b100;
 	children: [prompt, entry];
-	padding: 0 0 8 0;
+	padding: 10 0 0 15;
 }
 
 listview {
+	background-color: @b100;
 	columns: 1;
 	lines: 8;
-	padding: 0 0 8 8;
+	padding: 10 20 15 20;
 }
 
 prompt {
