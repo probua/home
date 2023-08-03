@@ -1,2 +1,2 @@
 #!/bin/bash
-source ~/workspace/probua/home/config/scripts/rofi_single_confirmation.sh " Confirm lock screen:" "dm-tool lock"
+source ~/.config/probua/scripts/rofi-single-confirmation.sh " Confirm lock screen:" "dm-tool lock"
