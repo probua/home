@@ -4,74 +4,74 @@ separator_block_width=12
 markup=none
 
 [MEDIA_STATUS]
-command=source ~/projects/probua/home/config/scripts/i3_media_status.sh
+command=source ~/.config/probua/scripts/i3-media-status.sh
 interval=1
 signal=3
 color=#FFD787
 
 [PLAY_NOW]
-command=source ~/projects/probua/home/config/scripts/i3_play_now.sh
+command=source ~/.config/probua/scripts/i3-play-now.sh
 interval=1
 signal=3
 color=#ffffff80
 
 [SOUND_MUTE]
-command=source ~/projects/probua/home/config/scripts/i3_sound_mute.sh
+command=source ~/.config/probua/scripts/i3-sound-mute.sh
 interval=1
 signal=6
 color=#FFD787
 
 [MIC_MUTE]
-command=source ~/projects/probua/home/config/scripts/i3_mic.sh
+command=source ~/.config/probua/scripts/i3-mic.sh
 interval=1
 signal=7
 color=#FFD787
 
 [CAPS]
-command=source ~/projects/probua/home/config/scripts/i3_caps.sh
+command=source ~/.config/probua/scripts/i3-caps.sh
 interval=1
 signal=11
 color=#FFD787
 
 [NUM]
-command=source ~/projects/probua/home/config/scripts/i3_num.sh
+command=source ~/.config/probua/scripts/i3-num.sh
 interval=1
 signal=10
 color=#FFD787
 
 [BATTERY]
-command=source ~/projects/probua/home/config/scripts/i3_battery_info.sh
+command=source ~/.config/probua/scripts/i3-battery-info.sh
 interval=1
 color=#ffffffcc
 
 [SOUND_VOLUME]
-command=source ~/projects/probua/home/config/scripts/i3_sound_level.sh
+command=source ~/.config/probua/scripts/i3-sound-level.sh
 interval=1
 signal=5
 color=#ffffffcc
 
 [MEMORY]
-command=source ~/projects/probua/home/config/scripts/i3_memory_info.sh
+command=source ~/.config/probua/scripts/i3-memory-info.sh
 interval=1
 color=#ffffffcc
 
 [BRIGHTNESS]
-command=source ~/projects/probua/home/config/scripts/i3_brightness_info.sh
+command=source ~/.config/probua/scripts/i3-brightness-info.sh
 interval=once
 signal=4
 color=#ffffffcc
 
 [DATE]
-command=source ~/projects/probua/home/config/scripts/i3_date.sh
+command=source ~/.config/probua/scripts/i3-date.sh
 interval=1
 color=#ffffffcc
 
 [TIME]
-command=source ~/projects/probua/home/config/scripts/i3_time.sh
+command=source ~/.config/probua/scripts/i3-time.sh
 interval=1
 color=#ffffffcc
 
 [EXIT]
 full_text=" "
-command=source ~/projects/probua/home/config/scripts/rofi_exit_menu.sh
+command=source ~/.config/probua/scripts/rofi-exit-menu.sh
 color=#FFD787

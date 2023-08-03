@@ -1,3 +1,4 @@
 #!/bin/bash
 
-ln -s ~/workspace/probua/home/config/alacritty ~/.alacritty.yml
+cat config/alacritty > ~/.alacritty.yml
+echo "alacritty" > ~/.config/i3/terminal
