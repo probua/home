@@ -1,10 +1,10 @@
 configuration {
-	 display-drun: "Run:";
-	 display-window: "Windows";
-	 drun-display-format: "{icon} {name}";
-	 font: "Awesome 12";
-	 modi: "window,run,drun";
-	 show-icons: true;
+	display-drun: "Run";
+	display-window: "Windows";
+	drun-display-format: "{icon}  {name}";
+	font: "Awesome 12";
+	modi: "window,run,drun";
+	show-icons: true;
 }
 
 @theme "/dev/null"
@@ -25,7 +25,7 @@ configuration {
 }
 
 window {
-	width: 45%;
+	width: 40%;
 	padding: 0;
 	background-color: @bg1;
 	border-radius: 20px;
