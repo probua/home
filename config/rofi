@@ -10,17 +10,13 @@ configuration {
 @theme "/dev/null"
 
 * {
-	bg: #00000000;
+	bg0: #00000000;
+	bg1: #000000ff;
 	fg0: #ffd787;
 	fg1: #ffffff;
-	fg2: #ffffff4d;
-	red: #FF0000;
-	green: #00FF00;
-	blue: #0000FF;
-	b50: #00000080;
-	b100: #000000;
+	fg2: #888888;
 
-	background-color: @bg;
+	background-color: @bg0;
 
 	border: 0;
 	margin: 0;
@@ -30,12 +26,12 @@ configuration {
 
 window {
 	width: 45%;
-	padding: 8;
-	background-color: @b50;
+	padding: 0;
+	background-color: @bg1;
+	border-radius: 20px;
 }
 
 mainbox {
-	background-color: @bg;
 	children: [inputbar, listview];
 	padding: 10;
 }
@@ -50,7 +46,6 @@ element selected {
 }
 
 element-text {
-	background-color: inherit;
 	text-color: inherit;
 	vertical-align: 0.5;
 }
@@ -65,13 +60,11 @@ entry {
 }
 
 inputbar {
-	background-color: @b100;
 	children: [prompt, entry];
 	padding: 10 0 0 15;
 }
 
 listview {
-	background-color: @b100;
 	columns: 1;
 	lines: 8;
 	padding: 10 20 15 20;
