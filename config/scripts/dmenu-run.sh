@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-dmenu_run -i -p "Run" -fn "Hack-12" -nb "#000000" -nf "#ffd787" -sb "#ffd787" -sf "#000000"
+dmenu_run -i -p "Run" -fn "monospace-12" -nb "#000000" -nf "#ffffff" -sb "#ffffff" -sf "#000000"
