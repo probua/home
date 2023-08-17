@@ -233,14 +233,14 @@ set $fg3 #808080
 set $fg4 #4d4d4d
 
 # primary i3bar
-bar {    
+bar {
     position bottom
     output primary
-	tray_output primary
-	tray_padding 7
-	strip_workspace_numbers yes
+    tray_output primary
+    tray_padding 9
+    strip_workspace_numbers yes
     status_command i3blocks
-	# i3bar_command i3bar --transparency
+    # i3bar_command i3bar --transparency
     colors {
         background $bg
         statusline $bg
@@ -250,17 +250,18 @@ bar {
         inactive_workspace $bg $bg $fg3
         urgent_workspace   $bg $bg $fg1
     }
-	padding 4px 5px 4px 10px
+    #padding 4px 5px 4px 10px
+    padding 6px 2px 6px 10px
 }
 # secondary i3bar
 bar {
-	position bottom
-	output nonprimary
-	tray_output none
+    position bottom
+    output nonprimary
+    tray_output none
     strip_workspace_numbers yes
     status_command i3blocks
-	# i3bar_command i3bar --transparency
-	colors {
+    # i3bar_command i3bar --transparency
+    colors {
         background $bg
         statusline $bg
         separator  $bg
@@ -269,7 +270,7 @@ bar {
         inactive_workspace $bg $bg $fg3
         urgent_workspace   $bg $bg $fg1
     }
-	padding 4px 5px 4px 10px
+    padding 4px 5px 4px 10px
 }
 
 # class                 border    backgr.   text       indicator   child_border
