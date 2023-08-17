@@ -305,3 +305,6 @@ bindsym Caps_Lock --release exec pkill -SIGRTMIN+11 i3blocks
 # Num. Lock
 bindsym Num_Lock --release exec pkill -SIGRTMIN+10 i3blocks
 
+# Launch Terminal
+exec source ~/.config/probua/scripts/i3-launch-terminal.sh
+
