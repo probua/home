@@ -3,29 +3,29 @@ separator=false
 separator_block_width=12
 markup=none
 
-[MEDIA_STATUS]
-command=source ~/.config/probua/scripts/i3-media-status.sh
-interval=1
-signal=3
-color=#FFD787
+#[MEDIA_STATUS]
+#command=source ~/.config/probua/scripts/i3-media-status.sh
+#interval=1
+#signal=3
+#color=#FFD787
 
-[PLAY_NOW]
-command=source ~/.config/probua/scripts/i3-play-now.sh
-interval=1
-signal=3
-color=#ffffff80
+#[PLAY_NOW]
+#command=source ~/.config/probua/scripts/i3-play-now.sh
+#interval=1
+#signal=3
+#color=#a0a0a0
 
 [SOUND_MUTE]
 command=source ~/.config/probua/scripts/i3-sound-mute.sh
 interval=1
 signal=6
-color=#FFD787
+color=#FF8888
 
 [MIC_MUTE]
 command=source ~/.config/probua/scripts/i3-mic.sh
 interval=1
 signal=7
-color=#FFD787
+color=#FF8888
 
 [CAPS]
 command=source ~/.config/probua/scripts/i3-caps.sh
@@ -39,37 +39,37 @@ interval=1
 signal=10
 color=#FFD787
 
+[MEMORY]
+command=source ~/.config/probua/scripts/i3-memory-info.sh
+interval=1
+color=#c0c0c0
+
 [BATTERY]
 command=source ~/.config/probua/scripts/i3-battery-info.sh
 interval=1
-color=#ffffffcc
+color=#c0c0c0
 
 [SOUND_VOLUME]
 command=source ~/.config/probua/scripts/i3-sound-level.sh
 interval=1
 signal=5
-color=#ffffffcc
-
-[MEMORY]
-command=source ~/.config/probua/scripts/i3-memory-info.sh
-interval=1
-color=#ffffffcc
+color=#c0c0c0
 
 [BRIGHTNESS]
 command=source ~/.config/probua/scripts/i3-brightness-info.sh
 interval=once
 signal=4
-color=#ffffffcc
+color=#c0c0c0
 
 [DATE]
 command=source ~/.config/probua/scripts/i3-date.sh
 interval=1
-color=#ffffffcc
+color=#c0c0c0
 
 [TIME]
 command=source ~/.config/probua/scripts/i3-time.sh
 interval=1
-color=#ffffffcc
+color=#c0c0c0
 
 [EXIT]
 full_text=""
