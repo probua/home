@@ -106,8 +106,8 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+space floating toggle
 
-# print screen
-bindsym Print --release exec xfce4-screenshooter
+# print screens
+bindsym Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
