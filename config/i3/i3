@@ -106,7 +106,7 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+space floating toggle
 
-# print screens
+# print screen
 bindsym Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
 
 # Define names for default workspaces for which we configure key bindings later on.
