@@ -63,10 +63,10 @@ bindsym XF86AudioPrev exec playerctl previous && pkill -SIGRTMIN+3 i3blocks
 floating_modifier $mod
 
 # Lock screen
-bindsym $mod+Escape exec . ~/.config/probua/scripts/rofi-lock-menu.sh
+bindsym $mod+Escape exec bash ~/.config/probua/scripts/rofi-lock-menu.sh
 
 # Start a terminal
-bindsym $mod+Return exec . ~/.config/probua/scripts/i3-launch-terminal.sh
+bindsym $mod+Return exec bash ~/.config/probua/scripts/i3-launch-terminal.sh
 
 # Kill focused window
 bindsym $mod+q kill
@@ -75,7 +75,7 @@ bindsym $mod+q kill
 bindsym $mod+d exec rofi -show drun
 
 # Start dmenu
-bindsym $mod+a exec . ~/.config/probua/scripts/dmenu-run.sh
+bindsym $mod+a exec bash ~/.config/probua/scripts/dmenu-run.sh
 
 # change focus
 bindsym $mod+Left focus left
@@ -204,10 +204,10 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit menu i3
-bindsym $mod+Shift+e exec . ~/.config/probua/scripts/rofi-exit-menu.sh
+bindsym $mod+Shift+e exec bash ~/.config/probua/scripts/rofi-exit-menu.sh
 
 # wallpaper
-bindsym $mod+Shift+w exec . ~/.config/probua/scripts/rofi-wallpaper-picker.sh
+bindsym $mod+Shift+w exec bash ~/.config/probua/scripts/rofi-wallpaper-picker.sh
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -290,17 +290,17 @@ smart_borders no_gaps
 for_window [class="^.*"] border pixel 2
 
 # screen layout (monitor)
-exec . ~/.screenlayout/i3.sh
+exec bash ~/.screenlayout/i3.sh
 
 # Applications
 #assign [class="firefox"] $ws2
 
 # Wallpaper
-exec . ~/.fehbg
+exec bash ~/.fehbg
 exec picom -b
 
 # Launch Terminal
-exec . ~/.config/probua/scripts/i3-launch-terminal.sh
+exec bash ~/.config/probua/scripts/i3-launch-terminal.sh
 
 # Caps. Lock
 bindsym Caps_Lock --release exec pkill -SIGRTMIN+11 i3blocks

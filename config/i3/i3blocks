@@ -4,74 +4,74 @@ separator_block_width=12
 markup=none
 
 #[MEDIA_STATUS]
-#command=. ~/.config/probua/scripts/i3-media-status.sh
+#command=bash ~/.config/probua/scripts/i3-media-status.sh
 #interval=1
 #signal=3
 #color=#FFD787
 
 #[PLAY_NOW]
-#command=. ~/.config/probua/scripts/i3-play-now.sh
+#command=bash ~/.config/probua/scripts/i3-play-now.sh
 #interval=1
 #signal=3
 #color=#a0a0a0
 
 [SOUND_MUTE]
-command=. ~/.config/probua/scripts/i3-sound-mute.sh
+command=bash ~/.config/probua/scripts/i3-sound-mute.sh
 interval=1
 signal=6
 color=#FF8888
 
 [MIC_MUTE]
-command=. ~/.config/probua/scripts/i3-mic.sh
+command=bash ~/.config/probua/scripts/i3-mic.sh
 interval=1
 signal=7
 color=#FF8888
 
 [CAPS]
-command=. ~/.config/probua/scripts/i3-caps.sh
+command=bash ~/.config/probua/scripts/i3-caps.sh
 interval=1
 signal=11
 color=#FFD787
 
 [NUM]
-command=. ~/.config/probua/scripts/i3-num.sh
+command=bash ~/.config/probua/scripts/i3-num.sh
 interval=1
 signal=10
 color=#FFD787
 
 [MEMORY]
-command=. ~/.config/probua/scripts/i3-memory-info.sh
+command=bash ~/.config/probua/scripts/i3-memory-info.sh
 interval=1
 color=#c0c0c0
 
 [BATTERY]
-command=. ~/.config/probua/scripts/i3-battery-info.sh
+command=bash ~/.config/probua/scripts/i3-battery-info.sh
 interval=1
 color=#c0c0c0
 
 [SOUND_VOLUME]
-command=. ~/.config/probua/scripts/i3-sound-level.sh
+command=bash ~/.config/probua/scripts/i3-sound-level.sh
 interval=1
 signal=5
 color=#c0c0c0
 
 [BRIGHTNESS]
-command=. ~/.config/probua/scripts/i3-brightness-info.sh
+command=bash ~/.config/probua/scripts/i3-brightness-info.sh
 interval=once
 signal=4
 color=#c0c0c0
 
 [DATE]
-command=. ~/.config/probua/scripts/i3-date.sh
+command=bash ~/.config/probua/scripts/i3-date.sh
 interval=1
 color=#c0c0c0
 
 [TIME]
-command=. ~/.config/probua/scripts/i3-time.sh
+command=bash ~/.config/probua/scripts/i3-time.sh
 interval=1
 color=#c0c0c0
 
 [EXIT]
 full_text=""
-command=. ~/.config/probua/scripts/rofi-exit-menu.sh
+command=bash ~/.config/probua/scripts/rofi-exit-menu.sh
 color=#FFD787
