@@ -3,7 +3,12 @@
 VOLUME_0=""
 VOLUME_LOW=""
 VOLUME_HIGH=""
-SOUND_LEVEL=$(amixer -M get Master | awk -F"[][]" '/%/ { print $2 }' | awk -F"%" 'BEGIN{tot=0; i=0} {i++; tot+=$1} END{printf("%s\n", tot/i) }')
+
+DEFAULT_SINK=$(pactl get-default-sink)
+SOUND_LEVEL=$(pactl get-sink-volume $DEFAULT_SINK | sed 's/ //g' | awk -F"/" '{ print $2 }' | awk -F"%" '{ print $1 }' )
+
+#LEFT_SOUND_LEVEL=$(pactl get-sink-volume $DEFAULT_SINK | sed 's/ //g' | awk -F"/" '{ print $2 }' | awk -F"%" '{ print $1 }' )
+#RIGHT_SOUND_LEVEL=$(pactl get-sink-volume $DEFAULT_SINK | sed 's/ //g' | awk -F"/" '{ print $4 }' | awk -F"%" '{ print $1 }' )
 
 ICON="$VOLUME_0"
 if [ "$SOUND_LEVEL" -lt 5 ]; then
@@ -14,4 +19,7 @@ else
 	ICON="$VOLUME_HIGH"
 fi
 
-echo "$ICON" "$SOUND_LEVEL" | awk '{ printf("%s %s\n", $1, $2) }'
+#echo "$LEFT_SOUND_LEVEL"
+#echo "$RIGHT_SOUND_LEVEL"
+
+echo "$ICON" "$SOUND_LEVEL" | awk '{ printf("%s %s%\n", $1, $2) }'
