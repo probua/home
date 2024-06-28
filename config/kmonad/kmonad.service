@@ -1,0 +1,11 @@
+[Unit]
+Description=KMonad service
+
+[Service]
+Restart=always
+RestartSec=3
+ExecStart=/usr/bin/kmonad /home/probua/.config/kmonad/ziyoulang-k68.kbd
+Nice=-20
+
+[Install]
+WantedBy=default.target

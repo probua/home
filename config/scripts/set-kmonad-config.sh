@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cp -r config/kmonad ~/.config
+cp -r config/kmonad/kbd ~/.config
