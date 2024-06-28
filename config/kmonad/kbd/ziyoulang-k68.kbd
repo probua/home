@@ -49,6 +49,7 @@
   shm (around lsft ])
   sho (around lsft [)
   she (around lsft =)
+  shd (around lsft -)
   ;; ctrl + alt
   cal (around lalt lctl)
   ;; hotkey
@@ -91,7 +92,7 @@
 )
 
 (deflayer symbols
-  @rmi @ron @rtw @rth @rfo @sh5 @ras _    _    _    _    @sh8 @sh9 del  pause
+  @rmi @ron @rtw @rth @rfo @sh5 @ras _    _    _    @shd @sh8 @sh9 del  pause
   _    =    -    _    _    _    _    _    _    _    @sh7 @roc @rcc @rcb _
   _    @rtw _    _    _    _    _    _    _    _    @shm @rob _         _
   _    @let @grt _    _    @rtw _    _    _    @sho @she _         _    _
