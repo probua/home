@@ -1,0 +1,38 @@
+[colors.cursor]
+cursor = "#ffd787"
+text = "#181818"
+
+[colors.primary]
+background = "#000000"
+foreground = "#ecf0f1"
+
+[font]
+size = 8
+
+[font.normal]
+family = "monospace"
+style = "Regular"
+
+[[keyboard.bindings]]
+action = "ScrollHalfPageUp"
+key = "PageUp"
+
+[[keyboard.bindings]]
+action = "ScrollHalfPageDown"
+key = "PageDown"
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Right"
+
+[selection]
+save_to_clipboard = true
+
+[window]
+decorations = "full"
+opacity = 0.8
+startup_mode = "Maximized"
+
+[window.padding]
+x = 10
+y = 10
