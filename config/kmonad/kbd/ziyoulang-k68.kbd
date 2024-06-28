@@ -42,10 +42,13 @@
   let 102d
   grt (around lsft 102d)
   ;; shift symbols
+  sh5 (around lsft 5)
   sh7 (around lsft 7)
   sh8 (around lsft 8)
   sh9 (around lsft 9)
   shm (around lsft ])
+  sho (around lsft [)
+  she (around lsft =)
   ;; ctrl + alt
   cal (around lalt lctl)
   ;; hotkey
@@ -54,6 +57,7 @@
   rmi (around ralt -)
   roc (around ralt [)
   rcc (around ralt ])
+  ras (around ralt 6)
   rob (around ralt 7)
   rcb (around ralt 0)
   ron (around ralt 1)
@@ -67,7 +71,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    del
   caps a    s    d    f    g    h    j    k    l    ;    '    ret       pgup
   lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
-  lctl lmet lalt           spc            ralt      rctl      left down rght
+  lctl lmet lalt           spc            ralt           rctl left down rght
 )
 
 (deflayer base
@@ -75,21 +79,21 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    del
   caps a    s    d    f    g    h    j    k    l    ;    '    ret       pgup
   lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
-  lctl lmet @num           spc            @sym      @sym      left down rght
+  lctl lmet @num           spc            @sym           @sym left down rght
 )
 
 (deflayer numeric
   _    _    _    _    @af4 _    _    _    @sh7 @shm /    _    _    del  _
   _    f1   f2   f3   f4   _    @sh7 7    8    9    /    _    _    _    _
   _    f5   f6   f7   f8   _    @shm 4    5    6    ]    _    _         _
-  _    f9   f10  f11  f12  _    0    1    2    3    _    _         _    _
-  _    lalt _              0              _         _         home _    end
+  _    f9   f10  f11  f12  _    0    1    2    3    .    _         _    _
+  _    lalt _              0              _              home home _    end
 )
 
 (deflayer symbols
-  @rmi @ron @rtw @rth @rfo _    _    _    _    _    _    @sh8 @sh9 del  pause
-  _    _    _    _    _    _    _    _    _    _    _    @roc @rcc @rcb _
-  _    _    _    _    _    _    _    _    _    _    _    @rob _         _
-  _    @let @grt _    _    _    _    _    _    _    _    _         _    _
-  _    _    _              _              _         _         home _    end
+  @rmi @ron @rtw @rth @rfo @sh5 @ras _    _    _    _    @sh8 @sh9 del  pause
+  _    =    -    _    _    _    _    _    _    _    @sh7 @roc @rcc @rcb _
+  _    @rtw _    _    _    _    _    _    _    _    @shm @rob _         _
+  _    @let @grt _    _    @rtw _    _    _    @sho @she _         _    _
+  _    _    _              _              _              home home _    end
 )
