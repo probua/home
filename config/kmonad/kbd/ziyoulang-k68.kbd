@@ -38,6 +38,7 @@
   ;; layers
   num (layer-toggle numeric)
   sym (layer-toggle symbols)
+  med (layer-toggle media)
   ;; < >
   let 102d
   grt (around lsft 102d)
@@ -65,6 +66,14 @@
   rtw (around ralt 2)
   rth (around ralt 3)
   rfo (around ralt 4)
+  ;; media
+  vou KeyVolumeUp
+  vod KeyVolumeDown
+  som KeyMute
+  mpp KeyPlayPause
+  mks KeyStop
+  bnu KeyBrightnessUp
+  bnd KeyBrightnessDown
 )
 
 (defsrc
@@ -72,7 +81,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    del
   caps a    s    d    f    g    h    j    k    l    ;    '    ret       pgup
   lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
-  lctl lmet lalt           spc            ralt           rctl left down rght
+  lctl lmet lalt           spc                 ralt      rctl left down rght
 )
 
 (deflayer base
@@ -80,15 +89,15 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    del
   caps a    s    d    f    g    h    j    k    l    ;    '    ret       pgup
   lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
-  lctl lmet @num           spc            @sym           @sym left down rght
+  lctl lmet @num           spc                 @sym      @med left down rght
 )
 
 (deflayer numeric
-  _    _    _    _    @af4 _    _    _    @sh7 @shm /    _    _    del  _
+  _    _    _    _    @af4 _    _    _    @sh7 @shm /    _    _    del  del
   _    f1   f2   f3   f4   _    @sh7 7    8    9    /    _    _    _    _
   _    f5   f6   f7   f8   _    @shm 4    5    6    ]    _    _         _
   _    f9   f10  f11  f12  _    0    1    2    3    .    _         _    _
-  _    lalt _              0              _              home home _    end
+  _    lalt _              0                   _         _    home _    end
 )
 
 (deflayer symbols
@@ -96,5 +105,13 @@
   _    =    -    _    _    _    _    _    _    _    @sh7 @roc @rcc @rcb _
   _    @rtw _    _    _    _    _    _    _    _    @shm @rob _         _
   _    @let @grt _    _    @rtw _    _    _    @sho @she _         _    _
-  _    _    _              _              _              home home _    end
+  _    _    _              _                   _         _    home _    end
+)
+
+(deflayer media
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _    @bnu
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _    @bnd
+  _    _    _    _    _    _    _    _    _    _    _    _    @mpp      _
+  _    _    _    _    _    _    _    _    _    _    _    @som      @vou @mks
+  _    _    _              _                   _         _    home @vod end
 )
