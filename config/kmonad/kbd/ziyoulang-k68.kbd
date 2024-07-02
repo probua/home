@@ -43,6 +43,7 @@
   let 102d
   grt (around lsft 102d)
   ;; shift symbols
+  sh2 (around lsft 2)
   sh5 (around lsft 5)
   sh7 (around lsft 7)
   sh8 (around lsft 8)
@@ -71,7 +72,6 @@
   vod KeyVolumeDown
   som KeyMute
   mpp KeyPlayPause
-  mks KeyStop
   bnu KeyBrightnessUp
   bnd KeyBrightnessDown
 )
@@ -102,16 +102,16 @@
 
 (deflayer symbols
   @rmi @ron @rtw @rth @rfo @sh5 @ras _    _    _    @shd @sh8 @sh9 del  pause
-  _    =    -    _    _    _    _    _    _    _    @sh7 @roc @rcc @rcb _
-  _    @rtw _    _    _    _    _    _    _    _    @shm @rob _         _
+  _    =    @sh2 _    _    _    _    _    _    _    @sh7 @roc @rcc @rcb _
+  _    @rtw -    _    _    _    _    _    _    _    @shm @rob _         _
   _    @let @grt _    _    @rtw _    _    _    @sho @she _         _    _
   _    _    _              _                   _         _    home _    end
 )
 
 (deflayer media
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _    @bnu
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _    @bnd
-  _    _    _    _    _    _    _    _    _    _    _    _    @mpp      _
-  _    _    _    _    _    _    _    _    _    _    _    @som      @vou @mks
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    @mpp      @bnu
+  _    _    _    _    _    _    _    _    _    _    _    @som      @vou @bnd
   _    _    _              _                   _         _    home @vod end
 )
