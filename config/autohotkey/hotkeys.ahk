@@ -34,21 +34,16 @@
 <!v::F12
 
 ; media layer
->^BackSpace::Del
->^Home::PrintScreen ; opt
->^Delete::Insert ; opt
->^Left::Home
->^Right::End
 >^>Shift::Volume_Mute
 >^Enter::Media_Play_Pause
 >^Up::Volume_Up
 >^Down::Volume_Down
 
+; brightness control
+;<!>^Up::
+;<!>^Down::
+
 ; symbol layer
-<^>!BackSpace::Del
-<^>!Home::Pause ; opt
-<^>!Left::Home
-<^>!Right::End
 <^>!z::<
 <^>!x::>
 <^>!Escape::\
@@ -72,6 +67,19 @@
 <!Left::Home
 <!Right::End
 <!4::!F4
+
+; Right Ctrl Hotkeys
+>^BackSpace::Del
+>^Home::PrintScreen ; opt
+>^Delete::Insert ; opt
+>^Left::Home
+>^Right::End
+
+; AltGr Hotkeys
+<^>!BackSpace::Del
+<^>!Home::Pause ; opt
+<^>!Left::Home
+<^>!Right::End
 
 ; Windows hotkeys
 #q::!F4
