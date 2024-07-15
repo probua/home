@@ -33,13 +33,6 @@
 <!c::F11
 <!v::F12
 
-; Left Alt Hotkeys
-<!BackSpace::Del
-<!Home::Del ; opt
-<!Left::Home
-<!Right::End
-<!4::!F4
-
 ; media layer
 >^BackSpace::Del
 >^Home::PrintScreen ; opt
@@ -71,3 +64,13 @@
 <^>!ñ::*
 <^>!.::^
 <^>!-::¿
+
+; Left Alt Hotkeys
+<!BackSpace::Del
+<!Home::Del ; opt
+<!Left::Home
+<!Right::End
+<!4::!F4
+
+; Windows hotkeys
+#q::!F4
