@@ -107,7 +107,8 @@ bindsym $mod+e layout toggle split
 bindsym $mod+space floating toggle
 
 # print screen
-bindsym Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+#bindsym Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+bindsym Print exec gnome-screenshot -ai
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.

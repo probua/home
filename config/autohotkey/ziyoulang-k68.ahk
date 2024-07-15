@@ -62,45 +62,12 @@
 <^>!w::'
 <^>!a::@
 <^>!b::@
-
 <^>!0::?
 <^>!'::(
 <^>!¡::)
-
 <^>!p::/
-; <^>!ñ::
-; <^>!.::
-; <^>!-::
-
-;   ;; shift symbols
-;   sh2 (around lsft 2)
-;   sh5 (around lsft 5)
-;   sh7 (around lsft 7)
-;   sh8 (around lsft 8)
-;   sh9 (around lsft 9)
-;   shm (around lsft ])
-;   sho (around lsft [)
-;   she (around lsft =)
-;   shd (around lsft -)
-
-;   ;; right alt symbols
-;   rmi (around ralt -)
-;   roc (around ralt [)
-;   rcc (around ralt ])
-;   ras (around ralt 6)
-;   rob (around ralt 7)
-;   rcb (around ralt 0)
-;   ron (around ralt 1)
-;   rtw (around ralt 2)
-;   rth (around ralt 3)
-;   rfo (around ralt 4)
-
-; (deflayer symbols
-;   @rmi @ron @rtw @rth @rfo @sh5 @ras _    _    _    @shd @sh8 @sh9 del  pause
-;   _    =    @sh2 _    _    _    _    _    _    _    @sh7 @roc @rcc @rcb _
-;   _    @rtw -    _    _    _    _    _    _    _    @shm @rob _         _
-;   _    @let @grt _    _    @rtw _    _    _    @sho @she _         _    _
-;   _    _    _              _                   _         _    home _    end
-; )
+<^>!ñ::*
+<^>!.::^
+<^>!-::¿
 
 ;; i3 Hotkeys
