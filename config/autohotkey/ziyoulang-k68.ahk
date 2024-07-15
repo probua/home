@@ -42,6 +42,8 @@
 
 ; media layer
 >^BackSpace::Del
+>^Home::PrintScreen
+>^Delete::Insert
 >^Left::Home
 >^Right::End
 >^>Shift::Volume_Mute
@@ -69,5 +71,3 @@
 <^>!ñ::*
 <^>!.::^
 <^>!-::¿
-
-;; i3 Hotkeys
