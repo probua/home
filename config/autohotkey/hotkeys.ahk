@@ -35,15 +35,15 @@
 
 ; Left Alt Hotkeys
 <!BackSpace::Del
-<!Home::Del
+<!Home::Del ; opt
 <!Left::Home
 <!Right::End
 <!4::!F4
 
 ; media layer
 >^BackSpace::Del
->^Home::PrintScreen
->^Delete::Insert
+>^Home::PrintScreen ; opt
+>^Delete::Insert ; opt
 >^Left::Home
 >^Right::End
 >^>Shift::Volume_Mute
@@ -53,7 +53,7 @@
 
 ; symbol layer
 <^>!BackSpace::Del
-<^>!Home::Pause
+<^>!Home::Pause ; opt
 <^>!Left::Home
 <^>!Right::End
 <^>!z::<
