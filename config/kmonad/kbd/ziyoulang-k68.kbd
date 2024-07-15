@@ -67,6 +67,7 @@
   rtw (around ralt 2)
   rth (around ralt 3)
   rfo (around ralt 4)
+  rfi (around ralt 5)
   ;; media
   vou KeyVolumeUp
   vod KeyVolumeDown
@@ -102,10 +103,10 @@
 
 (deflayer symbols
   @rmi @ron @rtw @rth @rfo @sh5 @ras _    _    _    @shd @sh8 @sh9 del  pause
-  _    =    @sh2 _    _    _    _    _    _    _    @sh7 @roc @rcc @rcb _
+  _    =    @sh2 @rfi _    @rfi _    _    _    _    @sh7 @roc @rcc @rcb _
   _    @rtw -    _    _    _    _    _    _    _    @shm @rob _         _
   _    @let @grt _    _    @rtw _    _    _    @sho @she _         _    _
-  _    _    _              _                   _         _    home _    end
+  _    _    _              _                   _         _    _    _    _
 )
 
 (deflayer media
