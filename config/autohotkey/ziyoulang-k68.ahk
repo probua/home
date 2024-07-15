@@ -1,7 +1,7 @@
 ﻿# Requires AutoHotkey v2.0
 
 ; Left Alt = numeric layer
-<!q::
+<!m::Send, 1
 
 ; numeric layer
 ; f1 - f12
