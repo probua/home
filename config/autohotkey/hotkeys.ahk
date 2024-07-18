@@ -62,24 +62,26 @@
 <^>!-::¿
 
 ; Left Alt Hotkeys
-<!BackSpace::Del
-<!Home::Del ; opt
+<!BackSpace::Pause
+<!Home::PrintScreen
+<!Delete::Insert
 <!Left::Home
 <!Right::End
-<!4::!F4
-
-; Right Ctrl Hotkeys
->^BackSpace::Del
->^Home::PrintScreen ; opt
->^Delete::Insert ; opt
->^Left::Home
->^Right::End
 
 ; AltGr Hotkeys
-<^>!BackSpace::Del
-<^>!Home::Pause ; opt
+<^>!BackSpace::Pause
+<^>!Home::PrintScreen
+<^>!Delete::Insert
 <^>!Left::Home
 <^>!Right::End
 
+; Right Ctrl Hotkeys
+>^BackSpace::Del
+>^Home::PrintScreen
+>^Delete::Insert
+>^Left::Home
+>^Right::End
+
 ; Windows hotkeys
+<!4::!F4
 #q::!F4
