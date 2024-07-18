@@ -69,6 +69,10 @@
 <!Right::End
 <!PgUp::ScrollLock
 <!PgDn::End
+<!Enter::Insert
+<!RShift::PrintScreen
+<!¡::PgUp
+<!+::PgDn
 
 ; AltGr Hotkeys
 <^>!BackSpace::Pause
