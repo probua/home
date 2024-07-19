@@ -67,6 +67,8 @@
 <!Delete::Insert
 <!Left::Home
 <!Right::End
+<!PgUp::ScrollLock
+<!PgDn::End
 
 ; AltGr Hotkeys
 <^>!BackSpace::Pause
@@ -74,6 +76,8 @@
 <^>!Delete::Insert
 <^>!Left::Home
 <^>!Right::End
+<^>!PgUp::ScrollLock
+<^>!PgDn::End
 
 ; Right Ctrl Hotkeys
 >^BackSpace::Del
@@ -81,6 +85,8 @@
 >^Delete::Insert
 >^Left::Home
 >^Right::End
+>^PgUp::ScrollLock
+>^PgDn::End
 
 ; Windows hotkeys
 <!4::!F4
