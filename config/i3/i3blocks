@@ -72,6 +72,6 @@ interval=1
 color=#c0c0c0
 
 [EXIT]
-full_text=""
+full_text=
 command=bash ~/.config/probua/scripts/rofi-exit-menu.sh
 color=#FFD787
