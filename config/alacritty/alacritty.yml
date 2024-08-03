@@ -18,7 +18,7 @@ font:
 colors:
   primary:
     background: '#000000'
-    # cursor: '#ffd787'
+    cursor: '#FECA88'
 
 mouse_bindings:
   - { mouse: Right, action: PasteSelection }
