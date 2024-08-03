@@ -13,8 +13,8 @@ function markup_git_branch {
 			
 			grl="$(git rev-list $1 --not --ignore-missing origin/$1 --count)"
 
-			if [[ $grl > 0 ]]; then # git remote with differences
-				echo -e '\033[0m''git\033[90m:''\033[91m'"$1"'\033[0m'"$separator"
+			if [[ $grl > 0 ]]; then # git remote with differences (green)
+				echo -e '\033[0m''git\033[90m:''\033[92m'"$1"'\033[0m'"$separator"
 			else # git status clear
 				echo -e '\033[90m''git:''\e[97m'"$1""$separator"
 			fi
@@ -27,8 +27,8 @@ function markup_git_branch {
 				gsf=1
 			done
 
-			if [[ $gsf == 1 ]]; then
-				echo -e '\033[0m''git\033[90m:''\033[0;1;38;5;210m'"$1"'\033[0m'"$separator"
+			if [[ $gsf == 1 ]]; then # red
+				echo -e '\033[0m''git\033[90m:''\033[91m'"$1"'\033[0m'"$separator"
 			else # yellow
 				echo -e '\033[0m''git\033[90m:''\033[93m'"$1"'\033[0m'"$separator"
 			fi
