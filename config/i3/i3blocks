@@ -7,71 +7,71 @@ markup=none
 #command=bash ~/.config/probua/scripts/i3-media-status.sh
 #interval=1
 #signal=3
-#color=#FFD787
+#color=#FECA88
 
 #[PLAY_NOW]
 #command=bash ~/.config/probua/scripts/i3-play-now.sh
 #interval=1
 #signal=3
-#color=#a0a0a0
+#color=#6B6B6B
 
 [SOUND_MUTE]
 command=bash ~/.config/probua/scripts/i3-sound-mute.sh
 interval=1
 signal=6
-color=#FF8888
+color=#C55555
 
 [MIC_MUTE]
 command=bash ~/.config/probua/scripts/i3-mic.sh
 interval=1
 signal=7
-color=#FF8888
+color=#C55555
 
 [CAPS]
 command=bash ~/.config/probua/scripts/i3-caps.sh
 interval=1
 signal=11
-color=#FFD787
+color=#FECA88
 
 [NUM]
 command=bash ~/.config/probua/scripts/i3-num.sh
 interval=1
 signal=10
-color=#FFD787
+color=#FECA88
 
 [MEMORY]
 command=bash ~/.config/probua/scripts/i3-memory-info.sh
 interval=1
-color=#c0c0c0
+color=#D8D8D8
 
 [BATTERY]
 command=bash ~/.config/probua/scripts/i3-battery-info.sh
 interval=1
-color=#c0c0c0
+color=#D8D8D8
 
 [SOUND_VOLUME]
 command=bash ~/.config/probua/scripts/i3-sound-level.sh
 interval=1
 signal=5
-color=#c0c0c0
+color=#D8D8D8
 
 [BRIGHTNESS]
 command=bash ~/.config/probua/scripts/i3-brightness-info.sh
 interval=once
 signal=4
-color=#c0c0c0
+color=#D8D8D8
 
 [DATE]
 command=bash ~/.config/probua/scripts/i3-date.sh
 interval=1
-color=#c0c0c0
+color=#D8D8D8
 
 [TIME]
 command=bash ~/.config/probua/scripts/i3-time.sh
 interval=1
-color=#c0c0c0
+color=#D8D8D8
 
 [EXIT]
 full_text=
 command=bash ~/.config/probua/scripts/rofi-exit-menu.sh
-color=#FFD787
+color=#FECA88

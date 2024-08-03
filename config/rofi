@@ -12,9 +12,9 @@ configuration {
 * {
 	bg0: #00000000;
 	bg1: #000000ff;
-	fg0: #ffd787;
-	fg1: #ffffff;
-	fg2: #888888;
+	fg0: #FECA88;
+	fg1: #D8D8D8;
+	fg2: #6B6B6B;
 
 	background-color: @bg0;
 

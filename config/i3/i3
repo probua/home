@@ -227,11 +227,11 @@ bindsym $mod+r mode "resize"
 
 # colors
 set $bg  #000000
-set $fg0 #ffd787
-set $fg1 #ffffff
-set $fg2 #cccccc
-set $fg3 #808080
-set $fg4 #4d4d4d
+set $fg0 #FECA88
+set $fg1 #F8F8F8
+set $fg2 #D8D8D8
+set $fg3 #6B6B6B
+set $fg4 #181818
 
 # primary i3bar
 bar {
