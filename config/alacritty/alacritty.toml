@@ -1,10 +1,8 @@
 [colors.cursor]
-cursor = "#ffd787"
-text = "#181818"
+# cursor = "#ffd787"
 
 [colors.primary]
 background = "#000000"
-foreground = "#ecf0f1"
 
 [font]
 size = 8
