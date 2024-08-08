@@ -188,8 +188,8 @@
       "RSFT(KC_EQL)",
       "RALT(KC_QUOT)",
       "RALT(KC_BSLS)",
-      "KC_SLSH",
-      "KC_PGDN",
+      "KC_MUTE",
+      "KC_MPLY",
       "KC_NO",
       "KC_NO",
       "KC_NO",
@@ -198,10 +198,10 @@
       "KC_SPC",
       "KC_NO",
       "KC_NO",
-      "KC_MUTE",
+      "KC_HOME",
       "KC_VOLD",
       "KC_VOLU",
-      "C(G(KC_M))"
+      "KC_END"
     ]
   ],
   "encoders": []
