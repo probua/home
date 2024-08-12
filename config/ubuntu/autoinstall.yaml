@@ -1,0 +1,39 @@
+autoinstall:
+  version: 1
+  identity:
+    hostname: ubuntu
+    username: probua
+    password: "$6$Bjp0rzKGwUW1HHqp$lbP61U4eTIfqkI44vreXRpFw37LxkqLqOD8WMWh9KiEbsu63gDMtkSIbgUcr2/qhqIK/.fLc.W.6dYMmw9cF01"
+
+  snaps:
+    - name: aws-cli
+      classic: true
+    - name: code
+      classic: true
+    - name: obsidian
+      classic: true
+    - name: dbeaver-ce
+      classic: false
+  
+  packages:
+    - vim
+    - rofi
+    - dmenu
+    - git
+    - feh
+    - picom
+    - arandr
+    - i3
+    - i3status
+    - i3blocks
+    - brightnessctl
+    - playerctl
+    - keepassxc
+    - alacritty
+    - thunar
+    - fonts-font-awesome
+    - blueman
+    - pulseaudio-utils
+
+  late-commands:
+    - curtin in-target curl -o- -L https://slss.io/install | bash
