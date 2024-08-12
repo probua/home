@@ -3,7 +3,7 @@ autoinstall:
   identity:
     hostname: ubuntu
     username: probua
-    password: "$6$Bjp0rzKGwUW1HHqp$lbP61U4eTIfqkI44vreXRpFw37LxkqLqOD8WMWh9KiEbsu63gDMtkSIbgUcr2/qhqIK/.fLc.W.6dYMmw9cF01"
+    password: "$6$ZE4WV3QRJhPUnsNv$BpkTBYjUOxOiWV5sNPYDSitTwxW.3NHLmhRqptzpa8a4KTxGpkvMaSDbyq4PVri9kdpD1t7ldUBgwB6uveObg."
 
   snaps:
     - name: aws-cli
@@ -14,8 +14,15 @@ autoinstall:
       classic: true
     - name: dbeaver-ce
       classic: false
+    - name: postman
+      classic: false
+    - name: teams-for-linux
+      classic: false
+    # - name: docker
+    #   classic: false
   
   packages:
+    - curl
     - vim
     - rofi
     - dmenu
@@ -37,3 +44,5 @@ autoinstall:
 
   late-commands:
     - curtin in-target curl -o- -L https://slss.io/install | bash
+    # - curtin in-target usermod -aG docker probua
+    - curtin in-target usermod -aG video probua
