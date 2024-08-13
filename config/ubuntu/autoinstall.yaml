@@ -44,6 +44,6 @@ autoinstall:
     - curtin in-target curl -o- -L https://slss.io/install | bash
     - curtin in-target curl -o- -L https://raw.githubusercontent.com/probua/home/main/config/ubuntu/install-kmonad.sh | bash
     - curtin in-target curl -o- -L https://raw.githubusercontent.com/probua/home/main/config/ubuntu/install-docker.sh | bash
-    - curtin in-target usermod -aG docker probua
-    - curtin in-target usermod -aG video probua
     - curtin in-target curl -o- -L https://raw.githubusercontent.com/probua/home/main/config/ubuntu/install-config.sh | bash
+    # - curtin in-target usermod -aG docker probua
+    # - curtin in-target usermod -aG video probua
