@@ -18,9 +18,7 @@ autoinstall:
       classic: false
     - name: teams-for-linux
       classic: false
-    # - name: docker
-    #   classic: false
-  
+
   packages:
     - curl
     - vim
