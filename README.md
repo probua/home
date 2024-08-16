@@ -1,3 +1,8 @@
+# Auto Install (Tested on Ubuntu 24.04)
+```bash
+sudo curl -o- -L https://raw.githubusercontent.com/probua/home/main/config/scripts/auto-install/auto-install.sh | bash
+```
+
 # Install config
 ```bash
 git clone https://github.com/probua/home.git
