@@ -8,4 +8,3 @@ sudo usermod -aG docker probua
 sudo usermod -aG video probua
 source install-config.sh
 sudo timedatectl set-timezone America/Lima
-sudo passwd probua # update password
