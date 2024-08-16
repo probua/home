@@ -38,7 +38,9 @@ autoinstall:
     - thunar
     - fonts-font-awesome
     - blueman
+    - pulseaudio
     - pulseaudio-utils
+    - pavucontrol
 
   late-commands:
     # - curtin in-target curl -o- -L https://slss.io/install | bash
