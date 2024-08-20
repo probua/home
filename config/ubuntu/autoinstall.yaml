@@ -18,6 +18,8 @@ autoinstall:
       classic: false
     - name: teams-for-linux
       classic: false
+    - name: retroarch
+      classic: false
 
   packages:
     - curl
