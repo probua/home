@@ -1,4 +1,4 @@
-﻿; numeric layer
+﻿; Left Alt (numeric layer)
 <!m::1
 <!,::2
 <!.::3
@@ -19,7 +19,7 @@
 <!ñ::+
 <!Space::0
 
-; f1 - f12
+; Left Alt (f1 - f12)
 <!q::F1
 <!w::F2
 <!e::F3
@@ -33,17 +33,13 @@
 <!c::F11
 <!v::F12
 
-; media layer
+; Right Ctrl (media)
 >^>Shift::Volume_Mute
 >^Enter::Media_Play_Pause
 >^Up::Volume_Up
 >^Down::Volume_Down
 
-; brightness control
-;<!>^Up::
-;<!>^Down::
-
-; symbol layer
+; AltGr (symbols)
 <^>!z::<
 <^>!x::>
 <^>!Escape::\
@@ -54,14 +50,26 @@
 <^>!a::@
 <^>!b::@
 <^>!0::?
+<^>!9::¿
+<^>!8::^
 <^>!'::(
 <^>!¡::)
 <^>!p::/
 <^>!ñ::*
-<^>!.::^
-<^>!-::¿
 
-; Left Alt Hotkeys
+; AltGr (media/control)
+<^>!l::Volume_Down
+<^>!o::Volume_Up
+<^>!-::Home
+<^>!RControl::End
+
+; AltGr (arrows)
+<^>!m::Left
+<^>!,::Down
+<^>!k::Up
+<^>!.::Right
+
+; Left Alt (Hotkeys)
 <!BackSpace::Pause
 <!Home::PrintScreen
 <!Delete::Insert
@@ -74,7 +82,7 @@
 <!¡::PgUp
 <!+::PgDn
 
-; AltGr Hotkeys
+; AltGr (Hotkeys)
 <^>!BackSpace::Pause
 <^>!Home::PrintScreen
 <^>!Delete::Insert
@@ -83,7 +91,7 @@
 <^>!PgUp::ScrollLock
 <^>!PgDn::End
 
-; Right Ctrl Hotkeys
+; Right Ctrl (Hotkeys)
 >^BackSpace::Del
 >^Home::PrintScreen
 >^Delete::Insert
