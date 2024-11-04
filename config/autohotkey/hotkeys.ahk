@@ -33,12 +33,6 @@
 <!c::F11
 <!v::F12
 
-; Right Ctrl (media)
->^>Shift::Volume_Mute
->^Enter::Media_Play_Pause
->^Up::Volume_Up
->^Down::Volume_Down
-
 ; AltGr (symbols)
 <^>!z::<
 <^>!x::>
@@ -57,17 +51,21 @@
 <^>!p::/
 <^>!ñ::*
 
-; AltGr (media/control)
-<^>!l::Volume_Down
+; AltGr (arrows/media/control)
 <^>!o::Volume_Up
-<^>!-::Home
+<^>!k::Volume_Down
+<^>!RShift::Home
 <^>!RControl::End
+<^>!,::Left
+<^>!.::Down
+<^>!l::Up
+<^>!-::Right
 
-; AltGr (arrows)
-<^>!m::Left
-<^>!,::Down
-<^>!k::Up
-<^>!.::Right
+; Right Ctrl (media)
+>^>Shift::Volume_Mute
+>^Enter::Media_Play_Pause
+>^Up::Volume_Up
+>^Down::Volume_Down
 
 ; Left Alt (Hotkeys)
 <!BackSpace::Pause
@@ -83,7 +81,7 @@
 <!+::PgDn
 
 ; AltGr (Hotkeys)
-<^>!BackSpace::Pause
+<^>!BackSpace::Del
 <^>!Home::PrintScreen
 <^>!Delete::Insert
 <^>!Left::Home
@@ -101,5 +99,6 @@
 >^PgDn::End
 
 ; Windows hotkeys
+<^<^>!p::PrintScreen
 <!4::!F4
 #q::!F4
