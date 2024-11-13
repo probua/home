@@ -100,5 +100,4 @@
 
 ; Windows hotkeys
 <^<^>!p::PrintScreen
-<!4::!F4
 #q::!F4
