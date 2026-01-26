@@ -8,8 +8,8 @@ function markup_git_branch {
 		echo ""
 	else
 		separator=" "
-		gs=$(git status -s)
-		if [[ "$gs" == "" ]]; then
+		gitstatuss=$(git status -s)
+		if [[ "$gitstatuss" == "" ]]; then
 			
 			grl="$(git rev-list $1 --not --ignore-missing origin/$1 --count)"
 
@@ -19,7 +19,7 @@ function markup_git_branch {
 				echo -e '\033[90m''git:''\e[97m'"$1""$separator"
 			fi
 		else
-			gsc="$(gs | cut -c 2)"
+			gsc="$(gitstatuss | cut -c 2)"
 			gsf=0
 
 			for i in $gsc;
