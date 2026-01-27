@@ -1,41 +1,44 @@
-# probua-theme
+# Obtiene el nombre de la rama actual
 function git_branch {
-	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+	git branch --no-color 2>/dev/null | sed -n '/\* /s///p'
 }
 
+# Muestra el estado del repo con colores según el estado
 function markup_git_branch {
-	if [[ "$1" == "" ]]; then
-		echo ""
-	else
-		separator=" "
-		gitstatuss=$(git status -s)
-		if [[ "$gitstatuss" == "" ]]; then
-			
-			grl="$(git rev-list $1 --not --ignore-missing origin/$1 --count)"
+	local branch="$1"
+	[[ -z "$branch" ]] && return
 
-			if [[ $grl > 0 ]]; then # git remote with differences (blue)
-				echo -e '\033[0m''git\033[90m:''\033[94m'"$1"'\033[0m'"$separator"
-			else # git status clear
-				echo -e '\033[90m''git:''\e[97m'"$1""$separator"
-			fi
+	local separator=" "
+	local gitstatus
+	local color="\033[0m"
+
+	# Verifica si estás dentro de un repositorio git
+	git rev-parse --is-inside-work-tree &>/dev/null || return
+
+	# Verifica el estado del repo
+	gitstatus=$(git status -s 2>/dev/null)
+
+	if [[ -z "$gitstatus" ]]; then
+		# Limpio localmente
+		local grl
+		grl=$(git rev-list "$branch" --not --ignore-missing "origin/$branch" --count 2>/dev/null)
+		if [[ $grl -gt 0 ]]; then
+			color='\033[94m' # Azul: commits no pusheados
 		else
-			gsc="$(gitstatuss | cut -c 2)"
-			gsf=0
-
-			for i in $gsc;
-			do 
-				gsf=1
-			done
-
-			if [[ $gsf == 1 ]]; then # red
-				echo -e '\033[0m''git\033[90m:''\033[91m'"$1"'\033[0m'"$separator"
-			else # yellow
-				echo -e '\033[0m''git\033[90m:''\033[93m'"$1"'\033[0m'"$separator"
-			fi
-
+			color='\033[97m' # Blanco: limpio y sincronizado
+		fi
+	else
+		# Con cambios locales
+		if echo "$gitstatus" | grep -qE '^\s*M'; then
+			color='\033[93m' # Amarillo: archivos modificados
+		else
+			color='\033[91m' # Rojo: archivos nuevos/no seguidos
 		fi
 	fi
+
+	echo -e "\033[90mgit:${color}${branch}\033[0m${separator}"
 }
+
 # # ver 1.0
 # PS1='\[\e[0;38;5;246m\]\u@\h \[\e[0;38;5;39m\]\w \[\e[0m\]$(markup_git_branch $(git_branch))
 # \[\e[0;38;5;222m\]> \[\e[0m\]'
