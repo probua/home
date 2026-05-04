@@ -39,6 +39,13 @@ function markup_git_branch {
 	echo -e "\033[90mgit:${color}${branch}\033[0m${separator}"
 }
 
+# user@host
+if [[ -n "$SSH_CONNECTION" ]]; then
+  HOST_COLOR="\[\e[96m\]"  # si estás por SSH
+else
+  HOST_COLOR="\[\e[90m\]"
+fi
+
 # # ver 1.0
 # PS1='\[\e[0;38;5;246m\]\u@\h \[\e[0;38;5;39m\]\w \[\e[0m\]$(markup_git_branch $(git_branch))
 # \[\e[0;38;5;222m\]> \[\e[0m\]'
@@ -58,6 +65,12 @@ function markup_git_branch {
 #\[\e[97m\]> \[\e[0m\]'
 
 # ver 1.4
-PS1='\[\e[90m\]\t
-\[\e[93m\]\w \[\e[0m\]$(markup_git_branch $(git_branch))
-\[\e[97m\]> \[\e[0m\]'
+# PS1='\[\e[90m\]\t
+# \[\e[93m\]\w \[\e[0m\]$(markup_git_branch $(git_branch))
+# \[\e[97m\]> \[\e[0m\]'
+
+# ver 1.5
+PS1="\[\e[90m\]\t
+${HOST_COLOR}\u@\h\[\e[0m\]
+\[\e[93m\]\w \[\e[0m\]\$(markup_git_branch \$(git_branch))
+\[\e[97m\]> \[\e[0m\]"
