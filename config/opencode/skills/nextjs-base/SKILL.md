@@ -128,6 +128,59 @@ export function useScrollButtons(scrollRef: RefObject<HTMLElement | null>, optio
 
 ## Styling Conventions
 
+### Tailwind v4 Color System
+
+Tailwind v4 uses CSS-first configuration via `@theme inline` in `globals.css` (no `tailwind.config.js`).
+
+**Semantic color naming** — name colors by their role, not by their value:
+
+```css
+@theme inline {
+  /* Fixed brand colors — never change with theme */
+  --color-primary: #171C47;
+  --color-accent: #31B188;
+  --color-muted: #5E6471;
+
+  /* Dynamic colors — connected to CSS vars that swap per theme */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+}
+```
+
+This generates Tailwind utilities: `text-primary`, `bg-accent`, `text-muted`, `bg-surface`, `border-border`, etc.
+
+**Theme-aware colors via CSS variable swap:**
+
+```css
+:root {
+  --background: #ffffff;
+  --foreground: #171C47;
+  --surface: #F5F7F6;
+  --border: rgba(94, 100, 113, 0.2);
+}
+
+.dark,
+.on-dark {
+  --foreground: #F5F7F6;
+  --surface: #0C0E30;
+  --border: rgba(94, 100, 113, 0.3);
+}
+```
+
+Key distinctions:
+- **Fixed colors** (`primary`, `accent`, `muted`) — defined directly in `@theme`, always the same value
+- **Dynamic colors** (`foreground`, `background`, `surface`, `border`) — connected to `var()`, change with `.dark` or `.on-dark` class
+- `.dark` — for full dark mode (applied to `<html>`)
+- `.on-dark` — for contextual dark backgrounds within light mode (e.g., transparent navbar over hero)
+- Use opacity modifiers: `text-muted/60`, `bg-muted/20`, `border-muted/30`
+
+**Rules:**
+- Never hardcode colors in components (`text-gray-700`, `bg-gray-100`) — use semantic tokens
+- When a color needs to change with the theme, define it as a CSS var in `:root`/`.dark` and connect via `var()` in `@theme`
+- When a color is always the same (brand), define it directly in `@theme`
+
 ### Tailwind + Custom CSS Classes
 - Use Tailwind utilities as primary styling
 - For complex or repeated styles, create CSS classes in `globals.css`
@@ -242,3 +295,12 @@ Same useState + useEffect pattern in multiple components should be extracted to 
 
 ### 8. Inline SVG Duplication
 Same SVG path copied across multiple files should be a shared icon component in `components/icons/`.
+
+### 9. Hardcoded Colors
+Never use arbitrary color values (`text-gray-700`, `bg-gray-100`, `text-black`) in components. Always use semantic color tokens (`text-muted`, `bg-surface`, `text-primary`) defined in `@theme`. This ensures consistency and makes theme changes automatic.
+
+### 10. Manual Color Ternaries
+Don't use ternary expressions to swap colors manually (`scrolled ? "text-white" : "text-black"`). Instead, use a CSS class (like `on-dark`) that swaps the `--foreground` variable, and always use `text-foreground`. The CSS variable swap handles the color change automatically.
+
+### 11. Missing `metadataBase`
+Always set `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!)` in the root layout's `generateMetadata()`. Without it, Open Graph images, canonical URLs, and other absolute metadata URLs won't resolve correctly when shared on social media.

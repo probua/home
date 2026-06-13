@@ -243,6 +243,74 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 }
 ```
 
+## Global Site Data in Layout
+
+When Strapi has a "Site" single type with global settings (name, description, logo, navigation links), fetch it once in the root layout and distribute to components.
+
+### Pattern
+
+```tsx
+// src/app/layout.tsx
+import { fetchSiteData } from '@/lib/site';
+import { toSiteData } from '@/types/site';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const siteData = toSiteData(await fetchSiteData()); // cached
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+    title: {
+      template: `%s | ${siteData.site}`,
+      default: `${siteData.site} | ${siteData.description}`,
+    },
+    description: siteData.description,
+  };
+}
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const siteData = toSiteData(await fetchSiteData()); // cache hit — no extra request
+
+  return (
+    <html lang="es">
+      <body>
+        <Navbar site={siteData} />   {/* client component receives props */}
+        <div>{children}</div>
+        <Footer site={siteData} />
+      </body>
+    </html>
+  );
+}
+```
+
+Key points:
+- `generateMetadata` and layout body both call `fetchSiteData()` — `React.cache()` deduplicates to a single HTTP request
+- Transform immediately after fetch: `toSiteData(await fetchSiteData())`
+- Client components (Navbar) receive data via props — they cannot fetch from Strapi directly
+- `metadataBase` is required for Open Graph and canonical URL resolution
+- `title.template` lets child pages set only their portion: `export const metadata = { title: "About" }` → `"About | Site Name"`
+- `title.default` is used by pages that don't set their own title (e.g., home page)
+
+### 404 Page with CMS Data
+
+```tsx
+// src/app/not-found.tsx
+import { fetchSiteData } from '@/lib/site';
+import { toSiteData } from '@/types/site';
+
+export default async function NotFound() {
+  const siteData = toSiteData(await fetchSiteData());
+
+  return (
+    <Section>
+      <Container>
+        <h1>404</h1>
+        <p>{siteData.notFoundText}</p>
+        <Link href="/">Volver al inicio</Link>
+      </Container>
+    </Section>
+  );
+}
+```
+
 ## Common Pitfalls
 
 - **Missing `populate` params**: Strapi returns empty objects for relations without explicit populate
@@ -250,3 +318,4 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 - **Passing raw types to components**: Always transform `Strapi*Data` to `*Data` before passing to UI components
 - **Nullable relations**: Strapi nullable fields must be typed as `| null`, check before accessing
 - **Missing error handling**: Always wrap dynamic route fetches in try/catch with `notFound()` fallback
+- **Nullable `formats` in images**: Strapi may return `"formats": null` instead of an object. Always null-check `raw.formats` in `toImageData()` before accessing `.large`, `.medium`, etc. Type `ImageData.formats` as `| null` to match
