@@ -126,6 +126,66 @@ export function useScrollButtons(scrollRef: RefObject<HTMLElement | null>, optio
 }
 ```
 
+> ⚠️ **Hydration caveat:** buttons consuming `canScrollLeft`/`canScrollRight`
+> for `disabled`/`aria-hidden` **must** add `suppressHydrationWarning` — those
+> values derive from `scrollWidth` (browser-only, unknown to the server). See
+> **Hydration & SSR Pitfalls** below.
+
+## Hydration & SSR Pitfalls
+
+### The core rule
+On a hydration mismatch warning, **first check whether the mismatched attribute
+depends on browser-only data.** If it does, the fix is `suppressHydrationWarning`
+on that element — do **not** refactor hooks chasing it.
+
+### Browser-only data (the server can never know these)
+Attributes derived from:
+- DOM layout: `scrollWidth`, `clientWidth`, `scrollLeft`, `offsetWidth`, `offsetHeight`, `getBoundingClientRect()`
+- Browser APIs: `matchMedia` (dark mode, breakpoints), `IntersectionObserver`, `window.scrollY`
+- Time/random: `Date.now()`, `new Date()`, `Math.random()`
+- Client storage: `localStorage`, `sessionStorage`, cookies read on the client
+
+The server has none of this, so it renders a default while the client computes
+the real value after mount → the attribute **diverges**. This is **inherent** —
+the server genuinely cannot compute it — not a bug fixable by changing hooks.
+
+### What does NOT fix it (verified empirically on React 19 + Next.js 16)
+These all still diverge, because the attribute *value* itself differs
+server vs. client regardless of timing:
+- `useLayoutEffect` → `useEffect` (timing is not the issue)
+- `useSyncExternalStore` + `getServerSnapshot` (meant for external stores, not ref/DOM measurements)
+- `useState(false)` + `useEffect` measurement (first render matches, yet the post-mount change still gets flagged for layout-derived attributes)
+
+### The fix: `suppressHydrationWarning`
+React's official escape hatch for client-only data. Put it on the element whose
+attribute diverges. It does two things:
+1. Silences the warning.
+2. Lets React apply the **client's** correct value. Without it, React 19 logs
+   *"This won't be patched up"* and keeps the server value — a latent functional
+   bug (e.g. a scroll button stuck `disabled`/invisible).
+
+```tsx
+// Nav buttons disabled by scroll position: `disabled` depends on scrollWidth,
+// which the server doesn't have → both buttons need suppressHydrationWarning.
+<button
+  suppressHydrationWarning
+  type="button"
+  disabled={!canScrollRight}
+  aria-hidden={!canScrollRight}
+  aria-label="Next"
+>
+```
+
+- Apply to the **specific element(s)** with the divergent attribute, not globally.
+- It covers that element's attributes and direct text content (one level deep — not children).
+
+### Common cases
+- Carousel / horizontal-scroll nav buttons (`disabled` from scroll position)
+- Element visibility toggled by `IntersectionObserver` or scroll position
+- Dark-mode class from `matchMedia("(prefers-color-scheme: dark)")`
+- Timestamps / "time ago" formatters
+- Toggles hydrated from `localStorage`
+
 ## Styling Conventions
 
 ### Tailwind v4 Color System
@@ -304,3 +364,6 @@ Don't use ternary expressions to swap colors manually (`scrolled ? "text-white" 
 
 ### 11. Missing `metadataBase`
 Always set `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!)` in the root layout's `generateMetadata()`. Without it, Open Graph images, canonical URLs, and other absolute metadata URLs won't resolve correctly when shared on social media.
+
+### 12. Hydration Mismatch on Browser-Only Attributes
+Never refactor hooks to "fix" a hydration mismatch caused by an attribute that depends on browser-only data (`scrollWidth`, `matchMedia`, `Date`, `localStorage`, etc.). The server genuinely cannot compute it, so the divergence is inherent and cannot be eliminated by changing hook timing or type. Use `suppressHydrationWarning` on the affected element instead. See the **Hydration & SSR Pitfalls** section.
