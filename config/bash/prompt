@@ -74,3 +74,4 @@ PS1="\[\e[90m\]\t
 ${HOST_COLOR}\u@\h\[\e[0m\]
 \[\e[93m\]\w \[\e[0m\]\$(markup_git_branch \$(git_branch))
 \[\e[97m\]> \[\e[0m\]"
+
