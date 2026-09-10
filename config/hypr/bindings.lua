@@ -1,0 +1,36 @@
+hl.unbind("SUPER + COMMA")
+hl.unbind("SUPER + SHIFT + COMMA")
+hl.unbind("SUPER + J")
+hl.unbind("SUPER + K")
+hl.unbind("SUPER + L")
+hl.unbind("SUPER + O")
+hl.unbind("SUPER + SHIFT + O")
+hl.unbind("SUPER + P")
+hl.unbind("SUPER + SHIFT + P")
+hl.unbind("SUPER + code:20")
+hl.unbind("SUPER + SHIFT + code:20")
+
+hl.unbind("SUPER + CTRL + SPACE")
+hl.unbind("SUPER + CTRL + LEFT")
+hl.unbind("SUPER + CTRL + RIGHT")
+hl.unbind("SUPER + CTRL + S")
+
+o.bind("SUPER + Q", "Close window", hl.dsp.window.close())
+o.bind("SUPER + D", "Apps menu", "omarchy-menu toggle apps")
+o.bind("SUPER + A", "Omarchy root menu", "omarchy-menu toggle root")
+o.bind("SUPER + H", "Toggle window split", hl.dsp.layout("togglesplit"))
+o.bind("SUPER + E", "Toggle workspace layout", "omarchy-hyprland-workspace-layout-toggle")
+
+o.bind("SUPER + CTRL + M", "Mute microphone", "omarchy-audio-input-mute", { locked = true })
+o.bind("SUPER + CTRL + S", "Mute", "omarchy-audio-output-volume mute-toggle", { locked = true })
+o.bind("SUPER + CTRL + UP", "Volume up", "omarchy-audio-output-volume raise", { locked = true, repeating = true })
+o.bind("SUPER + CTRL + DOWN", "Volume down", "omarchy-audio-output-volume lower", { locked = true, repeating = true })
+o.bind("SUPER + CTRL + SPACE", "Play/pause", "omarchy-shell media playPause", { locked = true })
+o.bind("SUPER + CTRL + LEFT", "Previous track", "omarchy-shell media previous", { locked = true })
+o.bind("SUPER + CTRL + RIGHT", "Next track", "omarchy-shell media next", { locked = true })
+
+local ws_keys = { M = 1, COMMA = 2, PERIOD = 3, J = 4, K = 5, L = 6, U = 7, I = 8, O = 9, MINUS = 10, NTILDE = 11, P = 12 }
+for key, ws in pairs(ws_keys) do
+  o.bind("SUPER + " .. key, "Switch to workspace " .. ws, hl.dsp.focus({ workspace = tostring(ws) }))
+  o.bind("SUPER + SHIFT + " .. key, "Move window to workspace " .. ws, hl.dsp.window.move({ workspace = tostring(ws) }))
+end
