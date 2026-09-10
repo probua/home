@@ -28,7 +28,7 @@ de sobrescribirlo y fuerza `hyprctl reload` si hay sesión Hyprland activa.
 | i3 | Omarchy (default) |
 |---|---|
 | `$mod+Return` terminal | `SUPER+RETURN` Terminal |
-| `$mod+flechas` foco | `SUPER+FLECHAS` |
+| `$mod+flechas` foco | `SUPER+FLECHAS` (en grupos, LEFT/RIGHT cambian de tab) |
 | `$mod+Shift+flechas` mover ventana | `SUPER+SHIFT+FLECHAS` (swap) |
 | `$mod+f` fullscreen | `SUPER+F` |
 | `$mod+1..0` workspaces (+Shift para mover) | `SUPER+1..0` (+Shift, +Shift+Alt silencioso) |
@@ -49,7 +49,8 @@ de sobrescribirlo y fuerza `hyprctl reload` si hay sesión Hyprland activa.
 | `$mod+d` rofi drun | `SUPER+D` Apps menu |
 | `$mod+a` dmenu | `SUPER+A` Omarchy root menu |
 | `$mod+h` split h | `SUPER+H` Toggle split (Hyprland divide automático; alterna dirección) |
-| `$mod+e` layout toggle split | `SUPER+E` Toggle dwindle/master |
+| `$mod+e` layout toggle split | `SUPER+E` (duplicado de `SUPER+H`) |
+| `$mod+w` layout tabbed | `SUPER+W` agrupa/desagrupa todas las ventanas tiled del workspace (≈ tabbed; navega con `SUPER+ALT+TAB`) |
 | `$mod+Ctrl+m` mute micro | `SUPER+CTRL+M` |
 | `$mod+Ctrl+Up/Down` volumen ± | `SUPER+CTRL+UP/DOWN` (con OSD y repetición) |
 
@@ -84,6 +85,8 @@ de sobrescribirlo y fuerza `hyprctl reload` si hay sesión Hyprland activa.
 | `SUPER+MINUS` | Expand window left | Quedan `SUPER+CTRL/ALT+MINUS` |
 | `SUPER+P` | Pseudo window | Sin reemplazo (poco usado) |
 | `SUPER+SHIFT+COMMA` | Dismiss all notifications | — |
+| `SUPER+SPACE` | Omarchy menu (launcher) | Apps menu (`SUPER+D`) y menú root (`SUPER+A`) |
+| `SUPER+W` | Close window | `SUPER+Q` (mismo atajo que en i3) |
 | `SUPER+SHIFT+O` | Lanzar Obsidian | Vía apps menu (`SUPER+D`) |
 | `SUPER+SHIFT+P` | Lanzar Google Photos | Vía apps menu |
 | `SUPER+SHIFT+MINUS` | Shrink window up | Quedan variantes CTRL/ALT |
@@ -94,14 +97,17 @@ de sobrescribirlo y fuerza `hyprctl reload` si hay sesión Hyprland activa.
 Nota: Omarchy define MINUS/IGUAL por keycode, por eso los unbinds usan
 `SUPER + code:20` (y su variante SHIFT) en lugar del keysym.
 
+Nota: `SUPER+E` antes alternaba el layout del workspace (dwindle/scrolling);
+esa función sigue disponible como comando
+`omarchy-hyprland-workspace-layout-toggle`.
+
 ## No migrado (con alternativas)
 
 | i3 | Situación en Hyprland |
 |---|---|
 | `$mod+r` modo resize | No hay modos. Usar `SUPER+MINUS/IGUAL` (y variantes CTRL/ALT) o `SUPER+clic der.` para redimensionar |
 | `$mod+s` layout stacking | Sin equivalente. Grupos: `SUPER+G` |
-| `$mod+w` layout tabbed | Grupos de Hyprland: `SUPER+G` (≈ tabbed), `SUPER+ALT+TAB` navega |
-| `$mod+space` toggle floating | Es `SUPER+T` (se prioriza el launcher `SUPER+SPACE`) |
+| `$mod+space` toggle floating | `SUPER+SPACE` (y `SUPER+T` sigue igual) |
 | `$mod+v` split v | `SUPER+H` cubre h/v con una tecla; `SUPER+V` sigue siendo pegado universal |
 | `$mod+Shift+c/r` reload/restart | Hyprland recarga la config automáticamente al guardar |
 | Barra i3blocks / colores / gaps | Fuera de alcance: solo hotkeys (Omarchy shell los cubre) |

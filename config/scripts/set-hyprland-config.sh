@@ -6,6 +6,13 @@ if [ -f ~/.config/hypr/bindings.lua ] && ! cmp -s config/hypr/bindings.lua ~/.co
 fi
 cat config/hypr/bindings.lua > ~/.config/hypr/bindings.lua
 
+mkdir -p ~/.local/bin
+for script in config/hypr/scripts/*.sh; do
+  name=$(basename "$script" .sh)
+  cp "$script" ~/.local/bin/"$name"
+  chmod +x ~/.local/bin/"$name"
+done
+
 if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
   hyprctl reload >/dev/null 2>&1
 fi
