@@ -34,9 +34,9 @@ de sobrescribirlo y fuerza `hyprctl reload` si hay sesión Hyprland activa.
 | `$mod+1..0` workspaces (+Shift para mover) | `SUPER+1..0` (+Shift, +Shift+Alt silencioso) |
 | `floating_modifier $mod` | `SUPER+clic izq.` mover / `SUPER+clic der.` redimensionar |
 | `Print` captura | `PRINT` Screenshot |
-| `$mod+Escape` menú lock | `SUPER+ESCAPE` System menu (lock/logout/reboot/shutdown) |
-| `$mod+Shift+e` menú exit | Cubierto por `SUPER+ESCAPE` |
-| `$mod+Shift+w` selector de wallpaper | `SUPER+CTRL+SPACE` Background switcher* |
+| `$mod+Escape` menú lock | `SUPER+ESCAPE` Lock directo (`omarchy-shell lock lock`, IPC del servicio omarchy.lock) |
+| `$mod+Shift+e` menú exit | `SUPER+SHIFT+E` System menu (antes en `SUPER+ESCAPE`) |
+| `$mod+Shift+w` selector de wallpaper | `SUPER+SHIFT+W` Background switcher |
 | Teclas XF86 volumen/brillo/media | Idénticas, con OSD de Omarchy |
 
 \* `SUPER+CTRL+SPACE` se reasigna en esta capa (ver conflictos).
@@ -146,6 +146,9 @@ geometría, solo cuenta ventanas.
 | `SUPER+MINUS` | Expand window left | Quedan `SUPER+CTRL/ALT+MINUS` |
 | `SUPER+P` | Pseudo window | Sin reemplazo (poco usado) |
 | `SUPER+SHIFT+COMMA` | Dismiss all notifications | — |
+| `SUPER+SHIFT+M` | Music (Spotify) | Restaurado: mover a ws 1 (colisión dura: Hyprland ejecuta el primer bind registrado) |
+| `SUPER+SHIFT+E` | Email (webapp) | `SUPER+SHIFT+E` System menu (menú exit i3) |
+| `SUPER+SHIFT+W` | Omawrite | `SUPER+SHIFT+W` Background switcher (wallpaper picker i3) |
 | `SUPER+SPACE` | Omarchy menu (launcher) | Apps menu (`SUPER+D`) y menú root (`SUPER+A`) |
 | `SUPER+W` | Close window | `SUPER+Q` (mismo atajo que en i3) |
 | `SUPER+SHIFT+O` | Lanzar Obsidian | Vía apps menu (`SUPER+D`) |
