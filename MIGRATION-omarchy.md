@@ -73,6 +73,41 @@ de sobrescribirlo y fuerza `hyprctl reload` si hay sesión Hyprland activa.
 | `Ñ` (NTILDE) | 11 |
 | `P` | 12 |
 
+## Barra: rueda sobre workspaces (capa shell)
+
+Réplica del scroll de i3bar: la rueda del ratón sobre el widget de
+workspaces de la barra inferior rota de workspace (arriba = anterior,
+abajo = siguiente). `SUPER+rueda` (global) sigue disponible.
+
+Implementación: `config/scripts/set-omarchy-shell-config.sh` clona el
+widget built-in con el mecanismo oficial (`omarchy plugin clone
+omarchy.workspaces` → `~/.config/omarchy/plugins/probua.workspaces/`) e
+inyecta parches mínimos sobre el QML clonado, en dos fases idempotentes:
+
+- fase 1 (rueda): función `focusRelativeWorkspace()` → dispatch `e±1` +
+  `onWheelMoved` en los botones (señal que `WidgetButton` ya emite,
+  mismo patrón que los widgets Tray/Microphone)
+- fase 2 (estilo visual): activo = número blanco, pasivo (con ventanas,
+  no visible) = número gris, inactivo (sin ventanas) = oculto — la barra
+  solo muestra existentes + activo (réplica de i3 con
+  `strip_workspace_numbers`)
+- fase 3 (rango y etiqueta): los workspaces 10-12 se muestran como
+  "10"/"11"/"12" (el filtro original tapaba 11/12 y el 10 salía como
+  "0")
+
+Los parches usan anclajes sobre el QML más reciente: si Omarchy cambia
+el widget upstream, el installer detecta el anclaje roto y avisa sin
+tocar nada. Las escrituras son in-place (preservan el inode para el
+watcher del shell) y al final se ejecuta `omarchy-restart-shell` solo
+si se aplicó algún parche (los re-runs sin cambios son silenciosos y
+no tocan el shell). La deriva de features del widget no llega al clon
+automáticamente (es un fork), pero el fallo siempre es gracioso: a lo
+sumo el widget desaparece de la barra.
+
+Reversión: `omarchy plugin remove probua.workspaces` restaura el
+built-in. Las actualizaciones de Omarchy nunca tocan
+`~/.config/omarchy/`.
+
 ## Conflictos resueltos (i3 gana) y mitigaciones
 
 | Tecla | Se pierde (default Omarchy) | Mitigación |

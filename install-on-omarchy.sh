@@ -3,6 +3,7 @@
 source config/scripts/set-bash-config.sh
 source config/scripts/set-vim-config.sh
 source config/scripts/set-hyprland-config.sh
+source config/scripts/set-omarchy-shell-config.sh
 # source config/scripts/set-rofi-config.sh
 # source config/scripts/set-picom-config.sh
 # source config/scripts/set-i3-config.sh
