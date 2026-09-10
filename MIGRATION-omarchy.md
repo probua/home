@@ -108,6 +108,32 @@ Reversión: `omarchy plugin remove probua.workspaces` restaura el
 built-in. Las actualizaciones de Omarchy nunca tocan
 `~/.config/omarchy/`.
 
+## Look & feel: smart gaps/borders
+
+Réplica del `smart_gaps on` + `smart_borders no_gaps` de i3: cuando un
+workspace tiene una sola ventana tiled, ocupa todo el espacio sin gaps
+ni borde; al haber dos o más vuelven los valores por defecto de Omarchy.
+
+Hyprland no tiene esta opción nativa: la histórica
+`dwindle:no_gaps_when_only` fue eliminada en la reestructuración lua
+(verificado en wiki y fuente de 0.56), sin reemplazo. La implementa el
+daemon `config/hypr/scripts/hypr-smart-single-window.sh` (instalado en
+`~/.local/bin/` y arrancado por la capa de binds con `o.exec_on_start`):
+escucha eventos de Hyprland por socket2 y aplica el mismo mecanismo del
+toggle oficial de Omarchy — un lua de estado en
+`~/.local/state/omarchy/toggles/hypr/smart-single-window.lua` (gaps y
+borde a 0) más `hyprctl reload` cuando el workspace enfocado tiene una
+sola ventana tiled; al pasar a dos o más elimina el archivo y recarga,
+restaurando lo que definan los config files (sin defaults
+hardcodeados). Nota: ni las workspace rules ni los `hyprctl eval`
+runtime re-layoutean de forma fiable — solo la recarga de config.
+
+Semántica: las ventanas flotantes no cuentan y un grupo (SUPER+W)
+cuenta como N ventanas (como i3 tabbed). Singleton via flock; solo
+recarga en las transiciones 1↔N del ws enfocado. Log de diagnóstico
+en `$XDG_RUNTIME_DIR/hypr-smart-single.log`. Escala-agnóstico: no toca
+geometría, solo cuenta ventanas.
+
 ## Conflictos resueltos (i3 gana) y mitigaciones
 
 | Tecla | Se pierde (default Omarchy) | Mitigación |
