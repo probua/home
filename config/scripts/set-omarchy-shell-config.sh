@@ -8,6 +8,21 @@
 # in-place (sin sustituir el inode, para no despistar al watcher del shell)
 # y reinicio del shell solo cuando se aplicó algún parche.
 
+# Override a nivel de máquina del omarchy-shell (gana al tema activo y
+# hot-recarga): barra de 28px para que la frontera ventana↔barra caiga en
+# píxel físico exacto con scale 1.25 (836×1.25=1045) y eliminar la franja
+# de 1-2px al cambiar de workspace (layout flush sin gaps).
+install_shell_toml() {
+  mkdir -p "$HOME/.config/omarchy"
+  if [ -f "$HOME/.config/omarchy/shell.toml" ] && ! cmp -s config/omarchy/shell.toml "$HOME/.config/omarchy/shell.toml"; then
+    cp "$HOME/.config/omarchy/shell.toml" "$HOME/.config/omarchy/shell.toml.bak.$(date +%s)"
+  fi
+  if ! cmp -s config/omarchy/shell.toml "$HOME/.config/omarchy/shell.toml"; then
+    cat config/omarchy/shell.toml > "$HOME/.config/omarchy/shell.toml"
+    echo "set-omarchy-shell-config: shell.toml instalado (barra 28px, hot-reload)"
+  fi
+}
+
 set_omarchy_shell_config() {
   local SOURCE_ID="omarchy.workspaces"
   local PLUGIN_ID="${USER:-$(id -un)}.workspaces"
@@ -168,4 +183,5 @@ EOF
   fi
 }
 
+install_shell_toml
 set_omarchy_shell_config
