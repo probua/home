@@ -49,5 +49,3 @@ for key, ws in pairs(ws_keys) do
   o.bind("SUPER + " .. key, "Switch to workspace " .. ws, hl.dsp.focus({ workspace = tostring(ws) }))
   o.bind("SUPER + SHIFT + " .. key, "Move window to workspace " .. ws, hl.dsp.window.move({ workspace = tostring(ws) }))
 end
-
-o.exec_on_start("hypr-smart-single-window")
