@@ -5,6 +5,9 @@
 #   fase 2 - estilo visual: activo = número claro, resto = punto gris
 #   fase 4 - rueda sobre TODA la barra rota workspace, excepto sobre los tray
 #            icons (que conservan su scroll propio vía propagación del evento)
+#   fase 5 - lock sobrio: clon de omarchy.lock con el wallpaper oscurecido y
+#            desaturado (entorno de trabajo)
+#   fase 6 - idle sin ttfx: lock directo a los 150s, monitor off ~155s
 # Mecanismo: clon oficial del widget + parches mínimos con anclajes,
 # idempotentes por fase y con detección de deriva upstream. Escrituras
 # in-place (sin sustituir el inode, para no despistar al watcher del shell)
@@ -252,6 +255,72 @@ EOF
     rm -f "$SNIP4"
     patched=1
     echo "set-omarchy-shell-config: fase 4 aplicada (rueda en toda la barra)"
+  fi
+
+  # ---------- Fase 5: lock sobrio ----------
+  # Clon del servicio de lock para trabajo: el wallpaper de la pantalla de
+  # bloqueo se oscurece (brightness) y desatura (saturation) via el
+  # MultiEffect de LockView.qml. El clon hereda la capability `authentication`
+  # (PluginRegistry la copia del origen via clonedFrom), así que PAM password
+  # y fingerprint siguen intactos; el IPC `lock` rutea al clon vía
+  # resolveEnabledId y el built-in pasa a disabledPlugins[] al habilitarse.
+  local LOCK_PLUGIN_ID="${USER:-$(id -un)}.lock"
+  local LOCK_DIR="$HOME/.config/omarchy/plugins/$LOCK_PLUGIN_ID"
+  local LOCK_QML="$LOCK_DIR/LockView.qml"
+
+  # Registro en máquina nueva: el clone habilita el clon él solo (plugins[] +
+  # disabledPlugins[] en shell.json).
+  if ! grep -q "\"$LOCK_PLUGIN_ID\"" "$HOME/.config/omarchy/shell.json" 2>/dev/null; then
+    omarchy plugin clone omarchy.lock >/dev/null
+  fi
+
+  if [[ ! -f $LOCK_QML ]]; then
+    echo "set-omarchy-shell-config: falta $LOCK_QML" >&2
+    return 1
+  fi
+
+  if ! grep -qF "brightness: -0.55" "$LOCK_QML"; then
+    local ANCHOR_CONTRAST='contrast: -0.08'
+    if [[ $(grep -cF "$ANCHOR_CONTRAST" "$LOCK_QML") != 1 ]]; then
+      echo "set-omarchy-shell-config: anclaje de fase 5 no único; omitida" >&2
+      rm -f "$TMP"
+      return 1
+    fi
+
+    awk -v anchor="$ANCHOR_CONTRAST" '
+      {
+        print
+        if (index($0, anchor) > 0) {
+          print "      brightness: -0.55"
+          print "      saturation: -0.3"
+        }
+      }
+    ' "$LOCK_QML" >"$TMP" && cat "$TMP" >"$LOCK_QML"
+    patched=1
+    echo "set-omarchy-shell-config: fase 5 aplicada (lock sobrio: wallpaper oscurecido)"
+  fi
+
+  # ---------- Fase 6: idle — lock directo, sin screensaver ttfx ----------
+  # lock a los 150s y screensaver a los 300s: como el lock llega primero, el
+  # guard isLocked de omarchy-launch-screensaver impide que ttfx arranque
+  # durante idle, y el monitor se apaga ~5s después del lock (blank del lock).
+  # screensaver debe ser MAYOR que lock: con ambos iguales disparan a la vez
+  # y los terminales de ttfx parpadearían justo antes de que el lock los mate.
+  # Escritura in-place (sin sustituir el inode) porque el shell watchea el
+  # archivo; el cambio hot-recarga sin reinicio.
+  if command -v jq >/dev/null 2>&1 && [[ -f $HOME/.config/omarchy/shell.json ]]; then
+    if ! jq -e '(.idle.screensaver // 0) == 300 and (.idle.lock // 0) == 150' \
+        "$HOME/.config/omarchy/shell.json" >/dev/null 2>&1; then
+      local TMPJSON
+      TMPJSON=$(mktemp)
+      jq '.idle = ((.idle // {}) + {screensaver: 300, lock: 150})' \
+        "$HOME/.config/omarchy/shell.json" >"$TMPJSON" && \
+        cat "$TMPJSON" >"$HOME/.config/omarchy/shell.json"
+      rm -f "$TMPJSON"
+      echo "set-omarchy-shell-config: idle ajustado (lock 150s directo, ttfx nunca en idle)"
+    fi
+  else
+    echo "set-omarchy-shell-config: shell.json/jq no disponibles; fase idle omitida" >&2
   fi
 
   rm -f "$TMP"
