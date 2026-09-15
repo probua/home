@@ -3,6 +3,8 @@
 # Capa de personalización del omarchy-shell sobre el widget de workspaces:
 #   fase 1 - rueda del ratón sobre el widget rota de workspace (réplica i3bar)
 #   fase 2 - estilo visual: activo = número claro, resto = punto gris
+#   fase 4 - rueda sobre TODA la barra rota workspace, excepto sobre los tray
+#            icons (que conservan su scroll propio vía propagación del evento)
 # Mecanismo: clon oficial del widget + parches mínimos con anclajes,
 # idempotentes por fase y con detección de deriva upstream. Escrituras
 # in-place (sin sustituir el inode, para no despistar al watcher del shell)
@@ -170,6 +172,86 @@ EOF
     ' "$QML" >"$TMP" && cat "$TMP" >"$QML"
     patched=1
     echo "set-omarchy-shell-config: fase 3 aplicada (workspaces 10-12)"
+  fi
+
+  # ---------- Fase 4: rueda del ratón en toda la barra ----------
+  # Un MouseArea se re-parentea al contentItem de la ventana de la barra,
+  # encima de todo (los WidgetButton — reloj, menú, iconos de paneles —
+  # aceptan la rueda en su onWheel aunque nadie la use, así que un capturador
+  # al fondo de la pila dejaría zonas muertas). Sin botones ni hover no
+  # interfiere con clics, arrastres ni tooltips. La rueda solo se intercepta
+  # si el punto NO cae dentro del subtree del tray: en ese caso se declina
+  # (wheel.accepted = false) y el evento sigue su entrega normal, de modo que
+  # los tray icons conservan su scroll (Tray.qml consume onWheel él solo).
+  # Requiere `import Quickshell` (el tipo attached QsWindow no resuelve sin él).
+  local NEED_IMPORT=0 NEED_AREA=0
+  grep -qFx "import Quickshell" "$QML" || NEED_IMPORT=1
+  grep -q "barWheelArea" "$QML" || NEED_AREA=1
+  if (( NEED_IMPORT || NEED_AREA )); then
+    local ANCHOR_IMPLICIT='implicitHeight: grid.implicitHeight'
+    local ANCHOR_IMPORT='import Quickshell.Hyprland'
+    if (( NEED_AREA )) && [[ $(grep -cF "$ANCHOR_IMPLICIT" "$QML") != 1 ]]; then
+      echo "set-omarchy-shell-config: anclaje de fase 4 no único; omitida" >&2
+      rm -f "$TMP"
+      return 1
+    fi
+    if (( NEED_IMPORT )) && [[ $(grep -cF "$ANCHOR_IMPORT" "$QML") != 1 ]]; then
+      echo "set-omarchy-shell-config: anclaje de import no único; fase 4 omitida" >&2
+      rm -f "$TMP"
+      return 1
+    fi
+
+    local SNIP4
+    SNIP4=$(mktemp)
+    cat >"$SNIP4" <<'EOF'
+
+  MouseArea {
+    id: barWheelArea
+    parent: root.QsWindow.contentItem
+    anchors.fill: parent
+    z: 999
+    acceptedButtons: Qt.NoButton
+    hoverEnabled: false
+
+    function itemHit(item, x, y) {
+      var kids = item.children
+      for (var i = kids.length - 1; i >= 0; i--) {
+        var child = kids[i]
+        if (!child || child === barWheelArea || !child.visible) continue
+        var origin = child.mapToItem(item, 0, 0)
+        var localX = x - origin.x
+        var localY = y - origin.y
+        if (localX < 0 || localY < 0 || localX > child.width || localY > child.height) continue
+        if (child.moduleName === "omarchy.tray") return true
+        if (itemHit(child, localX, localY)) return true
+      }
+      return false
+    }
+
+    onWheel: function(wheel) {
+      if (itemHit(barWheelArea.parent, wheel.x, wheel.y)) {
+        wheel.accepted = false
+        return
+      }
+      root.focusRelativeWorkspace(wheel.angleDelta.y > 0 ? -1 : 1)
+    }
+  }
+EOF
+
+    awk -v need_import="$NEED_IMPORT" -v need_area="$NEED_AREA" \
+        -v anchor_import="$ANCHOR_IMPORT" -v anchor_implicit="$ANCHOR_IMPLICIT" -v snip="$SNIP4" '
+      {
+        if (need_import && index($0, anchor_import) > 0) print "import Quickshell"
+        print $0
+        if (need_area && index($0, anchor_implicit) > 0) {
+          while ((getline l < snip) > 0) print l
+          close(snip)
+        }
+      }
+    ' "$QML" >"$TMP" && cat "$TMP" >"$QML"
+    rm -f "$SNIP4"
+    patched=1
+    echo "set-omarchy-shell-config: fase 4 aplicada (rueda en toda la barra)"
   fi
 
   rm -f "$TMP"
