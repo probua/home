@@ -4,6 +4,7 @@ source config/scripts/set-bash-config.sh
 source config/scripts/set-vim-config.sh
 source config/scripts/set-hyprland-config.sh
 source config/scripts/set-omarchy-shell-config.sh
+source config/scripts/set-omarchy-theme-config.sh
 source config/scripts/set-docker-user-config.sh
 source config/scripts/set-default-browser-config.sh
 # source config/scripts/set-rofi-config.sh
