@@ -5,8 +5,8 @@
 #   fase 2 - estilo visual: activo = número claro, resto = punto gris
 #   fase 4 - rueda sobre TODA la barra rota workspace, excepto sobre los tray
 #            icons (que conservan su scroll propio vía propagación del evento)
-#   fase 5 - lock sobrio: clon de omarchy.lock con el wallpaper oscurecido y
-#            desaturado (entorno de trabajo)
+#   fase 5 - lock sobrio: clon de omarchy.lock con el wallpaper ligeramente
+#            oscurecido y desaturado (entorno de trabajo)
 #   fase 6 - idle sin ttfx: lock directo a los 150s, monitor off ~155s
 # Mecanismo: clon oficial del widget + parches mínimos con anclajes,
 # idempotentes por fase y con detección de deriva upstream. Escrituras
@@ -259,7 +259,7 @@ EOF
 
   # ---------- Fase 5: lock sobrio ----------
   # Clon del servicio de lock para trabajo: el wallpaper de la pantalla de
-  # bloqueo se oscurece (brightness) y desatura (saturation) via el
+  # bloqueo se atenúa ligeramente (brightness) y desatura (saturation) via el
   # MultiEffect de LockView.qml. El clon hereda la capability `authentication`
   # (PluginRegistry la copia del origen via clonedFrom), así que PAM password
   # y fingerprint siguen intactos; el IPC `lock` rutea al clon vía
@@ -279,7 +279,11 @@ EOF
     return 1
   fi
 
-  if ! grep -qF "brightness: -0.55" "$LOCK_QML"; then
+  # Converge a brightness/saturation ligeros desde cualquier estado previo:
+  # clones nuevos (stock) insertan ambas líneas tras el ancla contrast, e
+  # instalaciones que ya traían el oscurecido fuerte (-0.55/-0.3) lo corrigen
+  # en sitio sin duplicar. Marker de aplicado: `brightness: -0.1`.
+  if ! grep -qF "brightness: -0.1" "$LOCK_QML"; then
     local ANCHOR_CONTRAST='contrast: -0.08'
     if [[ $(grep -cF "$ANCHOR_CONTRAST" "$LOCK_QML") != 1 ]]; then
       echo "set-omarchy-shell-config: anclaje de fase 5 no único; omitida" >&2
@@ -287,17 +291,26 @@ EOF
       return 1
     fi
 
-    awk -v anchor="$ANCHOR_CONTRAST" '
-      {
-        print
-        if (index($0, anchor) > 0) {
-          print "      brightness: -0.55"
-          print "      saturation: -0.3"
+    if grep -qE '^[[:space:]]*brightness:' "$LOCK_QML"; then
+      awk '
+        /^[ \t]*brightness:/ { print "      brightness: -0.1"; next }
+        /^[ \t]*saturation:/ { print "      saturation: -0.15"; next }
+        { print }
+      ' "$LOCK_QML" >"$TMP"
+    else
+      awk -v anchor="$ANCHOR_CONTRAST" '
+        {
+          print
+          if (index($0, anchor) > 0) {
+            print "      brightness: -0.1"
+            print "      saturation: -0.15"
+          }
         }
-      }
-    ' "$LOCK_QML" >"$TMP" && cat "$TMP" >"$LOCK_QML"
+      ' "$LOCK_QML" >"$TMP"
+    fi
+    cat "$TMP" >"$LOCK_QML"
     patched=1
-    echo "set-omarchy-shell-config: fase 5 aplicada (lock sobrio: wallpaper oscurecido)"
+    echo "set-omarchy-shell-config: fase 5 aplicada (lock sobrio: wallpaper ligeramente oscurecido)"
   fi
 
   # ---------- Fase 6: idle — lock directo, sin screensaver ttfx ----------
