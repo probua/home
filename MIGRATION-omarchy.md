@@ -29,7 +29,7 @@ de sobrescribirlo y fuerza `hyprctl reload` si hay sesión Hyprland activa.
 |---|---|
 | `$mod+Return` terminal | `SUPER+RETURN` Terminal |
 | `$mod+flechas` foco | `SUPER+FLECHAS` (en grupos, LEFT/RIGHT cambian de tab) |
-| `$mod+Shift+flechas` mover ventana | `SUPER+SHIFT+FLECHAS` (swap) |
+| `$mod+Shift+flechas` mover ventana | `SUPER+SHIFT+FLECHAS` (swap; si la ventana está en grupo, la saca de él — `hypr-swap-or-ungroup`) |
 | `$mod+f` fullscreen | `SUPER+F` |
 | `$mod+1..0` workspaces (+Shift para mover) | `SUPER+1..0` (+Shift, +Shift+Alt silencioso) |
 | `floating_modifier $mod` | `SUPER+clic izq.` mover / `SUPER+clic der.` redimensionar |
