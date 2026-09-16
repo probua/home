@@ -91,9 +91,15 @@ inyecta parches mínimos sobre el QML clonado, en dos fases idempotentes:
   no visible) = número gris, inactivo (sin ventanas) = oculto — la barra
   solo muestra existentes + activo (réplica de i3 con
   `strip_workspace_numbers`)
-- fase 3 (rango y etiqueta): los workspaces 10-12 se muestran como
-  "10"/"11"/"12" (el filtro original tapaba 11/12 y el 10 salía como
-  "0")
+  - fase 3 (rango y etiqueta): los workspaces 10-12 se muestran como
+    "10"/"11"/"12" (el filtro original tapaba 11/12 y el 10 salía como
+    "0")
+  - fase 7 (rotación acotada): la rueda salta solo entre workspaces
+    existentes dentro del rango 1..12; en los bordes la rotación se
+    detiene (nada de wrap). El delta se acumula con umbral ±120 (un
+    click de rueda) y al disparar se consume todo el acumulado, de modo
+    que el trackpad no dispara un cambio por cada micro-evento. Sin
+    lógica temporal: el cooldown inicial se retiró por confort (fase 8).
 
 Los parches usan anclajes sobre el QML más reciente: si Omarchy cambia
 el widget upstream, el installer detecta el anclaje roto y avisa sin

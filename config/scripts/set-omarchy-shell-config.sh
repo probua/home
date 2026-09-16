@@ -8,6 +8,11 @@
 #   fase 5 - lock sobrio: clon de omarchy.lock con el wallpaper ligeramente
 #            oscurecido y desaturado (entorno de trabajo)
 #   fase 6 - idle sin ttfx: lock directo a los 150s, monitor off ~155s
+#   fase 7 - rueda acotada: salta solo entre workspaces existentes en
+#            1..12 (sin wrap en los bordes) y acumula el delta para que
+#            el trackpad no dispare un cambio por cada micro-evento
+#   fase 8 - rueda sin lógica temporal: elimina el cooldown y el reset
+#            de gesto de la fase 7 v1 (umbral ±120 + consumo total)
 # Mecanismo: clon oficial del widget + parches mínimos con anclajes,
 # idempotentes por fase y con detección de deriva upstream. Escrituras
 # in-place (sin sustituir el inode, para no despistar al watcher del shell)
@@ -334,6 +339,131 @@ EOF
     fi
   else
     echo "set-omarchy-shell-config: shell.json/jq no disponibles; fase idle omitida" >&2
+  fi
+
+  # ---------- Fase 7: rueda acotada (1..12, existentes) + umbral trackpad ----------
+  # focusRelativeWorkspace pasa de e±1 (relativo sin límite, envuelve) a
+  # saltar entre workspaces EXISTENTES dentro de 1..12: se construye la
+  # lista real desde Hyprland.workspaces.values (sin el seed 1..5 que usa
+  # workspaceIds() para pintar botones) y se salta al id adyacente en la
+  # dirección dada; en los bordes no hay wrap: la rueda simplemente para.
+  # Trackpad: un gesto emite decenas de micro-deltas (±5..30) y cada una
+  # cambiaba de workspace. rotateWorkspace() acumula el delta y solo
+  # dispara al superar el umbral de un click de rueda (±120), consumiendo
+  # todo el acumulado al disparar (sin lógica temporal; ver fase 8).
+  local A1='? "+1" : "-1"'
+  local A2='readonly property real trailingGap'
+  local A3='onWheelMoved: function(delta) { root.focusRelativeWorkspace(delta > 0 ? -1 : 1) }'
+  local A4='root.focusRelativeWorkspace(wheel.angleDelta.y > 0 ? -1 : 1)'
+  if ! grep -q "rotateWorkspace" "$QML"; then
+    local a
+    for a in "$A1" "$A2" "$A3" "$A4"; do
+      if [[ $(grep -cF "$a" "$QML") != 1 ]]; then
+        echo "set-omarchy-shell-config: anclaje de fase 7 no único: $a; omitida" >&2
+        rm -f "$TMP"
+        return 1
+      fi
+    done
+
+    local SNIP7A SNIP7B
+    SNIP7A=$(mktemp)
+    SNIP7B=$(mktemp)
+    cat >"$SNIP7A" <<'EOF'
+    var cur = Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id : 0
+    if (!cur || cur < 1 || cur > 12) return
+    var ids = []
+    var values = Hyprland.workspaces.values
+    for (var i = 0; i < values.length; i++) {
+      var id = values[i].id
+      if (id >= 1 && id <= 12 && ids.indexOf(id) === -1) ids.push(id)
+    }
+    ids.sort(function(l, r) { return l - r })
+    var idx = ids.indexOf(cur)
+    if (idx === -1) return
+    var next = idx + (offset > 0 ? 1 : -1)
+    if (next < 0 || next >= ids.length) return
+    root.focusWorkspace(ids[next])
+EOF
+    cat >"$SNIP7B" <<'EOF'
+  property real wheelAccum: 0
+
+  function rotateWorkspace(delta) {
+    root.wheelAccum += delta
+    if (Math.abs(root.wheelAccum) < 120) return
+    var off = root.wheelAccum > 0 ? -1 : 1
+    root.wheelAccum = 0
+    root.focusRelativeWorkspace(off)
+  }
+
+EOF
+
+    awk -v a1="$A1" -v a2="$A2" -v a3="$A3" -v a4="$A4" \
+        -v snip7a="$SNIP7A" -v snip7b="$SNIP7B" '
+      {
+        line = $0
+        if (index(line, a1) > 0) {
+          while ((getline l < snip7a) > 0) print l
+          close(snip7a)
+          next
+        }
+        if (index(line, a3) > 0) {
+          print "        onWheelMoved: function(delta) { root.rotateWorkspace(delta) }"
+          next
+        }
+        if (index(line, a4) > 0) {
+          print "      root.rotateWorkspace(wheel.angleDelta.y)"
+          next
+        }
+        if (index(line, a2) > 0) {
+          while ((getline l < snip7b) > 0) print l
+          close(snip7b)
+          print line
+          next
+        }
+        print line
+      }
+    ' "$QML" >"$TMP" && cat "$TMP" >"$QML"
+    rm -f "$SNIP7A" "$SNIP7B"
+    patched=1
+    echo "set-omarchy-shell-config: fase 7 aplicada (rueda acotada 1..12 + umbral trackpad)"
+  fi
+
+  # ---------- Fase 8: rueda sin lógica temporal ----------
+  # La fase 7 v1 gateaba los disparos con cooldown (150ms) y reset de
+  # gesto (300ms); en la práctica el cooldown se siente mal. Se elimina
+  # toda la lógica temporal: queda la acumulación pura con umbral ±120
+  # (un click de rueda) y consumo total del acumulado al disparar. Las
+  # ráfagas se coalescen solas porque Hyprland.focusedWorkspace se
+  # actualiza de forma asíncrona (IPC) entre disparos consecutivos.
+  # Marcador: lastWheelTs (presente solo en la fase 7 v1); en máquinas
+  # nuevas la fase 7 ya inserta la versión final y esto no actúa.
+  local D1='  property real lastRotateTs: 0'
+  local D2='  property real lastWheelTs: 0'
+  local D3='    var now = Date.now()'
+  local D4='    if (now - root.lastWheelTs > 300) root.wheelAccum = 0'
+  local D5='    root.lastWheelTs = now'
+  local D6='    if (now - root.lastRotateTs < 150) return'
+  local D7='    root.lastRotateTs = now'
+  if grep -q "lastWheelTs" "$QML"; then
+    local d
+    for d in "$D1" "$D2" "$D3" "$D4" "$D5" "$D6" "$D7"; do
+      if [[ $(grep -cF "$d" "$QML") != 1 ]]; then
+        echo "set-omarchy-shell-config: anclaje de fase 8 no único: $d; omitida" >&2
+        rm -f "$TMP"
+        return 1
+      fi
+    done
+
+    awk -v d1="$D1" -v d2="$D2" -v d3="$D3" -v d4="$D4" \
+        -v d5="$D5" -v d6="$D6" -v d7="$D7" '
+      {
+        if ($0 == d1 || $0 == d2 || $0 == d3 || $0 == d4 ||
+            $0 == d5 || $0 == d6 || $0 == d7) next
+        print
+      }
+    ' "$QML" >"$TMP" && cat "$TMP" >"$QML"
+    patched=1
+    echo "set-omarchy-shell-config: fase 8 aplicada (rueda sin cooldown ni reset de gesto)"
   fi
 
   rm -f "$TMP"
