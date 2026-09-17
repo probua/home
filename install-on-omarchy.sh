@@ -7,6 +7,7 @@ source config/scripts/set-omarchy-shell-config.sh
 source config/scripts/set-omarchy-theme-config.sh
 source config/scripts/set-docker-user-config.sh
 source config/scripts/set-default-browser-config.sh
+source config/scripts/set-onlyoffice-config.sh
 # source config/scripts/set-rofi-config.sh
 # source config/scripts/set-picom-config.sh
 # source config/scripts/set-i3-config.sh
