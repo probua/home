@@ -13,10 +13,12 @@
 #            el trackpad no dispare un cambio por cada micro-evento
 #   fase 8 - rueda sin lógica temporal: elimina el cooldown y el reset
 #            de gesto de la fase 7 v1 (umbral ±120 + consumo total)
-#   fase 9 - lock: el movimiento del mouse al despertar (post-blank DPMS o
-#            resume de suspend) también re-enfoca el campo de contraseña,
-#            como ya hacía el click; cierra la carrera de foco que obligaba
-#            a clickear antes de poder escribir la contraseña
+#   fase 11 - lock: guard de foco reactivo — cualquier pérdida de
+#            activeFocus en el campo de contraseña se re-forza al instante
+#            (latencia 0, sin polling); reemplaza y subsume a las fases 9
+#            y 10 (wake por mouse y timer de 300ms con su ventana de
+#            pérdida de input). La (re)creación de superficie la cubre
+#            upstream con Component.onCompleted + Qt.callLater
 # Mecanismo: clon oficial del widget + parches mínimos con anclajes,
 # idempotentes por fase y con detección de deriva upstream. Escrituras
 # in-place (sin sustituir el inode, para no despistar al watcher del shell)
@@ -470,36 +472,90 @@ EOF
     echo "set-omarchy-shell-config: fase 8 aplicada (rueda sin cooldown ni reset de gesto)"
   fi
 
-  # ---------- Fase 9: foco del password al despertar con el mouse ----------
-  # Tras el blank por DPMS (idleBlankTimer, 5s tras el lock) — y sobre todo
-  # tras lid close → suspend → resume, que recrea la WlSessionLockSurface — el
-  # TextInput del password puede quedar sin activeFocus (carrera entre la
-  # (re)creación de la superficie y la entrega de teclado del compositor).
-  # Upstream solo re-enfoca en dos puntos: creación de superficie y click
-  # (onClicked → forcePasswordFocus). El movimiento del mouse despierta el
-  # display pero no toca el foco, así que las teclas van a ninguna parte hasta
-  # un click. Se replica el semantics del click en el movimiento: cualquier
-  # hover que despierte la pantalla también recupera el foco del campo.
-  # Marcador de aplicado: forcePasswordFocus dentro de onPositionChanged.
-  local OLD_POS='onPositionChanged: root.wakeRequested()'
-  local NEW_POS='onPositionChanged: { root.wakeRequested(); root.forcePasswordFocus() }'
-  if ! grep -qF "$NEW_POS" "$LOCK_QML"; then
-    if [[ $(grep -cF "$OLD_POS" "$LOCK_QML") != 1 ]]; then
-      echo "set-omarchy-shell-config: anclaje de fase 9 no único; omitida" >&2
-    else
-      awk -v old_pos="$OLD_POS" -v new_pos="$NEW_POS" '
-        {
-          line = $0
-          pos = index(line, old_pos)
-          if (pos > 0) {
-            print substr(line, 1, pos - 1) new_pos substr(line, pos + length(old_pos))
-            next
+  # ---------- Fase 11: guard de foco reactivo del password ----------
+  # Reemplaza las fases 9 y 10: en vez de perseguir cada camino de wake
+  # (mouse) o sondear con timer (300ms, con su ventana de pérdida de
+  # input), se reacciona al síntoma común a todos: la pérdida de
+  # activeFocus del campo mientras el item vive dispara
+  # onActiveFocusChanged y el handler re-forza el foco al instante
+  # (latencia 0, sin polling, sin gate de visible: si el foco se pierde
+  # durante el blank, queda reparado antes del wake). La recreación de
+  # superficie (resume/tapa) la cubre upstream con Component.onCompleted +
+  # Qt.callLater; el hueco teórico restante (teclas en el mismo tick de
+  # creación, antes de que corra el onCompleted) es incerrable desde QML.
+  # Solo hay un LockView interactivo (inputEnabled en Service.qml); el de
+  # preview lo tiene a false y queda inerte, así que no hay guerra de focos.
+  # Marcador de aplicado: la línea onActiveFocusChanged del TextInput.
+  local OLD_POS9='onPositionChanged: { root.wakeRequested(); root.forcePasswordFocus() }'
+  local STOCK_POS9='onPositionChanged: root.wakeRequested()'
+  local ANCHOR_KEYS='Keys.onPressed: function(event) {'
+  local NEW_FOCUS='onActiveFocusChanged: if (!activeFocus && root.inputEnabled) root.forcePasswordFocus()'
+
+  # Migración desde fases 9+10 (máquinas que ya las tenían aplicadas):
+  # 1) revertir el parche de fase 9 a la línea stock del MouseArea.
+  if grep -qF "$OLD_POS9" "$LOCK_QML"; then
+    awk -v old_pos="$OLD_POS9" -v stock_pos="$STOCK_POS9" '
+      {
+        line = $0
+        pos = index(line, old_pos)
+        if (pos > 0) {
+          print substr(line, 1, pos - 1) stock_pos substr(line, pos + length(old_pos))
+          next
+        }
+        print line
+      }
+    ' "$LOCK_QML" >"$TMP" && cat "$TMP" >"$LOCK_QML"
+    patched=1
+    echo "set-omarchy-shell-config: fase 11 migración (fase 9 revertida a stock)"
+  fi
+
+  # 2) eliminar el bloque Timer focusGuard de la fase 10 (buffer desde
+  #    "  Timer {" hasta su "  }": solo se dropea si contiene
+  #    id: focusGuard, junto al blanco que la inserción original añadió
+  #    tras el bloque; cualquier otro Timer a nivel de root se respeta).
+  if grep -q "id: focusGuard" "$LOCK_QML"; then
+    awk '
+      {
+        if (!buffering && $0 == "  Timer {") {
+          buffering = 1
+          buf = $0 "\n"
+          next
+        }
+        if (buffering) {
+          buf = buf $0 "\n"
+          if ($0 == "  }") {
+            buffering = 0
+            if (buf ~ /id: focusGuard/) {
+              if ((getline nxt) > 0 && nxt != "") print nxt
+            } else {
+              printf "%s", buf
+            }
           }
-          print line
+          next
+        }
+        print
+      }
+    ' "$LOCK_QML" >"$TMP" && cat "$TMP" >"$LOCK_QML"
+    patched=1
+    echo "set-omarchy-shell-config: fase 11 migración (focusGuard de fase 10 eliminado)"
+  fi
+
+  # 3) aplicar el guard reactivo (fresh clone o máquina sin el parche).
+  if ! grep -qF "$NEW_FOCUS" "$LOCK_QML"; then
+    if [[ $(grep -cF "$ANCHOR_KEYS" "$LOCK_QML") != 1 ]]; then
+      echo "set-omarchy-shell-config: anclaje de fase 11 no único; omitida" >&2
+    else
+      awk -v anchor="$ANCHOR_KEYS" -v new_focus="$NEW_FOCUS" '
+        {
+          if (index($0, anchor) > 0) {
+            match($0, /^ */)
+            print substr($0, 1, RLENGTH) new_focus
+          }
+          print
         }
       ' "$LOCK_QML" >"$TMP" && cat "$TMP" >"$LOCK_QML"
       patched=1
-      echo "set-omarchy-shell-config: fase 9 aplicada (foco del password al despertar con el mouse)"
+      echo "set-omarchy-shell-config: fase 11 aplicada (guard de foco reactivo del password)"
     fi
   fi
 
