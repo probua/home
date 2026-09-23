@@ -13,6 +13,10 @@
 #            el trackpad no dispare un cambio por cada micro-evento
 #   fase 8 - rueda sin lógica temporal: elimina el cooldown y el reset
 #            de gesto de la fase 7 v1 (umbral ±120 + consumo total)
+#   fase 9 - lock: el movimiento del mouse al despertar (post-blank DPMS o
+#            resume de suspend) también re-enfoca el campo de contraseña,
+#            como ya hacía el click; cierra la carrera de foco que obligaba
+#            a clickear antes de poder escribir la contraseña
 # Mecanismo: clon oficial del widget + parches mínimos con anclajes,
 # idempotentes por fase y con detección de deriva upstream. Escrituras
 # in-place (sin sustituir el inode, para no despistar al watcher del shell)
@@ -464,6 +468,39 @@ EOF
     ' "$QML" >"$TMP" && cat "$TMP" >"$QML"
     patched=1
     echo "set-omarchy-shell-config: fase 8 aplicada (rueda sin cooldown ni reset de gesto)"
+  fi
+
+  # ---------- Fase 9: foco del password al despertar con el mouse ----------
+  # Tras el blank por DPMS (idleBlankTimer, 5s tras el lock) — y sobre todo
+  # tras lid close → suspend → resume, que recrea la WlSessionLockSurface — el
+  # TextInput del password puede quedar sin activeFocus (carrera entre la
+  # (re)creación de la superficie y la entrega de teclado del compositor).
+  # Upstream solo re-enfoca en dos puntos: creación de superficie y click
+  # (onClicked → forcePasswordFocus). El movimiento del mouse despierta el
+  # display pero no toca el foco, así que las teclas van a ninguna parte hasta
+  # un click. Se replica el semantics del click en el movimiento: cualquier
+  # hover que despierte la pantalla también recupera el foco del campo.
+  # Marcador de aplicado: forcePasswordFocus dentro de onPositionChanged.
+  local OLD_POS='onPositionChanged: root.wakeRequested()'
+  local NEW_POS='onPositionChanged: { root.wakeRequested(); root.forcePasswordFocus() }'
+  if ! grep -qF "$NEW_POS" "$LOCK_QML"; then
+    if [[ $(grep -cF "$OLD_POS" "$LOCK_QML") != 1 ]]; then
+      echo "set-omarchy-shell-config: anclaje de fase 9 no único; omitida" >&2
+    else
+      awk -v old_pos="$OLD_POS" -v new_pos="$NEW_POS" '
+        {
+          line = $0
+          pos = index(line, old_pos)
+          if (pos > 0) {
+            print substr(line, 1, pos - 1) new_pos substr(line, pos + length(old_pos))
+            next
+          }
+          print line
+        }
+      ' "$LOCK_QML" >"$TMP" && cat "$TMP" >"$LOCK_QML"
+      patched=1
+      echo "set-omarchy-shell-config: fase 9 aplicada (foco del password al despertar con el mouse)"
+    fi
   fi
 
   rm -f "$TMP"
