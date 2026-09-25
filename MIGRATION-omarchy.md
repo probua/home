@@ -197,3 +197,26 @@ omarchy refresh hyprland                  # restaura defaults (crea backup autom
 
 O restaurar manualmente el último `~/.config/hypr/bindings.lua.bak.*` y
 `hyprctl reload`.
+
+## Variante Ubuntu (Hyprland vanilla)
+
+`config/hypr/ubuntu/bindings.lua` es un puerto de esta capa a Hyprland
+vanilla ≥0.55 (API Lua upstream, sin helpers `o` ni comandos `omarchy-*`).
+Se instala con `config/scripts/set-hyprland-ubuntu-config.sh` (sourced por
+`install-on-ubuntu.sh`), que reutiliza el `looknfeel.lua` compartido y los
+scripts de binds. La instalación de Hyprland queda fuera del instalador
+(config-only): el script se omite con aviso si falta el binario.
+
+Equivalencias respecto de la capa Omarchy:
+
+| Capa Omarchy | Variante Ubuntu |
+|---|---|
+| Terminal y menús del shell | `alacritty` y `rofi -show drun` (stack del viejo i3) |
+| `omarchy-audio-*` / `omarchy-shell media` | `pactl` / `playerctl` (tomados de config/i3/i3) |
+| Menús lock/exit/wallpaper (`omarchy-menu`) | Fase 2: adaptar menús rofi (`i3-msg exit` → `hyprctl dispatch exit`; i3lock no sirve en Wayland → swaylock/hyprlock; feh → swaybg) |
+| Tema Omarchy (colores/gaps) | Defaults vanilla; looknfeel.lua aporta animaciones off + smart gaps |
+| Barra (omarchy-shell) | Fase 2: waybar |
+
+Los unbinds apuntan a defaults vanilla (importante `SUPER+M`, que en
+vanilla es exit y acá es workspace 1). Validación post-instalación:
+`Hyprland --verify-config` y `hyprctl configerrors` tras reload.

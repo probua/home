@@ -5,7 +5,7 @@ cursor = "#FECA88"
 background = "#000000"
 
 [font]
-size = 8
+size = 11.5
 
 [font.normal]
 family = "monospace"
