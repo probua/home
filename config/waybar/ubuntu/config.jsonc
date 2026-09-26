@@ -1,9 +1,12 @@
 {
     // Barra waybar (variante Ubuntu): minimalista por decisión —
-    // workspaces+ventana | reloj | bandeja+audio. cpu/red/memoria y sus
-    // glifos quedaron en git history (backlog S: re-agregar).
-    // Puerto de la config sway original; glifos FontAwesome transplantados
-    // byte a byte desde la legacy (fonts-font-awesome). Ver MIGRATION-ubuntu.md.
+    // workspaces+ventana | reloj | bandeja+red+audio.
+    // Red: módulo nativo de waybar (nm-applet de noble no registra SNI;
+    // verificado: probado con Wayland, env del compositor y X11). El menú
+    // completo de redes lo abre nm-connection-editor (network-manager-gnome)
+    // al hacer click. Bluetooth: blueman-applet vía autostart con guard.
+    // Glifos FontAwesome transplantados byte a byte desde la config legacy
+    // (fonts-font-awesome). Ver MIGRATION-ubuntu.md.
     "layer": "top",
     "position": "bottom",
     "height": 30,
@@ -15,7 +18,7 @@
 
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "pulseaudio"],
+    "modules-right": ["tray", "network", "pulseaudio"],
 
     "hyprland/workspaces": {
         "format": "{name}",
@@ -38,6 +41,16 @@
         "icon-size": 14,
         "spacing": 8,
         "tooltip": false
+    },
+
+    "network": {
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": " {ipaddr}",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": "⚠ Disconnected",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format": "{ifname}: {ipaddr}",
+        "on-click": "nm-connection-editor"
     },
 
     "pulseaudio": {

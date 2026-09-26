@@ -62,11 +62,17 @@ local menu = "rofi -show run"
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 
--- Barra de estado: config versionada en config/waybar/ubuntu/ (despliegue
--- con set-waybar-ubuntu-config.sh). hyprland.start se dispara una vez por
--- sesión, así que los reloads no duplican instancias.
+-- Barra de estado y applets (StatusNotifierItem, el estándar D-Bus; la
+-- barra waybar es el host). hyprland.start se dispara una vez por sesión,
+-- así que los reloads no duplican instancias.
+-- Nota red: nm-applet de noble NO registra SNI (verificado empíricamente);
+-- el estado de red lo da el módulo network de waybar (click abre
+-- nm-connection-editor). blueman-applet con guard: solo si bluetoothd
+-- está activo (laptop/dongle; en desktop sin adaptador el servicio queda
+-- inactive y no arranca).
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
+    hl.exec_cmd("systemctl is-active --quiet bluetooth && blueman-applet")
 end)
 
 

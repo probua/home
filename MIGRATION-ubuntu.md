@@ -63,6 +63,8 @@ paquete o config nueva, actualizar aquí.
 | wdisplays | GUI de monitores (ajustes en caliente) |
 | wlr-randr | CLI de monitores (ajustes en caliente) |
 | fonts-font-awesome | Iconos de waybar (FA 4.7, los del style.css) |
+| network-manager-gnome | nm-connection-editor: GUI completa de redes (click del módulo network de la barra). NOTA: su applet (nm-applet) en noble NO registra SNI — probado con Wayland, env del compositor y X11; el estado de red lo da el módulo nativo de waybar |
+| blueman | Icono/menú bluetooth en el tray SNI (autostart con guard: solo si bluetoothd activo) |
 
 ### Configs desplegadas
 
@@ -123,7 +125,8 @@ Layout minimal (abajo): workspaces+ventana | reloj | bandeja+audio.
 | Izq | Workspaces 1-12 | Click = ir al workspace; activo en ámbar (FECA88); hover gris |
 | Izq | Título de la ventana enfocada | Solo lectura (máx 40 caracteres) |
 | Centro | Reloj HH:MM | Hover = calendario del mes |
-| Der | Bandeja (tray) | Click = menú de la app |
+| Der | Bandeja (tray): bluetooth (blueman, si hay adaptador) — apps con tray propio se suman solas | Click = menú de la app |
+| Der | Red (módulo waybar) | Click = nm-connection-editor · Hover = interfaz + IP · click der = formato alternativo |
 | Der | Audio | Click = mute/unmute · Click der = pavucontrol (mixer) · Rueda = volumen ±5% |
 
 Nota: `format-muted` de la config sway original estaba vacío — al mutear,
