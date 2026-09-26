@@ -22,13 +22,12 @@
 
     "hyprland/workspaces": {
         "format": "{name}",
-        "on-click": "activate",
-        // 1..12 persistentes: el esquema por letras de bindings.lua
-        // (M, coma, punto, J..P, minus, Ñ)
-        "persistent-workspaces": {
-            "1": [], "2": [], "3": [], "4": [], "5": [], "6": [],
-            "7": [], "8": [], "9": [], "10": [], "11": [], "12": []
-        }
+        "on-click": "activate"
+        // Sin persistent-workspaces a propósito: Hyprland crea workspaces
+        // perezosamente (existen solo con ventanas), así la barra muestra
+        // únicamente los que tienen ventanas + el activo — réplica de la
+        // vieja i3bar. La rueda sobre el módulo rota workspaces (default
+        // del módulo). El esquema 1..12 por letras vive en bindings.lua.
     },
 
     "hyprland/window": {

@@ -122,7 +122,7 @@ Layout minimal (abajo): workspaces+ventana | reloj | bandeja+audio.
 
 | Zona | Elemento | Interacciones |
 |---|---|---|
-| Izq | Workspaces 1-12 | Click = ir al workspace; activo en ámbar (FECA88); hover gris |
+| Izq | Workspaces: solo los que tienen ventanas + el activo (lazy, sin persistentes) | Click = ir · activo blanco `#F8F8F8` · con ventanas gris `#6B6B6B` · vacíos ocultos · rueda = rotar |
 | Izq | Título de la ventana enfocada | Solo lectura (máx 40 caracteres) |
 | Centro | Reloj HH:MM | Hover = calendario del mes |
 | Der | Bandeja (tray): bluetooth (blueman, si hay adaptador) — apps con tray propio se suman solas | Click = menú de la app |
@@ -133,6 +133,11 @@ Nota: `format-muted` de la config sway original estaba vacío — al mutear,
 el módulo desaparecía y parecía perderse el sonido. Ahora muestra glifo +
 "muted". Los glifos FontAwesome se transplantan byte a byte desde la
 config legacy (no sobreviven a la edición manual).
+
+Nota CSS: el módulo hyprland/workspaces aplica la clase `.active` al
+workspace enfocado; `.focused` (lo que estilizaba la config sway) nunca
+matchea en este módulo — el ámbar FECA88 era código muerto hasta que se
+detectó. No reintroducir `.focused`.
 
 ## Backlog incremental
 
