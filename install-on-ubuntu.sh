@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source config/scripts/set-apt-packages-config.sh imv alacritty rofi playerctl brightnessctl pulseaudio-utils
+source config/scripts/set-apt-packages-config.sh imv alacritty rofi playerctl brightnessctl pulseaudio-utils wdisplays wlr-randr
 source config/scripts/set-bash-config.sh
 source config/scripts/set-vim-config.sh
 source config/scripts/set-default-image-viewer-config.sh

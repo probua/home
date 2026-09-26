@@ -205,7 +205,16 @@ vanilla ≥0.55 (API Lua upstream, sin helpers `o` ni comandos `omarchy-*`).
 Se instala con `config/scripts/set-hyprland-ubuntu-config.sh` (sourced por
 `install-on-ubuntu.sh`), que reutiliza el `looknfeel.lua` compartido y los
 scripts de binds. La instalación de Hyprland queda fuera del instalador
-(config-only): el script se omite con aviso si falta el binario.
+(config-only): el script se omite con aviso si falta el binario. Para
+instalarla en Ubuntu 24.04: `bin/install-hyprland-ppa.sh` — PPA comunitario
+`ppa:cppiber/hyprland` (hyprland 0.56 + backports de libxkbcommon/libinput/
+wayland-protocols/libdisplay-info; mecanismo estándar adoptado por
+JaKooLit/Ubuntu-Hyprland en su rama 24.04). Compilar desde fuente no es
+viable en noble: cmake>=3.30, xkbcommon>=1.11, lua>=5.5 y parches de
+toolchain que el PPA resuelve y mantiene por nosotros. Riesgo asumido:
+PPA de terceros que actualiza algunas libs de sistema; reversión completa
+con `sudo ppa-purge ppa:cppiber/hyprland`. El kit instalado incluye
+hyprlock/hypridle/hyprpaper/hyprpicker/waybar, piezas de la fase 2.
 
 Equivalencias respecto de la capa Omarchy:
 
@@ -215,8 +224,14 @@ Equivalencias respecto de la capa Omarchy:
 | `omarchy-audio-*` / `omarchy-shell media` | `pactl` / `playerctl` (tomados de config/i3/i3) |
 | Menús lock/exit/wallpaper (`omarchy-menu`) | Fase 2: adaptar menús rofi (`i3-msg exit` → `hyprctl dispatch exit`; i3lock no sirve en Wayland → swaylock/hyprlock; feh → swaybg) |
 | Tema Omarchy (colores/gaps) | Defaults vanilla; looknfeel.lua aporta animaciones off + smart gaps |
+| Gestión de monitores (arandr era i3/X11) | `wdisplays`/`wlr-randr` para ajustar en caliente (runtime-only, no persisten); la disposición definitiva se fija con `hl.monitor` explícitos en hyprland.lua (reglas por salida primero, comodín `""` como fallback) |
 | Barra (omarchy-shell) | Fase 2: waybar |
 
 Los unbinds apuntan a defaults vanilla (importante `SUPER+M`, que en
-vanilla es exit y acá es workspace 1). Validación post-instalación:
-`Hyprland --verify-config` y `hyprctl configerrors` tras reload.
+vanilla es exit y acá es workspace 1). Rationale: Hyprland no reemplaza
+un bind al redefinir la misma tecla — dispara TODOS los coincidentes
+(a diferencia de i3), así que cada default reutilizado (Q, E, LEFT,
+RIGHT, SHIFT+S del ejemplo 0.56; M, J, P más un bloque defensivo)
+debe desligarse explícito en bindings.lua. Validación post-instalación:
+`Hyprland --verify-config` y `hyprctl configerrors` tras reload;
+`hyprctl binds` no debe mostrar keys duplicadas.
