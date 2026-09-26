@@ -51,6 +51,7 @@ una o varias veces.
 | `backgrounds/` | wallpapers; se instalan en `~/.config/omarchy/backgrounds/probua/` |
 | `bin/submodules/` | helpers de submodules (histórico) |
 | `MIGRATION-omarchy.md` | documento clave: migración i3→Omarchy, equivalencias de hotkeys, decisiones y racional de cada capa. **Consultarlo antes de tocar bindings o el shell** |
+| `MIGRATION-ubuntu.md` | variante Ubuntu (Hyprland vanilla): tracking de instalación (PPA/apt/configs), monitores, waybar y fase 2. **Consultarlo antes de tocar la capa Ubuntu** |
 
 ## Convenciones de idempotencia (obligatorias)
 

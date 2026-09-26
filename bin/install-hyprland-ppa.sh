@@ -17,7 +17,7 @@
 #   ./bin/install-hyprland-ppa.sh
 #
 # Idempotente: si hyprland ya está instalado con config Lua, no hace nada.
-# Doc y contexto: MIGRATION-omarchy.md, sección "Variante Ubuntu".
+# Doc y contexto: MIGRATION-ubuntu.md.
 
 PPA="ppa:cppiber/hyprland"
 PACKAGES=(hyprland xdg-desktop-portal-hyprland hyprlock hypridle hyprpaper hyprpicker waybar)

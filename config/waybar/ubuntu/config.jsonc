@@ -1,0 +1,64 @@
+{
+    // Barra waybar (variante Ubuntu): minimalista por decisión —
+    // workspaces+ventana | reloj | bandeja+audio. cpu/red/memoria y sus
+    // glifos quedaron en git history (backlog S: re-agregar).
+    // Puerto de la config sway original; glifos FontAwesome transplantados
+    // byte a byte desde la legacy (fonts-font-awesome). Ver MIGRATION-ubuntu.md.
+    "layer": "top",
+    "position": "bottom",
+    "height": 30,
+    "spacing": 0,
+    "margin-top": 6,
+    "margin-bottom": 6,
+    "margin-left": 10,
+    "margin-right": 7,
+
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "pulseaudio"],
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        // 1..12 persistentes: el esquema por letras de bindings.lua
+        // (M, coma, punto, J..P, minus, Ñ)
+        "persistent-workspaces": {
+            "1": [], "2": [], "3": [], "4": [], "5": [], "6": [],
+            "7": [], "8": [], "9": [], "10": [], "11": [], "12": []
+        }
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 40,
+        "tooltip": false
+    },
+
+    "tray": {
+        "icon-size": 14,
+        "spacing": 8,
+        "tooltip": false
+    },
+
+    "pulseaudio": {
+        "scroll-step": 5,
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}% ",
+        "format-bluetooth-muted": " {icon} ",
+        // glifo + "muted": el módulo nunca desaparece al mutear
+        // (bug de la config original: format-muted vacío)
+        "format-muted": " muted",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "format-icons": {"headphone": "", "hands-free": "", "headset": "", "phone": "", "portable": "", "car": "", "default": ["", "", ""]},
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "pavucontrol"
+    },
+
+    "clock": {
+        "timezone": "",
+        "format": " {:%H:%M}",
+        "format-alt": " {:%Y-%m-%d}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    }
+}

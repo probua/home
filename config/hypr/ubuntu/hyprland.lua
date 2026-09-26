@@ -5,7 +5,7 @@
 -- FINAL (require). OJO: Hyprland no reemplaza un bind al redefinir la
 -- misma tecla — dispara todos los que coinciden —, por eso bindings.lua
 -- desliga explícitamente cada default que reutiliza (ver
--- MIGRATION-omarchy.md, "Variante Ubuntu").
+-- MIGRATION-ubuntu.md).
 -- Se despliega con config/scripts/set-hyprland-ubuntu-config.sh.
 
 
@@ -62,14 +62,12 @@ local menu = "rofi -show run"
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 
--- Autostart necessary processes (like notifications daemons, status bars, etc.)
--- Or execute your favorite apps at launch like this:
---
--- hl.on("hyprland.start", function () 
---   hl.exec_cmd(terminal)
---   hl.exec_cmd("nm-applet")
---   hl.exec_cmd("waybar & hyprpaper & firefox")
--- end)
+-- Barra de estado: config versionada en config/waybar/ubuntu/ (despliegue
+-- con set-waybar-ubuntu-config.sh). hyprland.start se dispara una vez por
+-- sesión, así que los reloads no duplican instancias.
+hl.on("hyprland.start", function()
+    hl.exec_cmd("waybar")
+end)
 
 
 -------------------------------

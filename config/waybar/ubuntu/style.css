@@ -1,0 +1,87 @@
+/*
+ * waybar (variante Ubuntu): estética portada de la config sway original
+ * (negro minimal, workspace activo en ámbar FECA88) + bandeja (tray).
+ * Ver MIGRATION-ubuntu.md.
+ */
+
+* {
+    font-family: "FontAwesome", "Source Code Pro", monospace;
+    font-size: 12px;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+window#waybar {
+    background-color: #000000;
+    color: #6B6B6B;
+    border-radius: 0;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    margin-right: 0;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: #000000;
+    color: #6B6B6B;
+    border-bottom: 2px solid #000000;
+}
+
+#workspaces button.focused {
+    background-color: #000000;
+    color: #FECA88;
+    border-bottom: 2px solid #D8D8D8;
+}
+
+#workspaces button.active {
+    background-color: #000000;
+    color: #6B6B6B;
+}
+
+#workspaces button.urgent {
+    background-color: #000000;
+    color: #F8F8F8;
+}
+
+#workspaces button:hover {
+    background: #181818;
+    border-bottom: 2px solid #6B6B6B;
+}
+
+#window {
+    padding: 0 10px;
+    color: #6B6B6B;
+}
+
+#clock {
+    padding: 0 10px;
+    color: #6B6B6B;
+}
+
+#tray {
+    padding: 0 10px;
+    color: #6B6B6B;
+}
+
+#tray menu {
+    background-color: #000000;
+    color: #D8D8D8;
+}
+
+#cpu,
+#memory,
+#network,
+#pulseaudio {
+    padding: 0 10px;
+    color: #6B6B6B;
+}
+
+#pulseaudio.muted {
+    color: #F8F8F8;
+}

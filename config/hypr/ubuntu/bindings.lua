@@ -1,4 +1,4 @@
--- Variante Ubuntu de la capa de hotkeys (ver MIGRATION-omarchy.md).
+-- Variante Ubuntu de la capa de hotkeys (ver MIGRATION-ubuntu.md).
 -- API Lua vanilla de Hyprland (>=0.55): sin helpers de Omarchy (`o`)
 -- ni comandos omarchy-*. Stack propio: alacritty (terminal), rofi
 -- (launcher, vía XWayland) y pactl/playerctl (audio/media).
