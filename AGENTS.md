@@ -36,7 +36,11 @@ una o varias veces.
 - Scripts activos en Omarchy: `set-bash-config.sh`, `set-vim-config.sh`,
   `set-hyprland-config.sh`, `set-omarchy-shell-config.sh`,
   `set-omarchy-theme-config.sh`, `set-docker-user-config.sh`,
-  `set-default-browser-config.sh`.
+  `set-default-browser-config.sh`, `set-onlyoffice-config.sh`.
+- `set-pacman-packages-config.sh` se sourcea **primero** en Omarchy: es el
+  único punto que instala paquetes (`vim`, `nwg-displays`) y los
+  `set-*-config.sh` asumen que ya están. Equivalente Arch de
+  `set-apt-packages-config.sh` (solo Ubuntu/WSL).
 - Scripts legacy (comentados en el instalador): rofi, picom, i3, alacritty,
   kmonad, autohotkey. No reactivar sin pedido explícito.
 

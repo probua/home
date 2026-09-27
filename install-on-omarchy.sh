@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source config/scripts/set-pacman-packages-config.sh
 source config/scripts/set-bash-config.sh
 source config/scripts/set-vim-config.sh
 source config/scripts/set-hyprland-config.sh

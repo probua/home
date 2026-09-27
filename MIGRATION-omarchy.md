@@ -23,6 +23,30 @@ source config/scripts/set-hyprland-config.sh
 El script es idempotente, hace backup de `~/.config/hypr/bindings.lua` antes
 de sobrescribirlo y fuerza `hyprctl reload` si hay sesión Hyprland activa.
 
+## Paquetes base (pacman)
+
+Los `set-*-config.sh` despliegan configs, no instalan programas. Los paquetes
+que la capa asume se instalan con `config/scripts/set-pacman-packages-config.sh`
+(sourceado el primero en `install-on-omarchy.sh`, antes que `set-vim-config.sh`
+para que el binario exista cuando se despliegue el `vimrc`):
+
+| Paquete | Rol |
+|---|---|
+| `vim` | Editor de `config/vimrc` (vim-plug incluido). Distinto de `neovim`/`omarchy-nvim` que trae Omarchy |
+| `nwg-displays` | GUI de gestión de monitores (layout, escala, rotación, workspaces→monitor) |
+
+Es el equivalente Arch de `set-apt-packages-config.sh` (variante Ubuntu, que
+instala `wdisplays`/`wlr-randr`). Detecta los faltantes con `pacman -T`, solo
+instala esos, y en un re-run donde ya está todo no imprime nada.
+
+**Los archivos de monitores no los gestiona este repo**: `nwg-displays` escribe
+`~/.config/hypr/monitors.{lua,conf}` y `workspaces.{lua,conf}` en runtime, y
+Omarchy los carga vía `require("hypr.monitors")` en `hyprland.lua`, por lo que
+sustituyen su plantilla por defecto. `set-hyprland-config.sh` solo despliega
+`bindings.lua` y `looknfeel.lua`, así que en una máquina limpia la disposición
+se crea la primera vez que se abre la app (igual que en Ubuntu, donde la
+disposición volcada a mano vive en `config/hypr/ubuntu/hyprland.lua`).
+
 ## Equivalencias directas (no requieren cambios)
 
 | i3 | Omarchy (default) |
