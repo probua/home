@@ -5,8 +5,10 @@
 #   vim           -> config/vimrc + vim-plug (set-vim-config.sh solo despliega
 #                    la config, nunca instala el paquete)
 #   nwg-displays  -> GUI de gestión de monitores; escribe ~/.config/hypr/
-#                    monitors.{lua,conf} y workspaces.{lua,conf}, que Omarchy
-#                    carga vía `require("hypr.monitors")`
+#                    monitors.{lua,conf} y workspaces.{lua,conf}. Omarchy
+#                    solo carga monitors.lua (vía `require("hypr.monitors")`);
+#                    workspaces.lua requiere el parche que aplica
+#                    set-hyprland-config.sh y los .conf no los carga nadie
 # Es el equivalente Arch de set-apt-packages-config.sh (Ubuntu/WSL) y comparte
 # su interfaz: cada instalador puede sumar extras como argumentos al sourcear
 # (ej: source config/scripts/set-pacman-packages-config.sh wlr-randr); también
