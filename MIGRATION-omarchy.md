@@ -124,6 +124,17 @@ inyecta parches mínimos sobre el QML clonado, en dos fases idempotentes:
     click de rueda) y al disparar se consume todo el acumulado, de modo
     que el trackpad no dispara un cambio por cada micro-evento. Sin
     lógica temporal: el cooldown inicial se retiró por confort (fase 8).
+  - fase 12 (workspaces por monitor): cada barra muestra solo los
+    workspaces del monitor donde vive — la pantalla de la ventana de la
+    barra (`QsWindow.window.screen.name`, mismo patrón que `Bar.qml`)
+    contra `HyprlandWorkspace.monitor.name`. Sin seed 1..5 (sembraría
+    workspaces ajenos en el otro monitor), resaltado por `workspace.active`
+    (el activo de SU monitor: cada barra siempre muestra ≥1 número) y
+    rueda acotada al monitor de la barra (rota entre sus workspaces,
+    con el activo de ese monitor como actual). Guard: sin ventana de
+    barra (preview) se muestra todo. Con las `workspace_rules` de
+    nwg-displays cada monitor tiene su rango fijo (DP-1: 1-9,
+    HDMI-A-1: 10).
 
 Los parches usan anclajes sobre el QML más reciente: si Omarchy cambia
 el widget upstream, el installer detecta el anclaje roto y avisa sin

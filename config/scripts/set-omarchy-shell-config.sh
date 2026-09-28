@@ -14,11 +14,15 @@
 #   fase 8 - rueda sin lógica temporal: elimina el cooldown y el reset
 #            de gesto de la fase 7 v1 (umbral ±120 + consumo total)
 #   fase 11 - lock: guard de foco reactivo — cualquier pérdida de
-#            activeFocus en el campo de contraseña se re-forza al instante
-#            (latencia 0, sin polling); reemplaza y subsume a las fases 9
-#            y 10 (wake por mouse y timer de 300ms con su ventana de
-#            pérdida de input). La (re)creación de superficie la cubre
-#            upstream con Component.onCompleted + Qt.callLater
+#             activeFocus en el campo de contraseña se re-forza al instante
+#             (latencia 0, sin polling); reemplaza y subsume a las fases 9
+#             y 10 (wake por mouse y timer de 300ms con su ventana de
+#             pérdida de input). La (re)creación de superficie la cubre
+#             upstream con Component.onCompleted + Qt.callLater
+#   fase 12 - workspaces por monitor: cada barra muestra y rota solo los
+#             workspaces del monitor donde vive (pantalla de la ventana
+#             de la barra ↔ HyprlandWorkspace.monitor); el resaltado pasa
+#             de foco global a activo-de-monitor (siempre ≥1 número)
 # Mecanismo: clon oficial del widget + parches mínimos con anclajes,
 # idempotentes por fase y con detección de deriva upstream. Escrituras
 # in-place (sin sustituir el inode, para no despistar al watcher del shell)
@@ -556,6 +560,107 @@ EOF
       ' "$LOCK_QML" >"$TMP" && cat "$TMP" >"$LOCK_QML"
       patched=1
       echo "set-omarchy-shell-config: fase 11 aplicada (guard de foco reactivo del password)"
+    fi
+  fi
+
+  # ---------- Fase 12: workspaces por monitor ----------
+  # Cada barra muestra solo los workspaces del monitor donde vive. La
+  # ventana de la barra expone su salida (QsWindow.window.screen.name,
+  # mismo patrón que usa Bar.qml) y HyprlandWorkspace.monitor.name dice a
+  # qué monitor pertenece cada ws; con las workspace_rules de nwg-displays
+  # (ws fijos por monitor) cada barra queda en su rango.
+  #   - workspaceIds(): sin seed 1..5 (sembraría workspaces ajenos en el
+  #     otro monitor; los vacíos ya eran invisibles) + filtro por monitor.
+  #   - focused: de foco global a `workspace.active` (el activo de SU
+  #     monitor): cada barra resalta siempre su número y muestra ≥1.
+  #   - focusRelativeWorkspace (rueda, fases 7/8): rota solo entre los ws
+  #     del monitor de la barra, con el activo de ese monitor como actual.
+  # Guard: sin ventana/pantalla (p.ej. preview) barScreenName() es "" y se
+  # muestra todo (fallback gracible). Reactividad gratis: las funciones se
+  # evalúan dentro de bindings y monitor/active/screen tienen notify.
+  # Marcador de aplicado: la función barScreenName.
+  local F12A_SEED='var ids = [1, 2, 3, 4, 5]'
+  local F12A_FILTER='id > 0 && id <= 12 && ids.indexOf(id) === -1) ids.push(id)'
+  local F12A_ROT='id >= 1 && id <= 12 && ids.indexOf(id) === -1) ids.push(id)'
+  local F12A_FOCUS='readonly property bool focused: Hyprland.focusedWorkspace !== null && Hyprland.focusedWorkspace.id === modelData'
+  local F12A_CUR='var cur = Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id : 0'
+  local F12A_MODULE='moduleName: "omarchy.workspaces"'
+  if ! grep -q "barScreenName" "$QML"; then
+    local f12_ok=1 a12
+    for a12 in "$F12A_SEED" "$F12A_FILTER" "$F12A_ROT" "$F12A_FOCUS" "$F12A_CUR" "$F12A_MODULE"; do
+      if [[ $(grep -cF "$a12" "$QML") != 1 ]]; then
+        echo "set-omarchy-shell-config: anclaje de fase 12 no único: $a12; omitida" >&2
+        f12_ok=0
+        break
+      fi
+    done
+
+    if (( f12_ok )); then
+      local SNIP12
+      SNIP12=$(mktemp)
+      cat >"$SNIP12" <<'EOF'
+
+  function barScreenName() {
+    var win = root.QsWindow ? root.QsWindow.window : null
+    return win && win.screen && win.screen.name ? win.screen.name : ""
+  }
+
+  function workspaceOnThisScreen(ws) {
+    var screenName = root.barScreenName()
+    if (screenName === "") return true
+    return ws !== null && ws.monitor !== null && ws.monitor.name === screenName
+  }
+
+  function activeScreenWorkspaceId() {
+    var values = Hyprland.workspaces.values
+    for (var i = 0; i < values.length; i++) {
+      if (values[i].active && root.workspaceOnThisScreen(values[i])) return values[i].id
+    }
+    return 0
+  }
+EOF
+      awk -v f12_module="$F12A_MODULE" -v f12_seed="$F12A_SEED" \
+          -v f12_filter="$F12A_FILTER" -v f12_rot="$F12A_ROT" \
+          -v f12_focus="$F12A_FOCUS" -v f12_cur="$F12A_CUR" -v snip="$SNIP12" '
+        {
+          line = $0
+          if (index(line, f12_module) > 0) {
+            print line
+            while ((getline l < snip) > 0) print l
+            close(snip)
+            next
+          }
+          pos = index(line, f12_seed)
+          if (pos > 0) {
+            print substr(line, 1, pos - 1) "var ids = []"
+            next
+          }
+          pos = index(line, f12_filter)
+          if (pos > 0) {
+            print substr(line, 1, pos - 1) "id > 0 && id <= 12 && ids.indexOf(id) === -1 && root.workspaceOnThisScreen(values[i])) ids.push(id)"
+            next
+          }
+          pos = index(line, f12_rot)
+          if (pos > 0) {
+            print substr(line, 1, pos - 1) "id >= 1 && id <= 12 && ids.indexOf(id) === -1 && root.workspaceOnThisScreen(values[i])) ids.push(id)"
+            next
+          }
+          pos = index(line, f12_focus)
+          if (pos > 0) {
+            print substr(line, 1, pos - 1) "readonly property bool focused: workspace !== null && workspace.active"
+            next
+          }
+          pos = index(line, f12_cur)
+          if (pos > 0) {
+            print substr(line, 1, pos - 1) "var cur = root.activeScreenWorkspaceId()"
+            next
+          }
+          print line
+        }
+      ' "$QML" >"$TMP" && cat "$TMP" >"$QML"
+      rm -f "$SNIP12"
+      patched=1
+      echo "set-omarchy-shell-config: fase 12 aplicada (workspaces por monitor)"
     fi
   fi
 
