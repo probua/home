@@ -11,6 +11,18 @@ hl.config({
     col = {
       border_active = active_border_color,
     },
+
+    -- Cero margen entre los tabs y la ventana: se eliminan el gap del
+    -- indicador y su línea (default Omarchy: 5px + 1px de banda vacía).
+    -- La pestaña activa queda marcada solo por el color del tab
+    -- (col.active vs col.inactive).
+    groupbar = {
+      -- Tabs pegados entre sí: sin separación horizontal entre gradients
+      -- (default Omarchy: 5px).
+      gaps_in = 0,
+      indicator_gap = 0,
+      indicator_height = 0,
+    },
   },
 })
 
