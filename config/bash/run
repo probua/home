@@ -1,0 +1,7 @@
+# Limpia los .bash_history-<pid>.tmp huérfanos que deja bash >= 5.3
+# al morir sesiones de forma anormal (chequea si el PID sigue vivo)
+for f in "$HOME"/.bash_history-*.tmp; do
+	[ -e "$f" ] || continue
+	pid=${f##*-}; pid=${pid%.tmp}
+	[ -d "/proc/$pid" ] || rm -f -- "$f"
+done
