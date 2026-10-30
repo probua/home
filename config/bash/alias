@@ -8,3 +8,8 @@ alias ls="eza -a --color=auto --group-directories-first"
 alias ll="eza -lah --color=auto --group-directories-first"
 alias dps="docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}'"
 
+# torito db
+alias db-mdw="aws ssm start-session --target i-066a20ca81e316108 --document-name AWS-StartPortForwardingSession --parameters '{\"portNumber\":[\"50001\"],\"localPortNumber\":[\"50001\"]}' --region us-east-1"
+alias db-core="aws ssm start-session --target i-066a20ca81e316108 --document-name AWS-StartPortForwardingSession --parameters '{\"portNumber\":[\"50002\"],\"localPortNumber\":[\"50002\"]}' --region us-east-1"
+alias db-mdw-staging="aws ssm start-session --target i-05e659a4b589a782e --document-name AWS-StartPortForwardingSession --parameters '{\"portNumber\":[\"50001\"],\"localPortNumber\":[\"50001\"]}' --region us-east-1"
+alias db-core-staging="aws ssm start-session --target i-05e659a4b589a782e --document-name AWS-StartPortForwardingSession --parameters '{\"portNumber\":[\"50002\"],\"localPortNumber\":[\"50002\"]}' --region us-east-1"
