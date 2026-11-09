@@ -132,9 +132,9 @@ inyecta parches mínimos sobre el QML clonado, en dos fases idempotentes:
     (el activo de SU monitor: cada barra siempre muestra ≥1 número) y
     rueda acotada al monitor de la barra (rota entre sus workspaces,
     con el activo de ese monitor como actual). Guard: sin ventana de
-    barra (preview) se muestra todo. Con las `workspace_rules` de
-    nwg-displays cada monitor tiene su rango fijo (DP-1: 1-9,
-    HDMI-A-1: 10).
+    barra (preview) se muestra todo. El rango por monitor se fijaba con
+    `workspace_rules` de nwg-displays (DP-1: 1-9, HDMI-A-1: 10) —
+    retiradas; ver «Workspaces por monitor: bloques de Omarchy».
 
 Los parches usan anclajes sobre el QML más reciente: si Omarchy cambia
 el widget upstream, el installer detecta el anclaje roto y avisa sin
@@ -148,6 +148,135 @@ sumo el widget desaparece de la barra.
 Reversión: `omarchy plugin remove probua.workspaces` restaura el
 built-in. Las actualizaciones de Omarchy nunca tocan
 `~/.config/omarchy/`.
+
+## Barra: doble click sin moverla de borde (fase 13)
+
+Síntoma: al doble click en la barra inferior esta "se buggea" — salta a un
+lateral (y se vuelve vertical) y ventanas abiertas quedan varadas e
+inaccesibles; en apps single-instance (Electron: Obsidian) relanzar "no
+hace nada" porque la nueva instancia le avisa a la varada y muere
+(verificado en journal: scope de 390ms).
+
+Causa raíz — bug upstream
+([omacom/omarchy#17385](https://github.com/omacom/omarchy/pull/17385),
+abierto contra omarchy 4.5.0, reproducido en Hyprland 0.56.2 con dos
+monitores):
+
+1. El doble click en espacio vacío de la barra ejecuta `cycleBackground()`
+   con el segundo botón aún presionado (Qt reporta el doble click en la
+   segunda pulsación).
+2. Entrar/salir de glassy ejecuta `hyprctl reload` (toggle `bar-glassy` en
+   `~/.local/state/omarchy/toggles/hypr/`).
+3. Al recargar, Hyprland re-enfoca una ventana y teletransporta el cursor
+   a su centro (puede ser en el otro monitor).
+4. El `CenterGestureArea` de `Bar.qml` lee el salto como arrastre (umbral
+   4px, distancia Manhattan) y al soltar mueve la barra al borde más
+   cercano del cursor saltado, con la tormenta de re-focus/re-tilo que
+   deja ventanas varadas en workspaces no visibles.
+
+El bug secundario
+[#14649](https://github.com/omacom/omarchy/pull/14649) agrava el
+disparador: los widgets (clock, números de workspace, tray) tampoco
+consumen dobles clicks, así que un doble click sobre ellos también cicla
+el fondo de la barra. No hay opt-out por configuración en 4.5.0 (el PR
+#9933 que lo propone tampoco está fusionado).
+
+Mitigación: fase 13 de `config/scripts/set-omarchy-shell-config.sh` —
+clon del plugin de la barra (`omarchy plugin clone omarchy.bar` →
+`probua.bar`) con el mismo guard del PR: la segunda pulsación de un doble
+click que cicló el fondo no puede iniciar un bar-move hasta soltarse
+(`cycledOnPress`). Un press-and-drag deliberado sigue moviendo la barra.
+El gesto de ciclar fondo quedó luego neutralizado por la fase 14: cada
+ciclo cruza glassy → `hyprctl reload` → `reconcile()` (ver sección
+siguiente). El fondo de la barra se cambia por CLI (`omarchy bar
+background <opaque|glassy|none>`).
+
+Playbook de recuperación (si vuelve a pasar en otra máquina o antes de
+re-aplicar el instalador):
+
+```bash
+omarchy bar position bottom                       # restaurar la barra
+hyprctl dispatch focuswindow class:obsidian       # rescatar una ventana varada
+pkill -x obsidian && gtk-launch obsidian.desktop  # instancia Electron zombi
+omarchy-restart-shell                             # estado raro del shell
+```
+
+Deriva y reversión: el clon `probua.bar` es un fork del `Bar.qml`
+(~2600 líneas): las mejoras upstream de la barra no llegan solas. Cuando
+upstream fusione #17385 y lo libere conviene re-clonar o volver al
+built-in (`omarchy plugin remove probua.bar` **y** quitar la fase 13 del
+script — si solo se hace el remove, el instalador re-clonaría). Un clon
+nuevo con el fix upstream ya trae el marcador `cycledOnPress` y la fase
+se omite sola.
+
+## Workspaces por monitor: bloques de Omarchy (primaria 1-10, secundaria 11-12)
+
+Omarchy 4.5+ (instalado 7-nov-2026) gestiona workspaces por monitor con
+**bloques contiguos de 10** (`default/hypr/monitor-workspaces.lua`): cada
+monitor es dueño de un bloque, asignado por **identidad física**
+(make/model/serial — no por puerto: sobrevive a docks y renombrados de
+conector) y persistido en `~/.local/state/omarchy/monitor-workspaces`. En
+cada `hyprctl reload` (y en cada evento de monitor) su `reconcile()`
+mueve y **renumera** todo workspace ocupado que no esté en el monitor
+dueño de su bloque.
+
+### Post-mortem: ventanas "perdidas" (7-9 nov 2026)
+
+Las `workspace_rules` de nwg-displays que este repo instalaba (1-9→DP-1,
+10→HDMI-A-1) contradecían la asignación real de bloques (HDMI=bloque
+0=ws 1-10, DP-1=bloque 1=ws 11-20, por orden de llegada). Cada reload —
+incluido el que dispara el doble click en la barra al ciclar glassy —
+hacía que reconcile "corrigiera": renumeraba ws 1-4 (ocupados, en DP-1)
+→ 11-14, vaciando los workspaces y dejando ventanas inaccesibles.
+Obsidian, además, es single-instance: reabrir "no hacía nada" (la nueva
+instancia le avisa a la varada y muere — journal: scope de 390ms). El
+incidente original del 8-nov se explica por completo con esta cadena más
+el bar-move fantasma del PR #17385 (fase 13).
+
+### Alineación adoptada
+
+- **Primaria** (GIGA-BYTE GS27Q, DP-1) = bloque 0 → **ws 1-10**
+- **Secundaria** (LG FULL HD, HDMI-A-1) = bloque 1 → ws 11-20, en uso
+  **11-12**
+- Limitación del sistema: bloques contiguos de 10 hardcoded —
+  "10,11,12 en la secundaria" no es expresable; lo más cercano es 11-12
+- El require de `hypr.workspaces` queda retirado de `hyprland.lua`: las
+  reglas nwg dejan de cargar y de pelear con reconcile. nwg-displays
+  puede seguir usándose para layout de monitores; si vuelve a escribir
+  `workspaces.lua`, simplemente no se carga.
+- Con los bloques alineados cada reload es inocuo (reconcile = no-op).
+  Solo un monitor NUEVO (hotplug/reemplazo) dispara una renumeración
+  única al asentarse su bloque — comportamiento diseñado, no el bug.
+
+### Binds (config/hypr/bindings.lua)
+
+Semántica i3: **números globales y fijos** — cada tecla apunta siempre al
+mismo workspace (la semántica nativa "slot del monitor enfocado" de
+Omarchy/Niri se probó y se descartó: desde la secundaria SUPER+M abría
+ws 11 en vez de ws 1).
+
+- `SUPER+{M..MINUS}` → ws 1-10, el bloque de la **primaria**: desde
+  cualquier pantalla enfoca la primaria y su slot N (cierre sobre
+  `o.workspaces.focus(slot, primary)`).
+- `SUPER+{NTILDE,P}` → ws 11/12, slots 1-2 de la **secundaria**, siempre.
+- `SUPER+SHIFT+…` → mover la ventana (y seguirla) al workspace destino.
+- Primaria/secundaria se derivan **al presionar** desde el sistema de
+  bloques (`o.workspaces.workspace_id(monitor, 1) == 1` → dueña del
+  bloque 0): autoritativo, sobrevive a hotplugs. Portable — en una
+  laptop sola la única pantalla ES la primaria y NTILDE/P son no-op
+  graciable. El menú de keybindings lista sus descripciones pero no
+  puede replayearlos (closures sin expresión registrada en
+  `o.bind_expressions`).
+
+### Reproducibilidad (set-hyprland-config.sh)
+
+- Fase de retirada del require nwg (idempotente por ausencia, backup).
+- Fase de alineación de bloques: fuerza GIGA-BYTE=0 / LG=1 **solo** si
+  encuentra ambas identidades en el state file; en otra máquina se
+  omite y Omarchy asigna solo (monitor único → bloque 0 = ws 1-10).
+- Mover una ventana a un workspace concreto por teclado no existe como
+  dispatch directo; para rescates manuales:
+  `hyprctl dispatch 'hl.dsp.window.move({ workspace = "N", window = "address:0x…" })'`
 
 ## Look & feel: smart gaps/borders
 

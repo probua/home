@@ -52,8 +52,83 @@ o.bind("SUPER + CTRL + SPACE", "Play/pause", "omarchy-shell media playPause", { 
 o.bind("SUPER + CTRL + LEFT", "Previous track", "omarchy-shell media previous", { locked = true })
 o.bind("SUPER + CTRL + RIGHT", "Next track", "omarchy-shell media next", { locked = true })
 
-local ws_keys = { M = 1, COMMA = 2, PERIOD = 3, J = 4, K = 5, L = 6, U = 7, I = 8, O = 9, MINUS = 10, NTILDE = 11, P = 12 }
-for key, ws in pairs(ws_keys) do
-  o.bind("SUPER + " .. key, "Switch to workspace " .. ws, hl.dsp.focus({ workspace = tostring(ws) }))
-  o.bind("SUPER + SHIFT + " .. key, "Move window to workspace " .. ws, hl.dsp.window.move({ workspace = tostring(ws) }))
+-- Workspaces por bloque FIJO (sistema de bloques de Omarchy 4.5+,
+-- default/hypr/monitor-workspaces.lua). Cada monitor es dueño de un bloque
+-- contiguo de 10 workspaces, asignado por IDENTIDAD física (make/model/
+-- serial, no por puerto): primaria (GIGA-BYTE, DP-1) = bloque 0 → ws 1-10;
+-- secundaria (LG, HDMI-A-1) = bloque 1 → ws 11-20 (en uso: 11-12). La
+-- alineación la aplica set-hyprland-config.sh; post-mortem completo en
+-- MIGRATION-omarchy.md.
+-- Semántica i3 (números GLOBALES y fijos — NO "slot del monitor enfocado",
+-- que era la nativa de Omarchy/Niri y hacía que SUPER+M desde la secundaria
+-- abriera ws 11): las teclas apuntan SIEMPRE al mismo workspace.
+--   SUPER+{M..MINUS}        → ws 1..10 (bloque de la PRIMARIA): desde
+--                             cualquier pantalla enfoca la primaria y su
+--                             slot N
+--   SUPER+{NTILDE,P}        → ws 11/12 (slots 1-2 de la SECUNDARIA), siempre
+--   SUPER+SHIFT+{M..MINUS}  → mover ventana (y seguirla) a ws 1..10
+--   SUPER+SHIFT+{NTILDE,P}  → mover ventana (y seguirla) a ws 11/12
+-- Primaria/secundaria se resuelven AL PRESIONAR desde el propio sistema
+-- de bloques (o.workspaces.workspace_id): la primaria es la dueña del
+-- bloque 0 (su slot 1 = ws 1) — autoritativo (lee el state file), no
+-- heurístico. Portable: en una laptop sola la única pantalla ES la
+-- primaria (SUPER+M..MINUS funcionan igual) y NTILDE/P son no-op
+-- graciable. Closures propias: el menú de keybindings lista sus
+-- descripciones pero no puede replayearlas.
+local ws_keys = { M = 1, COMMA = 2, PERIOD = 3, J = 4, K = 5, L = 6, U = 7, I = 8, O = 9, MINUS = 10 }
+local secondary_keys = { NTILDE = 1, P = 2 }
+
+local function active_monitors()
+  local list = {}
+  for _, monitor in ipairs(hl.get_monitors()) do
+    if not monitor.is_mirror then list[#list + 1] = monitor end
+  end
+  return list
+end
+
+-- Dueña del bloque 0 (ws 1-10): la primaria.
+local function primary_monitor()
+  for _, monitor in ipairs(active_monitors()) do
+    if o.workspaces.workspace_id(monitor, 1) == 1 then
+      return monitor
+    end
+  end
+  return nil
+end
+
+-- Primera pantalla que no es la primaria: la secundaria.
+local function secondary_monitor()
+  local primary = primary_monitor()
+  for _, monitor in ipairs(active_monitors()) do
+    if primary == nil or monitor.name ~= primary.name then
+      return monitor
+    end
+  end
+  return nil
+end
+
+for key, slot in pairs(ws_keys) do
+  o.bind("SUPER + " .. key, "Switch to workspace " .. slot .. " (primary)", function()
+    local primary = primary_monitor()
+    if primary then o.workspaces.focus(slot, primary.name)() end
+  end)
+  o.bind("SUPER + SHIFT + " .. key, "Move window to workspace " .. slot .. " (primary)", function()
+    local primary = primary_monitor()
+    if primary then
+      hl.dispatch(hl.dsp.window.move({ workspace = tostring(o.workspaces.workspace_id(primary, slot)), follow = true }))
+    end
+  end)
+end
+
+for key, slot in pairs(secondary_keys) do
+  o.bind("SUPER + " .. key, "Switch to workspace " .. (slot + 10) .. " (secondary)", function()
+    local secondary = secondary_monitor()
+    if secondary then o.workspaces.focus(slot, secondary.name)() end
+  end)
+  o.bind("SUPER + SHIFT + " .. key, "Move window to workspace " .. (slot + 10) .. " (secondary)", function()
+    local secondary = secondary_monitor()
+    if secondary then
+      hl.dispatch(hl.dsp.window.move({ workspace = tostring(o.workspaces.workspace_id(secondary, slot)), follow = true }))
+    end
+  end)
 end

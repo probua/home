@@ -23,6 +23,18 @@
 #             workspaces del monitor donde vive (pantalla de la ventana
 #             de la barra ↔ HyprlandWorkspace.monitor); el resaltado pasa
 #             de foco global a activo-de-monitor (siempre ≥1 número)
+#   fase 13 - doble click neutro en la barra: guard cycledOnPress (espejo
+#             del PR upstream omacom/omarchy#17385, abierto contra 4.5.0)
+#             para que el doble click en espacio vacío no dispare un
+#             bar-move fantasma tras el warp de cursor del hyprctl reload
+#             de glassy — racional completo en MIGRATION-omarchy.md
+#   fase 14 - doble click neutralizado del todo: onDoubleClicked ya no
+#             cicla el fondo de la barra. Cada ciclo cruzaba glassy →
+#             hyprctl reload → reconcile() del sistema de bloques por
+#             monitor (default/hypr/monitor-workspaces.lua), la cadena que
+#             renumeraba workspaces "perdiendo" ventanas; y el bug #14649
+#             (abierto) hace que hasta los widgets disparen el gesto. El
+#             fondo de la barra queda por CLI: omarchy bar background
 # Mecanismo: clon oficial del widget + parches mínimos con anclajes,
 # idempotentes por fase y con detección de deriva upstream. Escrituras
 # in-place (sin sustituir el inode, para no despistar al watcher del shell)
@@ -661,6 +673,148 @@ EOF
       rm -f "$SNIP12"
       patched=1
       echo "set-omarchy-shell-config: fase 12 aplicada (workspaces por monitor)"
+    fi
+  fi
+
+  # ---------- Fase 13: doble click en la barra sin moverla de borde ----------
+  # Bug upstream omacom/omarchy#17385 (abierto contra omarchy 4.5.0,
+  # reproducido en Hyprland 0.56.2 con dos monitores): el doble click en
+  # espacio vacío de la barra ejecuta cycleBackground() con el segundo
+  # botón aún presionado; entrar/salir de glassy ejecuta `hyprctl reload`
+  # (toggle bar-glassy) y Hyprland teletransporta el cursor al centro de la
+  # ventana re-enfocada. El CenterGestureArea lee ese salto como arrastre
+  # (umbral 4px, distancia Manhattan) y al soltar mueve la barra al borde
+  # más cercano del cursor saltado — lateral y vertical — dejando además
+  # ventanas varadas en workspaces no visibles; en apps single-instance
+  # (Electron: Obsidian) relanzar "no hace nada" porque la nueva instancia
+  # le avisa a la varada y muere. Playbook de recuperación en
+  # MIGRATION-omarchy.md. Espejo del parche del PR: la segunda pulsación de
+  # un doble click que cicló el fondo no puede iniciar un bar-move hasta
+  # soltarse; un press-and-drag deliberado sigue moviendo la barra.
+  # Mecánica: clon del plugin de la barra (probua.bar) + parche mínimo
+  # sobre el CenterGestureArea del clon. Como el clon es un fork, cuando
+  # upstream fusione #17385 conviene re-clonar o volver al built-in: un
+  # clon nuevo con el fix ya trae el marcador y esta fase se omite sola.
+  # Marcador de aplicado: cycledOnPress.
+  local BAR_PLUGIN_ID="${USER:-$(id -un)}.bar"
+  local BAR_QML="$HOME/.config/omarchy/plugins/$BAR_PLUGIN_ID/Bar.qml"
+
+  # Registro en máquina nueva: el clone habilita el clon él solo (plugins[] +
+  # disabledPlugins[] en shell.json); la config de la barra (posición, layout,
+  # background en shell.json["bar"]) es agnóstica del plugin que la dibuja.
+  if ! grep -q "\"$BAR_PLUGIN_ID\"" "$HOME/.config/omarchy/shell.json" 2>/dev/null; then
+    omarchy plugin clone omarchy.bar >/dev/null
+  fi
+
+  if [[ ! -f $BAR_QML ]]; then
+    echo "set-omarchy-shell-config: falta $BAR_QML (¿falló el clone?)" >&2
+    rm -f "$TMP"
+    return 1
+  fi
+
+  if ! grep -q "cycledOnPress" "$BAR_QML"; then
+    # Anclas exactas de línea (comparación == en awk / grep -Fx): el
+    # ModuleSlot (modulePointer) repite dragging/suppressClick/pressedX a
+    # otra indentación y con otra línea siguiente, así que los pares
+    # (línea + siguiente) son únicos del CenterGestureArea. Si upstream
+    # fusiona el PR, un clon nuevo ya trae cycledOnPress y no se entra aquí.
+    local B_SUP='    property bool suppressClick: false'
+    local B_PRX='    property real pressedX: 0'
+    local B_DRAG='      if (dragging) return'
+    local B_SUPC='      suppressClick = false'
+    local B_MX='      pressedX = mouse.x'
+    local B_REL='    onReleased: function(mouse) {'
+    local B_IFND='      if (!dragging) return'
+    local B_CLEAR='      root.clearBarMove()'
+    local B_CYCLE='        root.cycleBackground()'
+
+    local f13_ok=1
+    if (( $(awk -v a="$B_SUP" -v b="$B_PRX" '$0 == a { if ((getline n) > 0 && n == b) c++ } END { print c + 0 }' "$BAR_QML") != 1 )) \
+       || (( $(awk -v a="$B_SUPC" -v b="$B_MX" '$0 == a { if ((getline n) > 0 && n == b) c++ } END { print c + 0 }' "$BAR_QML") != 1 )) \
+       || (( $(awk -v a="$B_REL" -v b="$B_IFND" '$0 == a { if ((getline n) > 0 && n == b) c++ } END { print c + 0 }' "$BAR_QML") != 1 )); then
+      echo "set-omarchy-shell-config: anclas de pares de fase 13 no únicas (¿deriva upstream?); omitida" >&2
+      f13_ok=0
+    fi
+    local a13
+    for a13 in "$B_DRAG" "$B_CLEAR" "$B_CYCLE"; do
+      if [[ $(grep -cFx "$a13" "$BAR_QML") != 1 ]]; then
+        echo "set-omarchy-shell-config: ancla de fase 13 no única: $a13; omitida" >&2
+        f13_ok=0
+        break
+      fi
+    done
+
+    if (( f13_ok )); then
+      awk -v sup="$B_SUP" -v prx="$B_PRX" -v drag="$B_DRAG" \
+          -v supc="$B_SUPC" -v mx="$B_MX" -v rel="$B_REL" -v ifnd="$B_IFND" \
+          -v clear="$B_CLEAR" -v cycle="$B_CYCLE" '
+        { lines[NR] = $0 }
+        END {
+          for (i = 1; i <= NR; i++) {
+            line = lines[i]
+
+            # startDrag: un press que acaba de ciclar el fondo no arrastra
+            if (line == drag) {
+              print "      if (dragging || cycledOnPress) return"
+              continue
+            }
+
+            # onCanceled: reset antes de limpiar el move
+            if (line == clear) print "      cycledOnPress = false"
+
+            # onDoubleClicked: marca el ciclo justo antes de ejecutarlo
+            if (line == cycle) print "        cycledOnPress = true"
+
+            print line
+
+            # propiedad del guard, tras el par suppressClick+pressedX
+            if (line == sup && lines[i + 1] == prx) {
+              print "    // The second press of a double-click that cycled the background. Until its"
+              print "    // release it moves no bar: cycling the glass can warp the cursor (Hyprland"
+              print "    // re-focusing a window), which would read as a drag to the nearest edge."
+              print "    property bool cycledOnPress: false"
+            }
+
+            # onPressed: reset tras el par suppressClick+pressedX
+            if (line == supc && lines[i + 1] == mx) print "      cycledOnPress = false"
+
+            # onReleased: reset antes del guard de dragging
+            if (line == rel && lines[i + 1] == ifnd) print "      cycledOnPress = false"
+          }
+        }
+      ' "$BAR_QML" >"$TMP" && cat "$TMP" >"$BAR_QML"
+      patched=1
+      echo "set-omarchy-shell-config: fase 13 aplicada (doble click en la barra ya no la mueve de borde)"
+    fi
+  fi
+
+  # ---------- Fase 14: doble click neutralizado ----------
+  # La fase 13 cortó el bar-move fantasma (#17385), pero el gesto seguía
+  # ejecutando cycleBackground(): entrar/salir de glassy recarga Hyprland
+  # (toggle bar-glassy + omarchy-restart-hyprctl) y cada reload despierta a
+  # reconcile() del sistema de bloques por monitor — la cadena que
+  # "perdía" ventanas renumerando workspaces (post-mortem en
+  # MIGRATION-omarchy.md). Con los bloques alineados un reload es inocuo,
+  # pero el gesto no aporta: #14649 (abierto) hace que los widgets tampoco
+  # consuman dobles clicks, así que cualquier doble click casual cicla el
+  # fondo y recarga config sin querer. Neutralización: el handler conserva
+  # la limpieza de suppressClick y acepta el evento (no propaga), pero ya
+  # no cicla. Fondo por CLI: `omarchy bar background <opaque|glassy|none>`.
+  # Marcador de aplicado: la ausencia de root.cycleBackground() en el clon
+  # (la definición de cycleBackground() queda, sin llamadas).
+  if grep -qF "root.cycleBackground()" "$BAR_QML"; then
+    if [[ $(grep -cF "root.cycleBackground()" "$BAR_QML") != 1 ]]; then
+      echo "set-omarchy-shell-config: ancla de fase 14 no única; omitida" >&2
+    else
+      awk '{
+        if (index($0, "root.cycleBackground()") > 0) {
+          print "        // fase 14: ciclo de fondo neutralizado (el doble click no recarga Hyprland)"
+          next
+        }
+        print
+      }' "$BAR_QML" >"$TMP" && cat "$TMP" >"$BAR_QML"
+      patched=1
+      echo "set-omarchy-shell-config: fase 14 aplicada (doble click en la barra neutralizado)"
     fi
   fi
 
